@@ -7,5 +7,4 @@ Thumbs.db
 /todo.txt
 
 # ignore rep
-/z_sources
-/z_temp
+/z_*
