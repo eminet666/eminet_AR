@@ -1,5 +1,7 @@
 # eminet_AR
 
+toujours en https (github.io en https)
+
 # AR Markers detection
 
 Bonnes pratiques ([ref](https://medium.com/chialab-open-source/10-tips-to-enhance-your-ar-js-app-8b44c6faffca))
@@ -19,6 +21,23 @@ evénements souris (clic, mouse avec le curseur)
 ex : pour changer en FullHD camera
 
 `<a-scene embedded arjs=’sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960;’>`
+
+# AR Image Tracking (Natural Feature Tracking or NFT)
+[example](https://github.com/AR-js-org/AR.js/tree/master/aframe/examples/image-tracking/)
+[NFT marker creator](https://carnaux.github.io/NFT-Marker-Creator/)
+[markers quality](https://github.com/Carnaux/NFT-Marker-Creator/wiki/Creating-good-markers)
+
+
+# AR geolocalisation (GPS)
+
+Localisation GPS
+- https://www.coordonnees-gps.fr/ma-position
+- https://www.latlong.net/
+- https://esri.github.io/html5-geolocation-tool-js/
+- https://www.torop.net/coordonnees-gps.php
+- https://www.mapsdirections.info/fr/coordonnees-sur-google-map.html
+- https://jsfiddle.net/fbqa8fuh/7/
+
 
 
 # outils
