@@ -8,7 +8,7 @@ AR (Augmented Reality)
 [Accueil AR.js](https://github.com/AR-js-org)
 
 0. AR.js documentation :
-[github](https://github.com/AR-js-org/AR.js-Docs)
+[github](https://github.com/AR-js-org/AR.js-Docs) ou 
 [online](https://ar-js-org.github.io/AR.js-Docs/)
 
 1. [librairie AR.js](https://github.com/AR-js-org/AR.js)
