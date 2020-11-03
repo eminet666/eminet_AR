@@ -17,9 +17,13 @@ evénements souris (clic, mouse avec le curseur)
 - utiliser Safari sur iOS (poublème accès webcam avec chrome _ bug google)
 - resolution par défaut de la webcam (640x480px)
 ex : pour changer en FullHD camera
+
 `<a-scene embedded arjs=’sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960;’>`
 
 
+# outils
+- aframe inspector : ctrl+alt+i
+- console : ctrl+maj+i (pas installé par défaut sur safari)
 
 
 
@@ -56,3 +60,10 @@ Square Markers - Patterns
 
 * a-frame
 [cours a-frame](https://aframe-course.glitch.me/index.html)
+[doc:primitives](https://github.com/aframevr/aframe/tree/master/docs/primitives)
+[doc:components](https://github.com/aframevr/aframe/tree/master/docs/components)
+[site](https://aframe.io/)
+[getting start](https://aframe.io/docs/1.0.0/introduction/)
+[blog examples](https://aframe.io/blog/)
+[components:superframe](https://github.com/supermedium/superframe)
+[components:](https://www.npmjs.com/search?q=keywords:aframe&page=1&ranking=optimal)
