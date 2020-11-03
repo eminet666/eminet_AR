@@ -9,7 +9,6 @@
 
 0. AR.js documentation [github](https://github.com/AR-js-org/AR.js-Docs)[online](https://ar-js-org.github.io/AR.js-Docs/)
 
-
 1. [librairie AR.js](https://github.com/AR-js-org/AR.js)
 2. [AR.js with HTML balises](https://github.com/AR-js-org/aframe)
 
