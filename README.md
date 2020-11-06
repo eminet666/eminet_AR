@@ -30,5 +30,5 @@ AR (Augmented Reality)
 - aframe inspector : ctrl+alt+i
 - console : ctrl+maj+i (pas installé par défaut sur safari)
 
-* sécurité
+# sécurité
 - l'AR nécessite le protocole https (ce que permet github.io)
