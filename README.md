@@ -1,7 +1,6 @@
 # eminet_AR
 
-# 1. AR Markers detection
-
+# 1. [AR Markers detection](https://github.com/eminet666/eminet_AR/tree/master/1_AR_markers)
 # 2. AR Image Tracking (Natural Feature Tracking or NFT)
 
 # 3. AR geolocalisation (GPS)
