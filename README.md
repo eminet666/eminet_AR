@@ -3,6 +3,7 @@
 toujours en https (github.io en https)
 
 # AR Markers detection
+[example](https://github.com/AR-js-org/AR.js/tree/master/aframe/examples/marker-based)
 
 Bonnes pratiques ([ref](https://medium.com/chialab-open-source/10-tips-to-enhance-your-ar-js-app-8b44c6faffca))
 - utiliser des markers asymétriques
@@ -27,8 +28,9 @@ ex : pour changer en FullHD camera
 [NFT marker creator](https://carnaux.github.io/NFT-Marker-Creator/)
 [markers quality](https://github.com/Carnaux/NFT-Marker-Creator/wiki/Creating-good-markers)
 
-
 # AR geolocalisation (GPS)
+[article pour commencer](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)
+[examples](https://github.com/AR-js-org/AR.js/tree/master/aframe/examples/location-based)
 
 Localisation GPS
 - https://www.coordonnees-gps.fr/ma-position
