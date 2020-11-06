@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+		<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
+		<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+	</head>
+
+  <body style='margin : 0px; overflow: hidden;'>
+
+		<!--
+			// <a-scene stats embedded arjs='trackingMethod: best;debugUIEnabled: false;'>
+			// <a-scene stats embedded arjs='trackingMethod: best;debugUIEnabled: false; patternRatio: 0.90'>
+			// patternRatio : [default] / 0.75 / 0.90 selon l'épaisseur du contour du marker généré
+
+			<a-marker preset="hiro">
+
+			<a-marker type="pattern" url="./patterns/pattern-Etienne.patt"> 						ok
+			<a-marker type="pattern" url="./patterns/pattern-Etienne_thin.patt"> 				ok
+			<a-marker type="pattern" url="./patterns/pattern-Etienne_thinest.patt"> 		ok
+			<a-marker type="pattern" url="./patterns/pattern-Etienne_blue.patt"> 				ok
+			<a-marker type="pattern" url="./patterns/pattern-Etienne_borderblue.patt"> 	ok
+
+			<a-marker type="pattern" url="./patterns/pattern-EtienneBW.patt">		ok
+			<a-marker type="pattern" url="./patterns/pattern-flag.patt"> 				ok
+			<a-marker type="pattern" url="./patterns/pattern-guepe.patt"> 			ok
+			<a-marker type="pattern" url="./patterns/pattern-guepe.patt"> 			ok
+			<a-marker type="pattern" url="./patterns/pattern-pericles.patt"> 		detection difficile
+			<a-marker type="pattern" url="./patterns/pattern-homere.patt"> 			ok
+		-->
+
+		<a-scene embedded arjs='trackingMethod: best;debugUIEnabled: false;'>
+				<a-marker preset="hiro">
+						<a-entity>
+								<a-box position='0 1 0' material='color: red;'>
+						        <a-animation a
+												attribute="rotation"
+							          dur="2000"
+							          fill="forwards"
+							          from="0 0 0"
+							          to="360 360 360"
+							          repeat="indefinite">
+										</a-animation>
+					      </a-box>
+						</a-entity>
+				</a-marker>
+
+				<a-entity camera></a-entity>
+    </a-scene>
+
+  </body>
+</html>
