@@ -1,3 +1,6 @@
+<!-- IMPORTATION D'UN MODELE 3D -->
+<!-- - conception dans un logiciel 3D et exporté en gltf/glb
+- ajout d'une librairie supplémentaire pour leur prise en charge -->
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -5,32 +8,29 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-		<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-		<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
+		<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+		<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 		<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
 	</head>
 
   <body style='margin : 0px; overflow: hidden;'>
 
 		<a-scene embedded arjs='trackingMethod: best;debugUIEnabled: false; '>
-
 			<a-assets>
-				<a-asset-item id="glbModel" src="./fox.glb"></a-asset-item>
+				<a-asset-item id="glbModel" src="./assets/3Dmodels/fox.glb"></a-asset-item>
 			</a-assets>
 
 			<a-marker preset="hiro">
-
-					<a-entity   id ="renard"
-								scale="0.5 0.5 0.5"
-								position="0 0 0"
-								rotation="0 0 0"
-								gltf-model="#glbModel">
-					 </a-entity>
-
+				<a-entity   id ="fox"
+							scale="2 2 2"
+							position="0 0 0"
+							rotation="0 0 90"
+							gltf-model="#glbModel">
+				</a-entity>
 			</a-marker>
 
-				<a-entity camera></a-entity>
-    </a-scene>
+			<a-entity camera></a-entity>
+    	</a-scene>
 
   </body>
 </html>
