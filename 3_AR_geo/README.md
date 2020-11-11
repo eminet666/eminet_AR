@@ -26,3 +26,7 @@ camera : [rotation-reader](https://aframe.io/docs/0.9.0/components/camera.html#r
 
 # temp
 https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564
+[issues](https://github.com/jeromeetienne/AR.js/issues)
+examples : https://github.com/kalwalt
+- https://github.com/kalwalt/ARnft
+- https://github.com/kalwalt/kalwalt-interactivity-AR
