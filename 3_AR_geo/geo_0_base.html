@@ -13,13 +13,16 @@
 
     <style>
         #info { position: absolute; bottom: 20px; left: 20px;
-            font-size: 2em; background-color: white;}
+            font-size: 1em; background-color: white;}
     </style>
 
   </head>
 
   <body style="margin: 0; overflow: hidden;">
-    <p id="info">cherchez une boule jaune, un cube rouge et un texte dans l'espace</p>
+    <p id="info"><b>cherchez une boule jaune, un cube rouge et un texte dans l'espace</b>
+        <br>- sur un ordinateur : cherchez dans l'espace avec la main (souris)
+        <br>- avec un smartphone (conseillé) : tournez l'écran autour de vous (mode portait)
+    </p>
     <a-scene embedded
              arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: false;"
              vr-mode-ui="enabled: false">
@@ -35,20 +38,20 @@
         <a-box position='0 0 0' material='color: red;'
                scale="0.5 0.5 0.5" rotation="45 45 45" position="0 1 0"
                look-at="[gps-camera]"
-               gps-entity-place="latitude: 48.8607; longitude: 2.3739;">
+               gps-entity-place="latitude: 48.86067; longitude: 2.37396;">
         </a-box>
 
         <a-text value="Hello, World !"
                 look-at="[gps-camera]"
                 scale="2 2 2" position="0 1 0"
-                gps-entity-place="latitude: 48.8607; longitude: 2.3738;">
+                gps-entity-place="latitude: 48.86067; longitude: 2.37398;">
         </a-text>
         <!-- position : seul le paramètre en y est valide = altitude -->
 
         <a-sphere position="0 1.5 0"
                   material="color: yellow;"
                   scale="0.1 0.1 0.1"
-                  gps-entity-place="latitude: 48.8607; longitude: 2.3737;">
+                  gps-entity-place="latitude: 48.86067; longitude: 2.37400;">
         </a-shere>
 
       <!-- gps-camera : permet la localisation gps -->
