@@ -38,27 +38,27 @@
         <a-box position='0 0 0' material='color: red;'
                scale="0.5 0.5 0.5" rotation="45 45 45" position="0 1 0"
                look-at="[gps-camera]"
-               gps-entity-place="latitude: 48.86067; longitude: 2.37396;">
+               gps-entity-place="latitude: 48.86065; longitude: 2.37396;">
         </a-box>
 
         <a-text value="Hello, World !"
                 look-at="[gps-camera]"
                 scale="2 2 2" position="0 1 0"
-                gps-entity-place="latitude: 48.86067; longitude: 2.37398;">
+                gps-entity-place="latitude: 48.86067; longitude: 2.37396;">
         </a-text>
         <!-- position : seul le paramètre en y est valide = altitude -->
 
         <a-sphere position="0 1.5 0"
                   material="color: yellow;"
                   scale="0.1 0.1 0.1"
-                  gps-entity-place="latitude: 48.86067; longitude: 2.37400;">
+                  gps-entity-place="latitude: 48.86067; longitude: 2.37398;">
         </a-shere>
 
       <!-- gps-camera : permet la localisation gps -->
       <!-- rotation-reader : permet de capturer les événements de rotation -->
       <!-- https://aframe.io/docs/0.9.0/components/camera.html#reading-position-or-rotation-of-the-camera    -->
-      <a-camera gps-camera rotation-reader> </a-camera>
-
+      <!-- <a-camera gps-camera rotation-reader gpsMinDistance="5"> </a-camera> -->
+      <a-camera gps-camera='gpsMinDistance: 5' rotation-readerlook-controls-enabled='false' arjs-look-controls='smoothingFactor: 0.1'> </a-camera>
     </a-scene>
   </body>
 </html>
