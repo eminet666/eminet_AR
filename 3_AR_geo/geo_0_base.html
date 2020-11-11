@@ -11,10 +11,14 @@
     <!-- look-at component : https://github.com/supermedium/superframe/tree/master/components/look-at/ -->
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
+    <style>
+        #info { position: absolute; bottom: 20px; left: 20px; font-size: 2 em;}
+    </style>
+
   </head>
 
   <body style="margin: 0; overflow: hidden;">
-
+    <p id="info">cherchez une boule jaune, un cube rouge et un texte dans l'espace</p>
     <a-scene embedded
              arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: false;"
              vr-mode-ui="enabled: false">
@@ -26,7 +30,6 @@
              <!-- vr-mode-ui : true = VR, false = AR -->
 
         <!-- ATTENTION : le résultat n'est pas toujours identique car la localisation GPS peut varier -->
-
 
         <a-box position='0 0 0' material='color: red;'
                scale="0.5 0.5 0.5" rotation="45 45 45" position="0 1 0"
