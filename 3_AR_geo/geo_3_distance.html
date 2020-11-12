@@ -13,7 +13,7 @@
 
     <script>
         AFRAME.registerComponent('getdistance', {
-          tick: function () {
+          update: function () {
             var el = this.el;
             const distanceMsg = document.querySelector('[gps-entity-place]').getAttribute('distanceMsg');
             console.log(distanceMsg);
@@ -40,7 +40,7 @@
                   gps-entity-place="latitude: 48.86067; longitude: 2.37398;distanceMsg">
         </a-shere>
 
-      <a-camera gps-camera='gpsMinDistance: 5' rotation-readerlook-controls-enabled='false' arjs-look-controls='smoothingFactor: 0.1' getdistance> </a-camera>
+      <a-camera gps-camera='gpsMinDistance: 5' rotation-reader look-controls-enabled='false' arjs-look-controls='smoothingFactor: 0.1' getdistance> </a-camera>
     </a-scene>
   </body>
 </html>
