@@ -1,3 +1,5 @@
+<!-- https://aframe.io/docs/1.0.0/components/animation.html -->
+<!-- https://blog.prototypr.io/learning-a-frame-how-to-do-animations-2aac1ae461da -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,12 +15,12 @@
 <body>
 
     <a-scene ar>
-        <a-box position="0 1.6 -3" scale="0.2 0.2 0.2" rotation="0 45 45" color="#4CC3D9">
-        </a-box>
-        <a-sphere position="-1 1.6 -3" radius="0.2" color="#EF2D5E">
+        <a-sphere position="0 1.6 0" radius="1.5" opacity="0"
+                  animation="property: rotation; dur:2000;  from: 0 0 0; to: 0 360 0; loop: true">
+                  <a-sphere position="1.5 0 0" radius="0.1" color="yellow"> </a-sphere>
         </a-sphere>
-        <a-cylinder position="1 1.6 -3" radius="0.1" height="0.15" color="#FFC65D">
-        </a-cylinder>
+
+        <a-entity camera look-controls position="0 1.6 0"></a-entity>
     </a-scene>
 </body>
 
