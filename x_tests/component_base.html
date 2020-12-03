@@ -1,0 +1,84 @@
+<!-- https://aframe.io/docs/1.0.0/core/component.html
+    // Registering component in foo-component.js
+    AFRAME.registerComponent('foo', {
+      schema: {},               // propriétés du composant
+      init: function () {},     // appelé à l'initialisation du composant
+      update: function () {},   // appelé à l'initialisation et maj d'une propriété du composant
+      tick: function () {},     // appelé à chaque mise à jour de la scène (changements continus)
+      remove: function () {},   // appelé quand l'entité est retirée de la scène
+      pause: function () {},    // appelé quand l'entité est jouée
+      play: function () {}      // appelé quand l'entité est mise en pause
+  });  -->
+
+<!-- https://aframe.io/docs/1.0.0/introduction/writing-a-component.html -->
+<html>
+  <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+        <script>
+            AFRAME.registerComponent('hello-world', {
+                init: function () {
+                    console.log('>>> Hello, World!');
+                }
+            });
+
+            AFRAME.registerComponent('log', {
+                schema: {
+                  message: {type: 'string', default: '>>> Logging ...'}
+                },
+
+                init: function () {
+                  console.log(this.data.message);
+                }
+            });
+
+            AFRAME.registerComponent('whoiam', {
+	          init: function () {
+	            var el = this.el;
+	              console.log(">>>> "+el.id);
+	            }
+	     	});
+
+            AFRAME.registerComponent('boite', {
+              schema: {
+                width: {type: 'number', default: 1},
+                height: {type: 'number', default: 1},
+                depth: {type: 'number', default: 1},
+                color: {type: 'color', default: '#AAA'}
+              },
+
+              init: function () {
+                var data = this.data;
+                var el = this.el;
+                this.geometry = new THREE.BoxBufferGeometry(data.width, data.height, data.depth);
+                this.material = new THREE.MeshStandardMaterial({color: data.color});
+                this.mesh = new THREE.Mesh(this.geometry, this.material);
+                el.setObject3D('mesh', this.mesh);
+              },
+            });
+
+        </script>
+  </head>
+
+  <body>
+    <a-scene>
+        <a-box id="boite1"
+            position="0 0 -5"
+            rotation="0 0 30"
+            hello-world
+            log="message: >>> test log !"
+            whoiam
+            >
+        </a-box>
+        
+        <a-entity  id="boite2"
+            boite="color: #128"
+            position="2 0 -5"
+            log="message: >>> test boite2 !"
+            >
+        </a-entity>
+
+        <a-sky color="#6EBAA7"></a-sky>
+    </a-scene>
+  </body>
+</html>
