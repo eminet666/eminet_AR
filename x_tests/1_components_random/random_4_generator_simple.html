@@ -1,0 +1,25 @@
+<!-- solution 1 : randomize component -->
+<!-- doc : https://github.com/namputo/aframe-entity-generator-component -->
+<html>
+
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="../assets/js/aframe-entity-generator-component.js"></script>
+        <script src="../assets/js/aframe-randomizer-components.js"></script>
+        <!-- <script src="https://supermedium.com/superframe/components/entity-generator/examples/build.js"></script> -->
+    </head>
+
+    <body>
+
+        <a-scene>
+            <a-assets>
+                <a-mixin id="sphere" geometry="primitive: sphere; radius: 0.2"></a-mixin>
+                <a-mixin id="random" random-spherical-position></a-mixin>
+                <a-mixin id="orange" material="color: #FF6600"></a-mixin>
+            </a-assets>
+
+            <a-entity entity-generator="mixin: random orange sphere; num: 50"></a-entity>
+        </a-scene>
+    </body>
+
+</html>

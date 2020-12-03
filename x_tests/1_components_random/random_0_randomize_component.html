@@ -1,0 +1,19 @@
+<!-- solution 1 : randomize component -->
+<!-- doc : https://github.com/harlyq/aframe-randomize-component -->
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="../assets/js/aframe-randomize-component.js"></script>
+    <!-- pb : <script src="https://unpkg.com/aframe-randomize-component@^0.3.0/dist/aframe-randomize-component.js"></script>     -->
+</head>
+
+<body>
+    <a-scene>
+        <a-box randomize="position:-2 -2 -5..2 2 -7; material.color:red..green; scale: 1 1 1|1.5 1.5 1.5|2 2 2;"></a-box>
+        <a-box randomize="position:-2 -2 -5..2 2 -7; material.color:red..green; scale: 1 1 1|1.5 1.5 1.5|2 2 2;"></a-box>
+        <a-box randomize="position:-2 -2 -5..2 2 -7; material.color:red..green; scale: 1 1 1|1.5 1.5 1.5|2 2 2;"></a-box>
+    </a-scene>
+</body>
+
+</html>

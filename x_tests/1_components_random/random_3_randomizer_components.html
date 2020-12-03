@@ -1,0 +1,46 @@
+<!-- solution 2 : randomizer components (voir fichier randomizer_components.js pour info)
+random-color / random-position / random-rotation / random-scale / random-spherical-position -->
+<!-- https://supermedium.com/superframe/components/randomizer/ -->
+<!-- https://github.com/supermedium/superframe -->
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <!-- doc : https://www.npmjs.com/package/aframe-randomizer-components -->
+    <!-- <script src="aframe-randomizer-components.js"></script> -->
+    <script src="https://unpkg.com/aframe-randomizer-components@3.0.2/dist/aframe-randomizer-components.min.js"></script>
+
+    <script>
+        AFRAME.registerComponent('console', {
+          init: function () {
+            var el = this.el;
+            el.addEventListener('click', e => {
+                // console.log(el.getAttribute('position'));
+                console.log(el.getDOMAttribute('position'));
+                // console.log(el.getAttribute('scale'));
+                // console.log(el.getAttribute('rotation'));
+                // console.log(el.getAttribute('material'));
+                })
+            }
+        });
+    </script>
+
+</head>
+
+<body>
+    <a-scene cursor='rayOrigin: mouse'>
+
+        <a-entity id="random"
+                geometry="primitive: box"
+                random-color
+                random-rotation
+                random-scale="min: 0.3 0.3 0.3; max: 0.5 0.5 0.5"
+                random-position="min: -2 1.6 -3; max: 2 1.6 -3"
+                console>
+        </a-entity>
+
+    </a-scene>
+</body>
+
+</html>
