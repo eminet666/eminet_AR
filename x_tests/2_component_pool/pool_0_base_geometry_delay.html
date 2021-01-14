@@ -1,0 +1,76 @@
+<!-- https://aframe.io/docs/1.0.0/components/pool.html
+https://github.com/aframevr/aframe/blob/master/docs/components/pool.md -->
+
+<!-- https://stackoverflow.com/questions/56618788/how-is-properly-to-make-pool-with-10-a-spheres-a-frame -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('foo', {
+            init: function() {
+                this.raycaster = null
+                console.log(this);
+                this.el.addEventListener('click', e => {
+                    createBall();
+                })
+
+                this.el.addEventListener('raycaster-intersected', evt => {
+                    this.raycaster = evt.detail.el;
+                });
+                this.el.addEventListener('raycaster-intersected-cleared', evt => {
+                    this.raycaster = null;
+                });
+
+            }
+        })
+        AFRAME.registerComponent('bar', {
+            init: function() {
+                this.el.addEventListener('click', e => {
+                    let pool = this.el.sceneEl.components["pool__spheres"]
+                    pool.returnEntity(this.el)
+                })
+            }
+        })
+        function createBall() {
+            let plan = document.getElementById("plan");
+            let pool = plan.sceneEl.components["pool__spheres"];
+            console.log(plan);
+            let sphere = pool.requestEntity();
+            let intersection = this.raycaster.components.raycaster.getIntersection(this.el);
+            // console.log(intersection.point.x);
+            sphere.setAttribute('position', intersection.point)
+        }
+    </script>
+</head>
+
+<body>
+        <!-- <a-scene pool__spheres='mixin: ball; size: 10' cursor='rayOrigin: mouse'> -->
+        <!-- augmentation automatique de la taille du pool _ warning console si size dépassée -->
+        <a-scene pool__spheres='mixin: ball; size: 10; dynamic: true' cursor='rayOrigin: mouse'>
+
+            <a-assets>
+                <a-mixin id="ball"
+                         geometry='primitive: sphere'
+                         material="color: red"
+                         scale='0.1 0.1 0.1'
+                         bar>
+                </a-mixin>
+            </a-assets>
+
+            <a-plane id="plan" position="0 0 -4"
+                     rotation="-90 0 0"
+                     width="4"
+                     height="4"
+                     color="#7BC8A4"
+                     foo >
+            </a-plane>
+
+        </a-scene>
+
+    <body>

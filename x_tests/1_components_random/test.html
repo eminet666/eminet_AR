@@ -1,0 +1,54 @@
+<!-- solution 1 : randomize component -->
+<!-- demo : https://harlyq.github.io/aframe-randomize-component/ -->
+<!-- doc mixin : https://aframe.io/docs/1.0.0/core/mixins.html -->
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="../assets/js/aframe-randomize-component.js"></script>
+
+        <script>
+            AFRAME.registerComponent("foo-bar", {
+                schema: {
+                    fooArray: {
+                        type: "array"
+                    }
+                },
+                update: function(oldData) {
+                    console.log("fooArray set to: ", this.data.fooArray)
+                },
+            })
+        </script>
+    </head>
+
+    <body>
+        <a-scene background="color:black">
+            <a-assets>
+                <a-mixin id="label" text="align: center; width: 10" position="0 -3 0"></a-mixin>
+                <a-mixin id="random1" randomize="position:-2 -2 2..2 2 -2; material.color:#444..white; scale: 1 1 1|1.5 1.5 1.5|2 2 2;"></a-mixin>
+                <a-mixin id="random2" randomize="position:-2 -2 -2..2 2 2; rotation:0 0 0..360 360 360; material.color:black..white"></a-mixin>
+            </a-assets>
+
+            <template id="boxTemplate">
+                <a-box scale=".2 .2 .2" mixin="random2"></a-box>
+            </template>
+
+                <a-entity id="adding" position="0 0 -5">
+                    <script>
+                        let boxTemplate = document.getElementById("boxTemplate")
+                        let adding = document.getElementById("adding")
+
+                        function spawn() {
+                            let clone = document.importNode(boxTemplate.content, true)
+                            adding.appendChild(clone)
+                            setTimeout(spawn, 2000)
+                        }
+                        spawn()
+                    </script>
+                </a-entity>
+
+        </a-scene>
+    </body>
+
+</html>
