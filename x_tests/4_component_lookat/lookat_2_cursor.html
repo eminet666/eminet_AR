@@ -1,8 +1,4 @@
-<!-- https://aframe.io/docs/1.0.0/components/pool.html
-https://github.com/aframevr/aframe/blob/master/docs/components/pool.md -->
-
-<!-- https://stackoverflow.com/questions/56618788/how-is-properly-to-make-pool-with-10-a-spheres-a-frame -->
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html>
 
 <head>
@@ -11,6 +7,8 @@ https://github.com/aframevr/aframe/blob/master/docs/components/pool.md -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
     <script>
         var dim = 3;
 
@@ -19,7 +17,7 @@ https://github.com/aframevr/aframe/blob/master/docs/components/pool.md -->
                 // this.el.addEventListener('click', e => {
                 //     addOne();
                 // })
-                setInterval(addOne(), 3000);
+                setTimeout(addOne(), 3000);
             }
         })
 
@@ -32,20 +30,18 @@ https://github.com/aframevr/aframe/blob/master/docs/components/pool.md -->
             }
         })
 
-
         function addOne() {
-            console.log("ici");
             let scene = document.getElementById("scene");
             let pool = scene.components["pool__balls"];
-            let sphere = pool.requestEntity();
+            let instance = pool.requestEntity();
             let x = getNum(-dim, dim);
             let y = getNum(0, dim);
             let z = getNum(-5, -2);
             let pos = x+" "+y+" "+z;
-            console.log(pos);
-            sphere.setAttribute('position', pos);
+            // console.log(pos);
+            instance.setAttribute('position', pos);
+            instance.play();
         }
-
         function removeOne(el) {
             let scene = document.getElementById("scene");
             let pool = scene.components["pool__balls"];
@@ -53,7 +49,7 @@ https://github.com/aframevr/aframe/blob/master/docs/components/pool.md -->
         }
 
         function getNum(min, max) {
-          return ((Math.random() * (max - min + 1) ) + min).toFixed(1);
+          return (Math.floor(Math.random() * (max - min + 1) ) + min).toFixed(1);
         }
 
     </script>
@@ -61,7 +57,7 @@ https://github.com/aframevr/aframe/blob/master/docs/components/pool.md -->
 
 <body>
         <a-scene id="scene"
-                 pool__balls="mixin: ball; size: 100; dynamic: true"
+                 pool__balls="mixin: flamingo; size: 100; dynamic: true"
                  cursor='rayOrigin: mouse'
                  create>
 
@@ -77,8 +73,9 @@ https://github.com/aframevr/aframe/blob/master/docs/components/pool.md -->
             </a-camera>
 
             <a-assets>
-                <a-mixin id="ball" material="color: red"
-                         geometry='primitive: sphere' scale='0.5 0.5 0.5'
+                <a-asset-item id="glbModel" src="../assets/3Dmodels/Flamingo.glb"></a-asset-item>
+                <a-mixin id="flamingo" gltf-model="#glbModel" animation-mixer
+                         scale="0.5 0.5 0.5" rotation="0 90 0"
                          remove>
                 </a-mixin>
             </a-assets>

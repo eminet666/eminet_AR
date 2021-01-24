@@ -1,0 +1,37 @@
+<!-- src : https://github.com/supermedium/superframe/tree/master/components/look-at/ -->
+<!-- old : https://github.com/matrix-org/aframe-look-at-component -->
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <head>
+        <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+        <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+        <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    </head>
+
+<body>
+    <a-scene background="color: #5280A7">
+
+        <a-assets>
+            <a-asset-item id="glbModel" src="../assets/3Dmodels/suzanne.glb"></a-asset-item>
+        </a-assets>
+
+        <a-entity id="occ1" gltf-model="#glbModel" look-at="[camera]" position="0 2 -3"></a-entity>
+        <a-entity id="occ2" gltf-model="#glbModel" look-at="[camera]" position="0 2 3"></a-entity>
+        <a-entity id="occ3" gltf-model="#glbModel" look-at="[camera]" position="-3 2 0"></a-entity>
+        <a-entity id="occ4" gltf-model="#glbModel" look-at="[camera]" position="3 2 0"></a-entity>
+
+        <a-entity id="player" camera look-controls wasd-controls position="0 1.7 0"></a-entity>
+
+        <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC"
+                 shadow="receive: true" shadow-material="opacite: 0.5">
+        </a-plane>
+        <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC">
+        </a-plane>
+
+    </a-scene>
+</body>
+
+</html>

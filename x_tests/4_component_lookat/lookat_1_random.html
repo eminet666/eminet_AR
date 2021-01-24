@@ -1,0 +1,97 @@
+<!-- https://stackoverflow.com/questions/41081623/a-frame-changing-entity-position-on-interval -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+
+    <script>
+        var dim = 5;
+        var interval = 3000;
+
+        AFRAME.registerComponent('addnew', {
+          tick: function (t) {
+            var entity = this.el;
+
+            // Run on an interval.
+            if (t - this.time < interval) { return; }
+            this.time = t;
+            // console.log(t);
+            addOne();
+          }
+        });
+
+
+        // AFRAME.registerComponent('remove', {
+        //     init: function() {
+        //         this.el.addEventListener('click', e => {
+        //             // removeOne(this.el);
+        //             addOne();
+        //         })
+        //     }
+        // })
+
+        function addOne() {
+            let scene = document.getElementById("scene");
+            let pool = scene.components["pool__monkeys"];
+            let instance = pool.requestEntity();
+            let x = getNum(-dim, dim);
+            let y = getNum(0, dim);
+            let z = getNum(-dim, dim);
+            let pos = x+" "+y+" "+z;
+            console.log(pos);
+            instance.setAttribute('position', pos);
+            instance.play();
+        }
+        function removeOne(el) {
+            let scene = document.getElementById("scene");
+            let pool = scene.components["pool__balls"];
+            pool.returnEntity(el);
+        }
+
+        function getNum(min, max) {
+          return (Math.floor(Math.random() * (max - min + 1) ) + min).toFixed(1);
+        }
+
+    </script>
+</head>
+
+<body>
+        <a-scene id="scene" background="color: #5280A7"
+                 pool__monkeys="mixin: suzanne; size: 100; dynamic: true"
+                 cursor='rayOrigin: mouse'
+                 addnew>
+
+            <a-camera position="0 1.6 4" look-controls wasd-controls>
+                <a-cursor position="0 0 -3"
+                          geometry="primitive: ring; radiusInner: 0.05; radiusOuter: 0.08;"
+                          material="color: blue; shader: flat"
+                          fuse= "true"
+                          <a-animation begin="fusing" easing="ease-in" attribute="scale"
+                                 fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500">
+                          </a-animation>
+                </a-cursor>
+            </a-camera>
+            <!-- <a-entity id="player" look-controls wasd-controls position="0 1.7 0"></a-entity> -->
+
+            <a-assets>
+                <a-asset-item id="glbModel" src="../assets/3Dmodels/suzanne.glb"></a-asset-item>
+                <a-mixin id="suzanne" gltf-model="#glbModel" look-at="[camera]" scale="1 1 1" remove>
+                </a-mixin>
+            </a-assets>
+<!-- look-at="[camera]" -->
+            <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC"
+                     shadow="receive: true" shadow-material="opacite: 0.5">
+            </a-plane>
+            <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC">
+            </a-plane>
+
+        </a-scene>
+
+    <body>
