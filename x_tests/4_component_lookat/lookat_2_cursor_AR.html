@@ -31,9 +31,13 @@
         AFRAME.registerComponent('remove', {
             init: function() {
                 this.el.addEventListener('click', e => {
-                    console.log("touché !")
+                    console.log("ici");
                     removeOne(this.el);
-                    addOne();
+                    // on en ajoute un nouveau
+                    // addOne();
+                    // ou reduire l'intervalle
+                    interval *= 0.9;
+                    console.log(interval);
                 })
             }
         })
@@ -49,10 +53,20 @@
             console.log(pos);
             instance.setAttribute('position', pos);
             instance.play();
+
+            instance.addEventListener('raycaster-intersected', evt => {
+                this.raycaster = evt.detail.el;
+            });
+
+            instance.addEventListener('raycaster-intersected-cleared', evt => {
+                this.raycaster = null;
+            });
+
+
         }
         function removeOne(el) {
             let scene = document.getElementById("scene");
-            let pool = scene.components["pool__balls"];
+            let pool = scene.components["pool__monkeys"];
             pool.returnEntity(el);
         }
 
@@ -64,11 +78,20 @@
 </head>
 
 <body>
-        <a-scene id="scene" background="color: #5280A7"
+        <a-scene id="scene" AR background="color: #5280A7"
                  pool__monkeys="mixin: suzanne; size: 100; dynamic: true"
+                 cursor='rayOrigin: mouse'
                  addnew>
 
             <a-camera position="0 1.7 0" look-controls wasd-controls>
+                <a-cursor position="0 0 -1"
+                          geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02;"
+                          material="color: red; shader: flat"
+                          fuse= "true">
+                          <a-animation begin="fusing" easing="ease-in" attribute="scale"
+                                 fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500">
+                          </a-animation>
+                </a-cursor>
             </a-camera>
             <!-- <a-entity id="player" look-controls wasd-controls position="0 1.7 0"></a-entity> -->
 

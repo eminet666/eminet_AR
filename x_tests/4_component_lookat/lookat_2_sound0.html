@@ -1,4 +1,4 @@
-<!-- https://stackoverflow.com/questions/41081623/a-frame-changing-entity-position-on-interval -->
+<!-- https://stackoverflow.com/questions/47921013/play-sound-on-click-in-a-frame -->
 <!DOCTYPE html>
 <html>
 
@@ -28,15 +28,14 @@
         });
 
 
-        AFRAME.registerComponent('remove', {
-            init: function() {
-                this.el.addEventListener('click', e => {
-                    console.log("touché !")
-                    removeOne(this.el);
-                    addOne();
-                })
-            }
-        })
+        // AFRAME.registerComponent('remove', {
+        //     init: function() {
+        //         this.el.addEventListener('click', e => {
+        //             // removeOne(this.el);
+        //             addOne();
+        //         })
+        //     }
+        // })
 
         function addOne() {
             let scene = document.getElementById("scene");
@@ -49,10 +48,15 @@
             console.log(pos);
             instance.setAttribute('position', pos);
             instance.play();
+            let son = document.getElementById("son");
+            console.log(son);
+            son.setAttribute('position', pos);
+            // console.log(son);
+            son.play;
         }
         function removeOne(el) {
             let scene = document.getElementById("scene");
-            let pool = scene.components["pool__balls"];
+            let pool = scene.components["pool__suzanne"];
             pool.returnEntity(el);
         }
 
@@ -66,18 +70,32 @@
 <body>
         <a-scene id="scene" background="color: #5280A7"
                  pool__monkeys="mixin: suzanne; size: 100; dynamic: true"
+                 cursor='rayOrigin: mouse'
                  addnew>
 
-            <a-camera position="0 1.7 0" look-controls wasd-controls>
+            <a-camera position="0 1.6 4" look-controls wasd-controls>
+                <a-cursor position="0 0 -3"
+                          geometry="primitive: ring; radiusInner: 0.05; radiusOuter: 0.08;"
+                          material="color: blue; shader: flat"
+                          fuse= "true"
+                          <a-animation begin="fusing" easing="ease-in" attribute="scale"
+                                 fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500">
+                          </a-animation>
+                </a-cursor>
             </a-camera>
             <!-- <a-entity id="player" look-controls wasd-controls position="0 1.7 0"></a-entity> -->
 
             <a-assets>
                 <a-asset-item id="glbModel" src="../assets/3Dmodels/suzanne.glb"></a-asset-item>
+                <audio id="boing" src="./boing.mp3" preload="auto" crossorigin="anonymous"></audio>
                 <a-mixin id="suzanne" gltf-model="#glbModel" look-at="[camera]"
                          scale="0.5 0.5 0.5" remove>
                 </a-mixin>
             </a-assets>
+
+            <a-sound id="son" src="#boing" autoplay="false" loop="false" volume="1"
+                     sound="maxDistance:20;rolloffFactor:10" position="0 0 0">
+            </a-sound>
 
             <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC"
                      shadow="receive: true" shadow-material="opacite: 0.5">

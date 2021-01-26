@@ -1,4 +1,5 @@
-<<!DOCTYPE html>
+<!-- https://stackoverflow.com/questions/41081623/a-frame-changing-entity-position-on-interval -->
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -8,43 +9,64 @@
 
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
     <script>
-        var dim = 3;
+        var dim = 5;
+        var interval = 3000;
 
-        AFRAME.registerComponent('create', {
-            init: function() {
-                // this.el.addEventListener('click', e => {
-                //     addOne();
-                // })
-                setTimeout(addOne(), 3000);
-            }
-        })
+        AFRAME.registerComponent('addnew', {
+          tick: function (t) {
+            var entity = this.el;
+
+            // Run on an interval.
+            if (t - this.time < interval) { return; }
+            this.time = t;
+            // console.log(t);
+            addOne();
+          }
+        });
+
 
         AFRAME.registerComponent('remove', {
             init: function() {
                 this.el.addEventListener('click', e => {
-                    // removeOne(this.el);
-                    addOne();
+                    console.log("ici");
+                    removeOne(this.el);
+                    // on en ajoute un nouveau
+                    // addOne();
+                    // ou reduire l'intervalle
+                    interval *= 0.9;
+                    console.log(interval);
                 })
             }
         })
 
         function addOne() {
             let scene = document.getElementById("scene");
-            let pool = scene.components["pool__balls"];
+            let pool = scene.components["pool__monkeys"];
             let instance = pool.requestEntity();
             let x = getNum(-dim, dim);
             let y = getNum(0, dim);
-            let z = getNum(-5, -2);
+            let z = getNum(-dim, dim);
             let pos = x+" "+y+" "+z;
-            // console.log(pos);
+            console.log(pos);
             instance.setAttribute('position', pos);
             instance.play();
+
+            instance.addEventListener('raycaster-intersected', evt => {
+                this.raycaster = evt.detail.el;
+            });
+
+            instance.addEventListener('raycaster-intersected-cleared', evt => {
+                this.raycaster = null;
+            });
+
+
         }
         function removeOne(el) {
             let scene = document.getElementById("scene");
-            let pool = scene.components["pool__balls"];
+            let pool = scene.components["pool__monkeys"];
             pool.returnEntity(el);
         }
 
@@ -56,29 +78,35 @@
 </head>
 
 <body>
-        <a-scene id="scene"
-                 pool__balls="mixin: flamingo; size: 100; dynamic: true"
+        <a-scene id="scene" background="color: #5280A7"
+                 pool__monkeys="mixin: suzanne; size: 100; dynamic: true"
                  cursor='rayOrigin: mouse'
-                 create>
+                 addnew>
 
-            <a-camera position="0 1.6 4" look-controls wasd-controls>
-                <a-cursor position="0 0 -3"
-                          geometry="primitive: ring; radiusInner: 0.05; radiusOuter: 0.08;"
-                          material="color: blue; shader: flat"
-                          fuse= "true"
+            <a-camera position="0 1.7 0" look-controls wasd-controls>
+                <a-cursor position="0 0 -1"
+                          geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02;"
+                          material="color: red; shader: flat"
+                          fuse= "true">
                           <a-animation begin="fusing" easing="ease-in" attribute="scale"
                                  fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500">
                           </a-animation>
                 </a-cursor>
             </a-camera>
+            <!-- <a-entity id="player" look-controls wasd-controls position="0 1.7 0"></a-entity> -->
 
             <a-assets>
-                <a-asset-item id="glbModel" src="../assets/3Dmodels/Flamingo.glb"></a-asset-item>
-                <a-mixin id="flamingo" gltf-model="#glbModel" animation-mixer
-                         scale="0.5 0.5 0.5" rotation="0 90 0"
-                         remove>
+                <a-asset-item id="glbModel" src="../assets/3Dmodels/suzanne.glb"></a-asset-item>
+                <a-mixin id="suzanne" gltf-model="#glbModel" look-at="[camera]"
+                         scale="0.5 0.5 0.5" remove>
                 </a-mixin>
             </a-assets>
+
+            <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC"
+                     shadow="receive: true" shadow-material="opacite: 0.5">
+            </a-plane>
+            <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC">
+            </a-plane>
 
         </a-scene>
 
