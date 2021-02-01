@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    </head>
+
+    <body>
+        <!-- le composant ar appelé dans la scène appelera la webcam -->
+        <a-scene ar>
+
+            <a-circle 
+                position="0 1.6 -3" 
+                material="side: double; color: #EF2D5E; transparent: true; opacity: 0.5"
+                geometry="primitive:circle;radius:0.5" radius="0.5">
+            </a-circle>
+
+        </a-scene>
+
+    </body>
+</html>
