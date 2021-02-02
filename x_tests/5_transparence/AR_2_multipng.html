@@ -1,0 +1,57 @@
+<!-- https://aframe.io/docs/1.1.0/components/material.html -->
+<!-- flat material 
+- uses the THREE.MeshBasicMaterial. 
+- are not affected by the scene’s lighting conditions.
+- useful for things such as images or videos. 
+
+<a-entity geometry="primitive: plane" material="shader: flat; src: #cat-image"></a-entity>
+
+Properties
+Property    Description                                                 Default Value
+- color     Base diffuse color.                                         #fff
+- fog       Whether or not material is affected by fog.                 true
+- height    Height of video (in pixels), if defining a video texture.   360
+- repeat    How many times a texture (defined by src) repeats in the X and Y direction. 1 1
+- src       Image or video texture map. Can either be a selector to an <img> or <video>, or an inline URL. None
+- width     Width of video (in pixels), if defining a video texture.    640
+- wireframe Whether to render just the geometry edges.                  false
+- wireframeLinewidth Width in px of the rendered line.                  2
+
+ -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    </head>
+
+    <body>
+
+        <!-- le composant ar appelé dans la scène appelera la webcam -->
+        <a-scene ar>
+
+            <a-assets>
+                <img id="trame" src="trame.png">
+            </a-assets>
+
+            <a-box color="orange" position="-0.5 1 -3.5" shadow></a-box>
+            <a-entity 
+                position="0 1.5 -3" 
+                geometry="primitive: plane" 
+                material="shader: flat; src: #trame; transparent: true;">
+            </a-entity>
+
+			<a-entity id="camera" position="0 1.6 0" camera look-controls></a-entity>
+
+        </a-scene>
+
+    </body>
+</html>
+
+
+
