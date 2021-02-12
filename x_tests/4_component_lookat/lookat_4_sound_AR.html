@@ -1,0 +1,116 @@
+<!-- https://stackoverflow.com/questions/41081623/a-frame-changing-entity-position-on-interval -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+
+    <script>
+        var dim = 5;
+        var interval = 3000;
+
+        AFRAME.registerComponent('addnew', {
+          tick: function (t) {
+            var entity = this.el;
+
+            // Run on an interval.
+            if (t - this.time < interval) { return; }
+            this.time = t;
+            // console.log(t);
+            addOne();
+          }
+        });
+
+
+        AFRAME.registerComponent('remove', {
+            init: function() {
+                this.el.addEventListener('click', e => {
+                    console.log("ici");
+                    this.el.parentNode.removeChild(this.el);
+                    interval *= 0.9;
+                    console.log(interval);
+                })
+            }
+        })
+
+        function addOne() {
+            let scene = document.getElementById("scene");
+            var entite = document.createElement('a-entity');
+            entite.setAttribute('mixin', 'suzanne');
+            let x = getNum(-dim, dim);
+            let y = getNum(0, dim);
+            let z = getNum(-dim, dim);
+            let pos = x+" "+y+" "+z;
+            console.log(pos);
+            entite.setAttribute('position', pos);
+            entite.setAttribute('class', 'suzanne');
+            scene.appendChild(entite);
+            //instance.play();
+
+            entite.addEventListener('raycaster-intersected', evt => {
+                this.raycaster = evt.detail.el;
+            });
+
+            entite.addEventListener('raycaster-intersected-cleared', evt => {
+                this.raycaster = null;
+            });
+
+
+        }
+
+        function getNum(min, max) {
+          return (Math.floor(Math.random() * (max - min + 1) ) + min).toFixed(1);
+        }
+
+    </script>
+</head>
+
+<body>
+        <a-scene id="scene" ar 
+                 cursor='rayOrigin: mouse'
+                 addnew>
+
+            <a-camera position="0 1.7 0" look-controls wasd-controls>
+                <a-cursor position="0 0 -1"
+                          geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02;"
+                          material="color: red; shader: flat"
+                          fuse= "true">
+                          <a-animation begin="fusing" easing="ease-in" attribute="scale"
+                                 fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500">
+                          </a-animation>
+                </a-cursor>
+            </a-camera>
+
+            <a-assets>
+                <a-asset-item id="glbModel" src="../assets/3Dmodels/suzanne.glb"></a-asset-item>
+                <audio id="boing" src="./boing.mp3" preload="auto" crossorigin="anonymous"></audio>
+                <a-mixin id="suzanne" gltf-model="#glbModel" look-at="[camera]" scale="0.5 0.5 0.5" 
+                sound="src: #boing; autoplay: true; maxDistance:20; rolloffFactor:10; loop: false; volume: 1"
+                remove>
+                </a-mixin>
+                <!-- <a-mixin id="suzanne" gltf-model="#glbModel" look-at="[camera]" scale="0.5 0.5 0.5"
+                    sound="src: #boing; autoplay: true; maxDistance:20; rolloffFactor:10; loop: false; volume: 1"
+                    remove>
+                </a-mixin> -->
+
+            <!-- <a-sound src="#boing" autoplay="true" loop="true" volume="1">
+            </a-sound> -->
+                
+            </a-assets>
+
+            <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC"
+                     shadow="receive: true" shadow-material="opacite: 0.5">
+            </a-plane>
+            <a-plane position="0 0 0" rotation="-90 0 0" width="15" height="15" color="#CCCCCC">
+            </a-plane>
+
+        </a-scene>
+
+    <body>
