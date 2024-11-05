@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détection de marqueur AR.js</title>
+    <!-- Importation de A-Frame et AR.js -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
+
+    <!-- Script du composant personnalisé pour la détection des clics -->
+    <script>
+        AFRAME.registerComponent('clickable', {
+            init: function () {
+                // Écoute l'événement 'click' pour les interactions
+                this.el.addEventListener('click', () => {
+                    window.location.href = 'https://ensaama.net/site/home/formations/dnmade/numerique-expriences-narratives-et-interactives';
+                });
+            }
+        });
+    </script>    
+
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+    <!-- Scène AR.js -->
+    <a-scene embedded arjs>
+        <!-- Détecteur de marqueur Hiro -->
+        <a-marker preset="hiro">
+            <!-- Cube rouge cliquable avec la classe 'clickable' -->
+            <a-box position="0 0.5 0" rotation="0 45 0" color="red" depth="0.5" height="0.5" width="0.5"
+                id="clickableCube" class="clickable">
+            </a-box>
+        </a-marker>
+
+        <!-- Caméra avec curseur intégré et raycaster pour les objets clickable-->
+        <a-entity camera raycaster="objects: .clickable; far: 10">
+            <a-cursor></a-cursor>
+        </a-entity>
+
+    </a-scene>
+
+    <script>
+        // Récupération de l'élément cube
+        const cube = document.querySelector('#clickableCube');
+
+        // Ajout d'un événement de clic pour ouvrir une nouvelle page HTML
+        cube.addEventListener('click', () => {
+            window.location.href = 'https://ensaama.net/site/home/formations/dnmade/numerique-expriences-narratives-et-interactives'; // Remplacez par l'URL souhaitée
+        });
+    </script>
+</body>
+
+</html>

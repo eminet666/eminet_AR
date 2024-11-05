@@ -7,7 +7,8 @@
 * [marker_3_patterns](./marker_3_patterns.html)
 * [marker_4_3Dmodel](./marker_4_3Dmodel.html)
 * [marker_5_3Dmodel_anim](./marker_5_3Dmodel_anim.html)
-* [marker_6_link_onclick](./marker_6_link_onclick.html)
+* [marker_6_link_onclick_script](./marker_6_link_onclick_script.html)
+* [marker_6_link_onclick_component](./marker_6_link_onclick_component.html)
 
 ### assets
 * [Hiro marker](./assets/images/hiro.png)
