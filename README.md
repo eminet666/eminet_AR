@@ -5,7 +5,6 @@
 * [base](https://eminet666.github.io/eminet_AR/x_tests/4_component_lookat/lookat_0_base.html) |
 * [timer](https://eminet666.github.io/eminet_AR/x_tests/4_component_lookat/lookat_1_random.html)
 
-
 # prémabule (sécurité)
 L'AR nécessite le protocole https (ce que permet github.io)
 
