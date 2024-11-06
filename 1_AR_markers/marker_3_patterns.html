@@ -37,11 +37,16 @@
 		<a-scene embedded arjs='trackingMethod: best;debugUIEnabled: false;'>
 		<!-- <a-scene embedded arjs='trackingMethod: best;debugUIEnabled: false; patternRatio: 0.90'> -->
 
-			<a-marker preset="hiro">
-			<!-- <a-marker type="pattern" url="./assets/patterns/pattern-Etienne.patt">  -->
-			<!-- <a-marker type="pattern" url="./assets/patterns/pattern-flag.patt"> -->
-			<!-- <a-marker type="pattern" url="./assets/patterns/pattern-homere.patt"> -->
-			<!-- <a-marker type="pattern" url="./assets/patterns/pattern-guepe.patt"> -->
+			<!-- <a-marker preset="hiro"> -->
+			<a-marker type="pattern" url="./assets/patterns/pattern-Etienne.patt">  -->
+				<a-box position='0 1 0' material='color: yellow;'></a-box>
+			</a-marker>
+
+			<a-marker type="pattern" url="./assets/patterns/pattern-flag.patt">
+				<a-box position='0 1 0' material='color: blue;'></a-box>
+			</a-marker>
+			
+			<a-marker type="pattern" url="./assets/patterns/pattern-guepe.patt">
 				<a-box position='0 1 0' material='color: red;'></a-box>
 			</a-marker>
 

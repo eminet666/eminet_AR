@@ -5,9 +5,6 @@ prémabule (sécurité) : nécessite le protocole https (ok avec github.io)
 ## 1. [AR Markers detection](./1_AR_markers/README.md)
 ## 2. [AR Image Tracking](./2_AR_image_tracking/README.md)
 ## 3. [AR Geolocalisation](./3_AR_geo/README.md)
-<!-- # 1. [AR Markers detection](https://github.com/eminet666/eminet_AR/tree/master/1_AR_markers)
-# 2. [AR Image Tracking](https://github.com/eminet666/eminet_AR/tree/master/2_AR_image_tracking) (Natural Feature Tracking or NFT)
-# 3. [AR geolocalisation](https://github.com/eminet666/eminet_AR/tree/master/3_AR_geo) (GPS) -->
 
 ### AR (Augmented Reality) _ référence
 [Accueil AR.js](https://github.com/AR-js-org)
