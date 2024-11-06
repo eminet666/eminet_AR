@@ -1,7 +1,7 @@
 ## AR detection less
 
 ### exemples cours
-* [AR_0_base](./AR_0_base.html) |
+* [AR_0_base](./AR_0_base.html)
 * [AR_1_referentiel](./AR_1_referentiel.html)
 * [AR_2_animation](./AR_2_animation.html)
 * [AR_3_relatives](./AR_3_relatives.html)
