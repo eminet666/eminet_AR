@@ -9,7 +9,7 @@
 * [marker_4_3Dmodel](./marker_4_3Dmodel.html)
 * [marker_5_3Dmodel_anim](./marker_5_3Dmodel_anim.html)
 * [marker_6_link_onclick_script](./marker_6_link_onclick_script.html)
-* [marker_6_link_onclick_component y](./marker_6_link_onclick_component.html)
+* [marker_6_link_onclick_component z](./marker_6_link_onclick_component.html)
 
 ### assets
 #### preset markers

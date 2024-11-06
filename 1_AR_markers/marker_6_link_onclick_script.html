@@ -9,16 +9,6 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
 
-    <script>
-        // Récupération de l'élément cube
-        const cube = document.querySelector('#clickableCube');
-
-        // Ajout d'un événement de clic pour ouvrir une nouvelle page HTML
-        cube.addEventListener('click', () => {
-            window.location.href = 'https://ensaama.net/site/home/formations/dnmade/numerique-expriences-narratives-et-interactives'; // Remplacez par l'URL souhaitée
-        });
-    </script>
-
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -32,14 +22,21 @@
             </a-box>
         </a-marker>
 
-        <!-- Caméra avec curseur intégré -->
-        <a-entity camera>
-            <a-cursor></a-cursor>
+        <a-entity camera raycaster="objects: .clickable; near: 0.1; far: 3">
+            <a-cursor rayOrigin="mouse"></a-cursor>
         </a-entity>
-
-        <!-- Raycaster pour détecter les objets de la classe 'clickable' -->
-        <a-entity raycaster="objects: .clickable"></a-entity>
     </a-scene>
+
+    <script>
+        // Récupération de l'élément cube
+        const cube = document.querySelector('#clickableCube');
+
+        // Ajout d'un événement de clic pour ouvrir une nouvelle page HTML
+        cube.addEventListener('click', () => {
+            window.location.href = 'https://ensaama.net/site/home/formations/dnmade/numerique-expriences-narratives-et-interactives'; // Remplacez par l'URL souhaitée
+        });
+    </script>
+
 </body>
 
 </html>
