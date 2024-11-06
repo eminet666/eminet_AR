@@ -17,9 +17,7 @@
 * [Hiro marker ratio 0.75](./assets/images/hiro_0.75.png)
 
 #### specific markers
-| ![etienne](./assets/images/pattern-Etienne.png) 
-| ![Image 2](./assets/images/pattern-flag.png) 
-| ![Image 3](./assets/images/pattern-guepe.png) |
+| ![etienne](./assets/images/pattern-Etienne.png) | ![Image 2](./assets/images/pattern-flag.png) | ![Image 3](./assets/images/pattern-guepe.png) |
 |------------------------|------------------------|------------------------|
 
 ![marker_homere](./assets/images/pattern-homere.png)
