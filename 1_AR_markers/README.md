@@ -16,11 +16,11 @@
 * [Hiro marker](./assets/images/hiro.png)
 * [Hiro marker ratio 0.75](./assets/images/hiro_0.75.png)
 
-#### specific markers
-| ![etienne](./assets/images/pattern-Etienne.png) | ![Image 2](./assets/images/pattern-flag.png) | ![Image 3](./assets/images/pattern-guepe.png) |
-|------------------------|------------------------|------------------------|
-
-![marker_homere](./assets/images/pattern-homere.png)
+#### specifics markers
+* ![etienne](./assets/images/pattern-Etienne.png) 
+* ![flag](./assets/images/pattern-flag.png) 
+* ![guepe](./assets/images/pattern-guepe.png)
+* ![homere](./assets/images/pattern-homere.png)
 
 ### ressources
 * [Markers Generator](https://jeromeetienne.github.io/AR.js/three.js/examples/marker-training/examples/generator.html)
