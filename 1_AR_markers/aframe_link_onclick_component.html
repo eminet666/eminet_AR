@@ -19,25 +19,22 @@
                 });
             }
         });
-    </script>    
+    </script>
 </head>
 
 <body style="margin: 0;">
     <!-- Scène A-Frame -->
     <a-scene>
-        <!-- Caméra avec curseur interactif -->
-        <a-entity camera position="0 1.6 0" look-controls raycaster="objects: .clickable; far: 10">
-            <a-cursor></a-cursor>
+        <!-- Caméra avec curseur interactif configuré pour mobile -->
+        <a-entity camera position="0 1.6 0" look-controls>
+            <a-cursor rayOrigin="mouse"></a-cursor>
         </a-entity>
 
         <!-- Cube Rouge avec interaction cliquable -->
-        <a-box position="0 1.5 -5" rotation="0 45 0" 
-            color="red" 
-            depth="1" height="1" width="1" 
-            class="clickable">
+        <a-box position="0 1.5 -5" rotation="0 45 0" color="red" depth="1" height="1" width="1" class="clickable"
+            clickable> <!-- Ajout du composant clickable -->
         </a-box>
     </a-scene>
-
 </body>
 
 </html>
