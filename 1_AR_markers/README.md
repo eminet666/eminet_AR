@@ -5,6 +5,7 @@
 * [marker_1_patternratio](./marker_1_patternratio.html)
 * [marker_2_rotation](./marker_2_rotation.html)
 * [marker_3_patterns](./marker_3_patterns.html)
+* [marker_3_patternratio](./marker_3_patternratio.html)
 * [marker_4_3Dmodel](./marker_4_3Dmodel.html)
 * [marker_5_3Dmodel_anim](./marker_5_3Dmodel_anim.html)
 * [marker_6_link_onclick_script](./marker_6_link_onclick_script.html)
