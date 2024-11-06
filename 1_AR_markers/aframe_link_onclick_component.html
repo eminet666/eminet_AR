@@ -31,20 +31,13 @@
         </a-entity>
 
         <!-- Cube Rouge avec interaction cliquable -->
-        <a-box position="0 1.5 -5" rotation="0 45 0" color="red" depth="1" height="1" width="1" id="clickableCube"
+        <a-box position="0 1.5 -5" rotation="0 45 0" 
+            color="red" 
+            depth="1" height="1" width="1" 
             class="clickable">
         </a-box>
     </a-scene>
 
-    <script>
-        // Récupération de l'élément cube
-        const cube = document.querySelector('#clickableCube');
-
-        // Ajout d'un événement de clic pour ouvrir une nouvelle page HTML
-        cube.addEventListener('click', () => {
-            window.location.href = 'https://ensaama.net/site/home/formations/dnmade/numerique-expriences-narratives-et-interactives'; // Remplacez par l'URL souhaitée
-        });
-    </script>
 </body>
 
 </html>
