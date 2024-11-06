@@ -18,9 +18,9 @@
 
 #### specifics markers
 * [etienne](./assets/images/pattern-Etienne.png) 
-* ![flag](./assets/images/pattern-flag.png) 
-* ![guepe](./assets/images/pattern-guepe.png)
-* ![homere](./assets/images/pattern-homere.png)
+* [flag](./assets/images/pattern-flag.png) 
+* [guepe](./assets/images/pattern-guepe.png)
+* [homere](./assets/images/pattern-homere.png)
 
 ### ressources
 * [Markers Generator](https://jeromeetienne.github.io/AR.js/three.js/examples/marker-training/examples/generator.html)
