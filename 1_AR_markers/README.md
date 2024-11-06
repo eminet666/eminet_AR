@@ -17,7 +17,7 @@
 * [Hiro marker ratio 0.75](./assets/images/hiro_0.75.png)
 
 #### specifics markers
-* ![etienne](./assets/images/pattern-Etienne.png) 
+* [etienne](./assets/images/pattern-Etienne.png) 
 * ![flag](./assets/images/pattern-flag.png) 
 * ![guepe](./assets/images/pattern-guepe.png)
 * ![homere](./assets/images/pattern-homere.png)
@@ -40,11 +40,9 @@
 
 * usage
     - utilisé en landscape (optimisé) (bugs en passant de l'un à l'autre)
-    - changement d'échelle sur les 3 axes en même temps
-    
+    - changement d'échelle sur les 3 axes en même temps   
     - taille du marker (règle empirique : doit être reconnaissable pour l'oeil humain). Marker de 3cm2 fonctionne à 40-50 cm
     - imprimer le marker (plus de difficultés sur écrans : effets de brillances, …)
-
     - logique d'événement : quand le marker est trouvé ou perdu, evénements souris (clic, mouse avec le curseur)
     - utiliser Safari sur iOS (problème accès webcam avec chrome _ bug google)
     - resolution par défaut de la webcam (640x480px)
