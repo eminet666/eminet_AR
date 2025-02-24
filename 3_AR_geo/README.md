@@ -1,11 +1,16 @@
-# AR geolocalisation (GPS)
+## AR geolocalisation (GPS)
 [article pour commencer](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)
 [examples](https://github.com/AR-js-org/AR.js/tree/master/aframe/examples/location-based)
 
 [tuto : location based app](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)
 [tuto : peakfinder app](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)
 
-# Localisation GPS (trouver votre position GPS)
+## ar.js
+* [geo_0_base](./geo_0_base.html)
+* [geo_1_precision](./geo_1_precision.html)
+* [geo_2_checkgps](./geo_2_checkgps.html)
+
+## Localisation GPS (trouver votre position GPS)
 * 2 programmes dans le répertoire 3_AR_geo
 - check-gps.html
 - myposition.html
@@ -21,10 +26,10 @@
 - [precision](https://naviguer.monsite-orange.fr/page-563a7dd767b23.html)
 - [précision](https://www.tuto-carto.fr/longitude-latitude-precision/)
 
-# components
+## components
 camera : [rotation-reader](https://aframe.io/docs/0.9.0/components/camera.html#reading-position-or-rotation-of-the-camera)
 
-# temp
+## temp
 https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564
 [issues](https://github.com/jeromeetienne/AR.js/issues)
 examples : https://github.com/kalwalt
