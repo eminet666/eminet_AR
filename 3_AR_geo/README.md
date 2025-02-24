@@ -5,7 +5,7 @@
 [tuto : location based app](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)
 [tuto : peakfinder app](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)
 
-## ar.js
+## ar.js new
 * [geo_0_base](./geo_0_base.html)
 * [geo_1_precision](./geo_1_precision.html)
 * [geo_2_checkgps](./geo_2_checkgps.html)
