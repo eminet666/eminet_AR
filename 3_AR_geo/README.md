@@ -9,6 +9,9 @@
 * [geo_0_base](./geo_0_base.html)
 * [geo_1_precision](./geo_1_precision.html)
 * [geo_2_checkgps](./geo_2_checkgps.html)
+* [geo_3_checkgps](./geo_3_test.html)
+
+<!-- https://ar-js-org.github.io/AR.js-Docs/location-based-aframe/ -->
 
 ## Localisation GPS (trouver votre position GPS)
 * 2 programmes dans le répertoire 3_AR_geo
