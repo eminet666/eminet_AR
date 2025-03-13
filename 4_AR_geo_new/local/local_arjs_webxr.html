@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR avec AR.js et WebXR</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <!-- <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.min.js"></script> -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script>
+        AFRAME.registerComponent("track-movement", {
+            init: function () {
+                this.cameraRig = document.getElementById("cameraRig");
+                this.originSet = false;
+                this.origin = new THREE.Vector3();
+
+                // Attendre que l'AR soit activé
+                this.el.sceneEl.addEventListener("enter-vr", () => {
+                    if (this.el.sceneEl.is("ar-mode") && !this.originSet) {
+                        let camera = this.cameraRig.object3D;
+                        this.origin.copy(camera.position);
+                        console.log("Origine fixée:", this.origin);
+                        this.originSet = true;
+                    }
+                });
+            },
+
+            tick: function () {
+                if (!this.originSet) return;
+
+                let camera = this.cameraRig.object3D;
+                let relativePos = new THREE.Vector3().subVectors(camera.position, this.origin);
+
+                // Débogage: Afficher la position relative du téléphone
+                console.log("Position relative:", relativePos);
+
+                // Mettre à jour la position du cube pour qu'il soit fixe dans l'espace
+                let cube = document.getElementById("cube");
+                cube.setAttribute("position", `0 1 -2`);
+            }
+        });
+
+        // Ajouter le composant de tracking à la scène
+        document.querySelector("a-scene").setAttribute("track-movement", "");
+    </script>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <!-- Caméra principale (position recalculée) -->
+        <a-entity id="cameraRig">
+            <a-camera position="0 1.6 0"></a-camera>
+        </a-entity>
+
+        <!-- Cube rouge à la position (0, 1, -2) -->
+        <a-box id="cube" position="0 1 -2" scale="0.5 0.5 0.5" color="red"></a-box>
+    </a-scene>
+</body>
+
+</html>

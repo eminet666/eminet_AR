@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR avec AR.js et WebXR</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+</head>
+
+<body style="margin: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
+
+    <!-- Scène AR avec GPS activé -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <!-- Caméra principale avec tracking GPS -->
+        <a-entity id="cameraRig" gps-camera rotation-reader track-movement>
+            <a-camera position="0 1.6 0"></a-camera>
+        </a-entity>
+
+        <!-- Cube rouge (fixe) -->
+        <a-box id="cube" position="0 1 -2" scale="0.5 0.5 0.5" color="red"></a-box>
+    </a-scene>
+
+    <!-- Affichage de la position GPS -->
+    <p id="positionDisplay" style="font-size: 18px; font-weight: bold; margin-top: 10px;">
+        Position : (En attente...)
+    </p>
+
+    <!-- Bouton pour fixer l'origine -->
+    <button id="fixOriginButton" style="margin-top: 10px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Fixer l'origine
+    </button>
+
+    <script>
+        AFRAME.registerComponent("track-movement", {
+            init: function () {
+                this.positionDisplay = document.getElementById("positionDisplay");
+                this.fixOriginButton = document.getElementById("fixOriginButton");
+                this.originSet = false;
+                this.origin = { latitude: null, longitude: null };
+                this.camera = this.el;
+                this.gpsReady = false;
+
+                // Vérifier si le GPS envoie des données
+                this.el.sceneEl.addEventListener("gps-camera-update-position", (event) => {
+                    this.gpsReady = true;
+                    console.log("GPS prêt avec position :", event.detail.position);
+                });
+
+                this.fixOriginButton.addEventListener("click", () => {
+                    if (!this.gpsReady) {
+                        alert("Le signal GPS n'est pas encore disponible. Veuillez patienter.");
+                        return;
+                    }
+                    let gpsData = this.camera.components["gps-camera"];
+                    if (gpsData && gpsData.currentCoords) {
+                        this.origin.latitude = gpsData.currentCoords.latitude;
+                        this.origin.longitude = gpsData.currentCoords.longitude;
+                        console.log("Origine GPS fixée:", this.origin);
+                        this.originSet = true;
+                        this.fixOriginButton.style.display = "none"; // Cacher le bouton après utilisation
+                    } else {
+                        alert("Impossible d'obtenir les coordonnées GPS. Réessayez.");
+                    }
+                });
+            },
+
+            tick: function () {
+                if (!this.originSet) return;
+
+                let gpsData = this.camera.components["gps-camera"];
+                if (!gpsData || !gpsData.currentCoords) return;
+
+                let latitude = gpsData.currentCoords.latitude;
+                let longitude = gpsData.currentCoords.longitude;
+
+                let deltaLat = latitude - this.origin.latitude;
+                let deltaLon = longitude - this.origin.longitude;
+
+                // Mise à jour de l'affichage de la position
+                this.positionDisplay.innerText = `Position : (ΔLat: ${deltaLat.toFixed(6)}, ΔLon: ${deltaLon.toFixed(6)})`;
+                console.log("Position relative GPS:", deltaLat, deltaLon);
+            }
+        });
+    </script>
+</body>
+
+</html>

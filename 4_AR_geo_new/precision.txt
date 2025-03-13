@@ -1,0 +1,47 @@
+PRECISION
+
+La circonférence de la Terre est d'environ 40,075 kilomètres à l'équateur.
+1 degré de latitude correspond à environ 111.32 kilomètres.
+
+Écart en latitude : La distance correspondant à un degré de latitude est relativement constante, 
+environ 111.32 kilomètres. 
+Cela est dû au fait que les lignes de latitude (parallèles) sont parallèles à l'équateur et ne convergent pas.
+
+Écart en longitude : La distance correspondant à un degré de longitude varie en fonction de la latitude.
+- l'équateur, un degré de longitude est également d'environ 111.32 kilomètres.
+- A mesure que l'on se rapproche des pôles, les lignes de longitude (méridiens) convergent, 
+réduisant ainsi la distance correspondant à un degré de longitude.
+- une latitude de 48.860675 degrés (proche de Paris), un degré de longitude correspond à environ 
+75 kilomètres.
+
+La Terre est approximativement une sphère, et les lignes de longitude convergent aux pôles. 
+Cela signifie que la distance entre deux lignes de longitude diminue à mesure que l'on s'éloigne de l'équateur. En revanche, les lignes de latitude restent parallèles, ce qui explique pourquoi un degré de latitude correspond à une distance constante.
+
+Calcul de la distance
++ 0.000001 degré : Latitude = 0,11132m nord, 0,075m est 
++ 0.00001  degré : Latitude = 1,1132m  nord, 0,75m  est => 1,1m, 0,75m
++ 0.0001   degré : Latitude = 11,132m  nord, 7,5m   est  
++ 0.001    degré : Latitude = 111,32m  nord, 75m    est 
++ 0.01     degré : Latitude = 1113,2m  nord, 750m   est  
++ 0.1      degré : Latitude = 11132m   nord, 7500m  est
++ 1        degré : Latitude = 111320m  nord, 75000m est => 111km, 75km
+
+Calcul pour 0,00001 degré de latitude :
+- La circonférence de la Terre est d'environ 40,075 kilomètres à l'équateur.
+- Un degré de latitude correspond à environ 111.32 kilomètres ( = 40075/360)
+- Donc pour 0.00001 degré, 111.32×0.00001=0.0011132 kilomètres = 1.1132 mètres
+
+Calcul pour 0,00001 degré de longitude 
+(le problème est que les fuseaux horaires sont le plus large à l'équateur et se rétrécissent vers les pôles)
+- À l'équateur, un degré de longitude correspond aussi à environ 111.32 kilomètres.
+- Conversion de la latitude en radians :latitude en radians=latitude en degrés×(π180)
+- Calcul de la distance d'un degré de longitude à la latitude donnée :
+        distance par degré de longitude = 111.32×cos⁡(latitude en radians) en kilomètres
+
+Exemple avec une latitude de 48.860675 degrés
+    Latitude en radians : 48.860675×(π180)≈0.85279548.860675×(180π​)≈0.852795
+    Distance par degré de longitude : 111.32×cos⁡(0.852795)≈73.23657111.32×cos(0.852795)≈73.23657 kilomètres
+    Distance pour 0.00001 degré de longitude : 73.23657×0.00001≈0.732473.23657×0.00001≈0.7324 kilomètres, 
+    soit environ 73.24 centimètres.
+
+

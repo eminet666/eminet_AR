@@ -5,6 +5,7 @@ prémabule (sécurité) : nécessite le protocole https (ok avec github.io)
 ### 1. [AR Markers detection](./1_AR_markers/README.md)
 ### 2. [AR Image Tracking](./2_AR_image_tracking/README.md)
 ### 3. [AR Geolocalisation](./3_AR_geo/README.md)
+### 4. [AR Geolocalisation NEW](./4_AR_geo_new/README.md)
 
 ### AR (Augmented Reality) _ référence
 [Accueil AR.js](https://github.com/AR-js-org)

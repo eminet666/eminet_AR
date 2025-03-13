@@ -1,0 +1,9 @@
+MODE SIMULATE : désactiver le GPS
+- iOS : réglages>confidentialités et sécurité>service de localisation : désactiver
+- android : 
+
+MODE GPS : activer le GPS
+- iOS : 
+1/ réglages>confidentialités et sécurité>service de localisation : activer
+2/ sélectionner le navigateur dans la liste et choisir : application active
+- android : 

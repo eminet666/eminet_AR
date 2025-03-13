@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mettre à Jour les Coordonnées GPS</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        #coordinates,
+        #average,
+        #deviation,
+        #previous,
+        #count {
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="coordinates">Chargement des coordonnées...</div>
+    <div id="average">Calcul de la moyenne...</div>
+    <div id="deviation">Calcul de l'écart...</div>
+    <div id="previous">Précédentes mesures:</div>
+    <div id="count">Nombre de mesures: 0</div>
+
+    <script>
+        // Tableau pour stocker les coordonnées
+        const coordinatesHistory = [];
+
+        // Fonction pour obtenir les coordonnées GPS
+        function getCoordinates() {
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const latitude = position.coords.latitude.toFixed(4);
+                    const longitude = position.coords.longitude.toFixed(4);
+
+                    // Ajouter les coordonnées au tableau
+                    coordinatesHistory.push({ latitude: parseFloat(latitude), longitude: parseFloat(longitude) });
+
+                    // Garder seulement les 10 dernières valeurs
+                    if (coordinatesHistory.length > 10) {
+                        coordinatesHistory.shift();
+                    }
+
+                    // Mettre à jour l'affichage des coordonnées
+                    updateCoordinatesDisplay();
+                }, function (error) {
+                    document.getElementById('coordinates').innerText = `Erreur: ${error.message}`;
+                });
+            } else {
+                document.getElementById('coordinates').innerText = 'La géolocalisation n\'est pas supportée par ce navigateur.';
+            }
+        }
+
+        // Fonction pour mettre à jour l'affichage des coordonnées
+        function updateCoordinatesDisplay() {
+            const lastCoord = coordinatesHistory[coordinatesHistory.length - 1];
+            document.getElementById('coordinates').innerText = `Dernière position: Latitude: ${lastCoord.latitude.toFixed(4)}, Longitude: ${lastCoord.longitude.toFixed(4)}`;
+
+            // Calculer et afficher la moyenne
+            const averageLat = calculateAverage(coordinatesHistory.map(coord => coord.latitude));
+            const averageLon = calculateAverage(coordinatesHistory.map(coord => coord.longitude));
+            document.getElementById('average').innerHTML = `<strong>Moyenne: Latitude: ${averageLat.toFixed(4)}, Longitude: ${averageLon.toFixed(4)}</strong>`;
+
+            // Calculer et afficher l'écart
+            const latDeviation = lastCoord.latitude - averageLat;
+            const lonDeviation = lastCoord.longitude - averageLon;
+            document.getElementById('deviation').innerText = `Écart: Latitude: ${latDeviation.toFixed(4)}, Longitude: ${lonDeviation.toFixed(4)}`;
+
+            // Afficher les 9 précédentes mesures
+            let previousText = 'Précédentes mesures:\n';
+            for (let i = coordinatesHistory.length - 2; i >= 0; i--) {
+                previousText += `Latitude: ${coordinatesHistory[i].latitude.toFixed(4)}, Longitude: ${coordinatesHistory[i].longitude.toFixed(4)}\n`;
+            }
+            document.getElementById('previous').innerText = previousText;
+
+            // Afficher le nombre de mesures
+            document.getElementById('count').innerText = `Nombre de mesures: ${coordinatesHistory.length}`;
+        }
+
+        // Fonction pour calculer la moyenne
+        function calculateAverage(values) {
+            const sum = values.reduce((acc, val) => acc + val, 0);
+            return sum / values.length;
+        }
+
+        // Mettre à jour les coordonnées toutes les 5 secondes
+        setInterval(getCoordinates, 5000);
+
+        // Obtenir les coordonnées initiales
+        getCoordinates();
+    </script>
+</body>
+
+</html>
