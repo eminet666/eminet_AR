@@ -34,3 +34,6 @@
 * [ref exemples](https://github.com/AR-js-org/AR.js/blob/master/aframe/examples/location-based/README.md)
 * [ref avoid shaking](./ref/avoid_shaking.html)
 * [ref show distances](./ref/show_distance.html)
+
+### tests
+* [test AR](./tests/README.md)
