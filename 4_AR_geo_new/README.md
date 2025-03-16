@@ -1,4 +1,4 @@
-## Test AR geo new
+## Test AR location
 
 ### infos
 * [précision](./precision.txt)
@@ -13,6 +13,12 @@
 ### tools
 * [tools gps](./tools/tools_gps.html)
 * [tools OSM](./tools/osm-my-position/index.html)
+* [tools OSM firstpos](./tools/osm-my-position_firstpos/)
+* [tools OSM addplaces](./tools/osm-my-position_addplaces/)
+* [tools OSM NSEO](./tools/osm-my-position_nseo/)
+* [tools url mypos map](https://www.mapsdirections.info/fr/coordonnees-sur-google-map.html)
+* [tools url alternative map](https://esri.github.io/html5-geolocation-tool-js/)
+* [tools url alternative mypos](./https://www.coordonnees-gps.fr/ma-position)
 
 ### gps
 * [gps simple](./gps/gps_simple.html)
