@@ -2,7 +2,7 @@
 
 // données
 let somePlaces = [
-  { lonlat:[2.373970, 48.860656] }, 	
+  // { lonlat:[2.373970, 48.860656] }, 	
 ]
 
 let firstGPSPosition = null;
