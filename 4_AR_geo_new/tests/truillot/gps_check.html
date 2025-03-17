@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR.js - Affichage GPS avec Geolocation API</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script type='text/javascript'
+        src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
+    <script type='text/javascript'
+        src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        p {
+            font-size: 1.5em;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            position: absolute;
+            top: 30px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Scène AR -->
+    <a-scene arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        renderer="antialias: true; alpha: true">
+        <!-- Caméra AR -->
+        <a-camera gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
+    </a-scene>
+
+    <!-- Paragraphe pour afficher la position GPS -->
+    <p id="gps">Initialisation...</p>
+
+    <script>
+        let mesureCount = 0; // Compteur de mesures GPS
+
+        // Fonction pour afficher la position GPS dans la console et sur la page
+        function updateGPSPosition(latitude, longitude) {
+            mesureCount++; // Incrémenter le compteur de mesures
+
+            // Affichage dans la console
+            console.log(`Latitude: ${latitude.toFixed(6)}, Longitude: ${longitude.toFixed(6)}, nb: ${mesureCount}`);
+
+            // Affichage sur la page
+            document.getElementById("gps").textContent = `Latitude: ${latitude.toFixed(6)}, Longitude: ${longitude.toFixed(6)}, nb: ${mesureCount}`;
+        }
+
+        // Fonction pour obtenir la position GPS avec la Geolocation API
+        function watchGPSPosition() {
+            if (navigator.geolocation) {
+                // Suivi de la position GPS avec watchPosition
+                navigator.geolocation.watchPosition(function (position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    updateGPSPosition(latitude, longitude);
+                }, function (error) {
+                    console.error("Erreur de géolocalisation : ", error.message);
+                    document.getElementById("gps").textContent = "Erreur de géolocalisation : " + error.message;
+                }, {
+                    enableHighAccuracy: true, // Activer la haute précision
+                    timeout: 10000, // Délai d'attente pour obtenir la position
+                    maximumAge: 0 // Pas de mise en cache de la position
+                });
+            } else {
+                console.error("La géolocalisation n'est pas supportée par ce navigateur.");
+                document.getElementById("gps").textContent = "Géolocalisation non supportée.";
+            }
+        }
+
+        // Démarrer la mise à jour de la position GPS
+        window.onload = function () {
+            watchGPSPosition(); // Commencer à suivre la position GPS
+        };
+    </script>
+</body>
+
+</html>

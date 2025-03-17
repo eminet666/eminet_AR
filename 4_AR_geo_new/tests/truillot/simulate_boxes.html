@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR.js A-Frame Location-based</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script type='text/javascript'
+        src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
+    <script type='text/javascript'
+        src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+</head>
+
+<body>
+    <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+        renderer='antialias: true; alpha: true'>
+        <a-camera gps-new-camera='gpsMinDistance: 5;simulateLatitude: 48.860675; simulateLongitude: 2.373996'></a-camera>
+        
+        <a-box color="red" gps-new-entity-place="latitude: 48.860685; longitude: 2.373996" 
+            depth="0.25" height="0.25" width="0.25" rotation="45 45 45" position="0 1 0"></a-box>
+
+        <a-box color="yellow" gps-new-entity-place="latitude: 48.860665; longitude: 2.373996" 
+            depth="0.25" height="0.25" width="0.25" rotation="45 45 45" position="0 1 0"></a-box>
+
+        <a-box color="blue" gps-new-entity-place="latitude: 48.860675; longitude: 2.374006" 
+            depth="0.25" height="0.25" width="0.25" rotation="45 45 45" position="0 1 0"></a-box>
+
+        <a-box color="green" gps-new-entity-place="latitude: 48.860675; longitude: 2.373986" 
+            depth="0.25" height="0.25" width="0.25" rotation="45 45 45" position="0 1 0"></a-box>
+<!-- 
+Init : lat: 48.860677, lon: 2.374005
+N: lat: 48.860777, lon: 2.374005
+E: lat: 48.860677, lon: 2.374105
+S: lat: 48.860577, lon: 2.374005
+O: lat: 48.860677, lon: 2.373905 -->
+
+    </a-scene>
+</body>
+
+</html>
