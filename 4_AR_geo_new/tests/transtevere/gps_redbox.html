@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR.js - GPS avec une boîte rouge</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script type='text/javascript'
+        src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
+    <script type='text/javascript'
+        src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .debug-info {
+            font-size: 1.2em;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 1000;
+            display: block;
+        }
+
+        #gps {
+            top: 20px;
+        }
+
+        #infogps {
+            top: 60px;
+        }
+
+        button {
+            position: absolute;
+            bottom: 30px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Scène AR -->
+    <a-scene arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        renderer="antialias: true; alpha: true">
+        <!-- Caméra AR -->
+        <a-camera gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
+
+        <!-- Boîte rouge -->
+        <a-box id="box1" color="red" height="5" width="5" depth="5"
+            gps-new-entity-place="latitude: 41.8799405; longitude: 12.4669416" 
+            ></a-box>
+
+        <!-- Ligne caméra -> boîte -->
+        <a-entity id="line"></a-entity>
+    </a-scene>
+
+    <!-- Affichage GPS et distance -->
+    <p id="gps" class="debug-info">Initialisation...</p>
+    <p id="infogps" class="debug-info">d: ...</p>
+
+    <!-- Bouton Toggle Debug -->
+    <button onclick="toggleDebug()">debug</button>
+
+    <script>
+        let cameraPosition = { latitude: null, longitude: null };
+        let measureCount = 0;
+        let debugVisible = true;
+
+        // Coordonnées de la boîte rouge
+        const box = { latitude: 41.8799405, longitude: 12.4669416, color: "red" };
+
+        // Fonction de calcul de distance (Haversine)
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3; // Rayon de la Terre en mètres
+            const φ1 = lat1 * Math.PI / 180;
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return R * c; // Distance en mètres
+        }
+
+        // Mise à jour de la distance et affichage
+        function updateDistance() {
+            if (cameraPosition.latitude === null || cameraPosition.longitude === null) return;
+
+            const distance = calculateDistance(cameraPosition.latitude, cameraPosition.longitude, box.latitude, box.longitude);
+            console.log(`Mesure ${measureCount}: d: ${distance.toFixed(2)}m`);
+            document.getElementById("infogps").textContent = `d: ${distance.toFixed(2)}m`;
+
+            updateLine();
+        }
+
+        // Tracer une ligne entre la caméra et la boîte
+        function updateLine() {
+            let lineEntity = document.getElementById("line");
+            lineEntity.innerHTML = ""; // Nettoyer l'ancienne ligne
+
+            let line = document.createElement("a-entity");
+            line.setAttribute("line", { start: "0 0 0", end: "0 0 -10", color: box.color });
+            line.setAttribute("gps-new-entity-place", `latitude: ${box.latitude}; longitude: ${box.longitude}`);
+            lineEntity.appendChild(line);
+        }
+
+        // Suivi de la position GPS
+        function watchGPSPosition() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(function (position) {
+                    measureCount++;
+                    cameraPosition.latitude = parseFloat(position.coords.latitude.toFixed(5));
+                    cameraPosition.longitude = parseFloat(position.coords.longitude.toFixed(5));
+
+                    console.log(`lat: ${cameraPosition.latitude}, lon: ${cameraPosition.longitude}, nb: ${measureCount}`);
+                    document.getElementById("gps").textContent = `lat: ${cameraPosition.latitude}, lon: ${cameraPosition.longitude}, nb: ${measureCount}`;
+
+                    updateDistance();
+                }, function (error) {
+                    console.error("Erreur de géolocalisation : ", error.message);
+                    document.getElementById("gps").textContent = "Erreur GPS : " + error.message;
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                });
+            } else {
+                console.error("La géolocalisation n'est pas supportée par ce navigateur.");
+                document.getElementById("gps").textContent = "Géolocalisation non supportée.";
+            }
+        }
+
+        // Fonction Toggle Debug
+        function toggleDebug() {
+            debugVisible = !debugVisible;
+            document.querySelectorAll('.debug-info').forEach(el => {
+                el.style.display = debugVisible ? "block" : "none";
+            });
+        }
+
+        // Démarrer le suivi GPS
+        window.onload = function () {
+            watchGPSPosition();
+        };
+    </script>
+</body>
+
+</html>

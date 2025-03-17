@@ -53,13 +53,19 @@
     <!-- Scène AR -->
     <a-scene arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
         renderer="antialias: true; alpha: true">
+        
+        <a-assets>
+            <a-asset-item id="glbModel" src="../antoine_hugo.glb"></a-asset-item>
+        </a-assets>
+        
         <!-- Caméra AR -->
         <a-camera gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
 
-        <!-- Boîte rouge -->
-        <a-box id="box1" color="red" height="5" width="5" depth="5"
-            gps-new-entity-place="latitude: 48.860984; longitude: 2.375357" 
-            ></a-box>
+        <!-- Model3D -->
+        <a-entity id="model3D" gltf-model="#glbModel" rotation="0 180 0" scale="1 1 1" model_loaded
+            shadow="cast:true; receive:true" animation-mixer position="0 0 -3 "
+            gps-entity-place="latitude: 48.833902; longitude: 2.295127;">
+        </a-entity>
 
         <!-- Ligne caméra -> boîte -->
         <a-entity id="line"></a-entity>
