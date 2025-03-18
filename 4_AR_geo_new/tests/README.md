@@ -24,7 +24,25 @@ O: lat: 48.860677, lon: 2.373905\
 
 ## test AR abaroma
 * [gps redbox](./abaroma/gps_redbox.html)
-* [gps 3Dmodel](./abaroma/gps_redbox.html)
+* [gps 3Dmodel](./abaroma/gps_3Dmodel.html)
+
+## test AR pantheon
+* [gps redbox](./pantheon/gps_redbox.html)
+* [gps 3Dmodel](./pantheon/gps_3Dmodel.html)
+
+## test AR campodeifiori
+* [gps redbox](./campodeifiori/gps_redbox.html)
+* [gps 3Dmodel](./campodeifiori/gps_3Dmodel.html)
+
+## test AR farnese
+* [gps redbox](./farnese/gps_redbox.html)
+* [gps 3Dmodel](./farnese/gps_3Dmodel.html)
+
+## test AR navonna
+* [gps redbox](./navonna/gps_redbox.html)
+* [gps 3Dmodel](./navonna/gps_3Dmodel.html)
+
+
 
 ### liens
 * [build your AR app](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)

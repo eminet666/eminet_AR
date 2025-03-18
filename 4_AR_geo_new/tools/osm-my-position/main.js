@@ -1,11 +1,12 @@
 // https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
 
 // données
-// let somePlaces = [
-//   { lonlat:[2.38396, 48.85065] },
-//   { lonlat:[2.38396, 48.85067] },
-//   { lonlat:[2.38398, 48.85067] }
-// ]
+let somePlaces = [
+  { lonlat:[12.473117, 41.898562] },
+  { lonlat:[12.471150, 41.895039] },
+  { lonlat:[12.471853, 41.895722] },
+  { lonlat:[12.476729, 41.899249] }
+]
 
 // ENSAAMA
 // let somePlaces = [
@@ -14,9 +15,10 @@
 //   { lonlat:[2.295819, 48.833491] }
 // ]
 
-let somePlaces = [
-  { lonlat:[2.373970, 48.860656] }, 	
-]
+// HOME
+// let somePlaces = [
+//   { lonlat:[2.373970, 48.860656] }, 	
+// ]
 
 function init() {
   let first = true;
