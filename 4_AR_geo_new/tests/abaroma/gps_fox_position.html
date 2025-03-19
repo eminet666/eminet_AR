@@ -53,13 +53,21 @@
     <!-- Scène AR -->
     <a-scene arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
         renderer="antialias: true; alpha: true">
+        
+        <a-assets>
+            <a-asset-item id="glbModel" src="../fox.glb"></a-asset-item>
+        </a-assets>
+        
         <!-- Caméra AR -->
         <a-camera gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
 
-        <!-- Boîte rouge -->
-        <a-box id="box1" color="red" height="5" width="5" depth="5"
-            gps-new-entity-place="latitude: 41.873794; longitude: 12.473733;" 
-            ></a-box>
+        <!-- Model3D -->
+        <a-entity id="model3D" gltf-model="#glbModel" 
+            rotation="0 60 0" position="0 0 -3"
+            scale="0.03 0.03 0.03"
+            animation-mixer="clip: Run"
+            gps-new-entity-place="latitude: 41.873794; longitude: 12.473733;">
+        </a-entity>
 
         <!-- Ligne caméra -> boîte -->
         <a-entity id="line"></a-entity>

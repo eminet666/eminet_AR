@@ -15,16 +15,21 @@ O: lat: 48.860677, lon: 2.373905\
 * [gps 3Dmodel](./truillot/gps_3Dmodel.html)
 <!-- * [simulate](./truillot/simulate_boxes.html) -->
 
+## test AR abaroma
+* [gps redbox](./abaroma/gps_redbox.html)
+* [gps 3Dmodel](./abaroma/gps_3Dmodel.html)
+* [gps 3Dmodel position](./abaroma/gps_3Dmodel_position.html)
+* [gps fox](./abaroma/gps_fox.html)
+* [gps fox position](./abaroma/gps_fox_position.html)
+* [gps 3Dmodel2](./abaroma/gps_3Dmodel2.html)
+* [gps 3Dmodel2 position](./abaroma/gps_3Dmodel2_position.html)
+
 ## test AR ensaama
 * [gps redbox](./ensaama/gps_3Dmodel.html)
 
 ## test AR trastevere
 * [gps redbox](./transtevere/gps_redbox.html)
 * [gps 3Dmodel](./transtevere/gps_3Dmodel.html)
-
-## test AR abaroma
-* [gps redbox](./abaroma/gps_redbox.html)
-* [gps 3Dmodel](./abaroma/gps_3Dmodel.html)
 
 ## test AR pantheon
 * [gps redbox](./pantheon/gps_redbox.html)
