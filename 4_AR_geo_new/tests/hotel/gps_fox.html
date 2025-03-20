@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR.js - GPS avec une boîte rouge</title>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
     <script type='text/javascript'
         src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
     <script type='text/javascript'
@@ -63,10 +64,10 @@
 
         <!-- Model3D -->
         <a-entity id="model3D" gltf-model="#glbModel" 
-            rotation="0 60 0" position="0 0 -3"
+            rotation="0 60 0"
             scale="0.03 0.03 0.03"
             animation-mixer="clip: Run"
-            gps-new-entity-place="latitude: 41.873794; longitude: 12.473733;">
+            gps-new-entity-place="latitude: 41.880947; longitude: 12.467218;">
         </a-entity>
 
         <!-- Ligne caméra -> boîte -->
@@ -86,7 +87,7 @@
         let debugVisible = true;
 
         // Coordonnées de la boîte rouge
-        const box = { latitude: 41.873794, longitude: 12.473733, color: "red" };
+        const box = { latitude: 41.880947, longitude: 12.467218, color: "red" };
 
         // Fonction de calcul de distance (Haversine)
         function calculateDistance(lat1, lon1, lat2, lon2) {

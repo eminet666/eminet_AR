@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR.js - GPS avec une boîte rouge</title>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
     <script type='text/javascript'
         src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
     <script type='text/javascript'
@@ -55,17 +56,25 @@
         renderer="antialias: true; alpha: true">
         
         <a-assets>
-            <a-asset-item id="glbModel" src="../antoine_hugo.glb"></a-asset-item>
+            <a-asset-item id="flamingo" src="../Flamingo.glb"></a-asset-item>
+            <a-asset-item id="parrot" src="../Parrot.glb"></a-asset-item>
+            <a-asset-item id="stork" src="../Stork.glb"></a-asset-item>            
         </a-assets>
         
         <!-- Caméra AR -->
         <a-camera gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
 
         <!-- Model3D -->
-        <a-entity id="model3D" gltf-model="#glbModel" 
-            rotation="0 180 0" scale="1 1 1"
-            animation-mixer="clip: pas_05;" 
-            gps-new-entity-place="latitude: 41.873794; longitude: 12.473733;">
+        <a-entity gps-new-entity-place="latitude: 41.880947; longitude: 12.467218;">
+            <a-entity id="flamingo" position="-6 1 -6" rotation="0 90 0" 
+                animation-mixer gltf-model="#flamingo-glb">
+            </a-entity>
+            <a-entity id="parrot" position="0 1 -6" rotation="0 90 0" 
+                animation-mixer gltf-model="#parrot-glb">
+            </a-entity>
+            <a-entity id="stork" position="5 1 -6" rotation="0 90 0" 
+                animation-mixer gltf-model="#stork-glb">
+            </a-entity>
         </a-entity>
 
         <!-- Ligne caméra -> boîte -->
@@ -85,7 +94,7 @@
         let debugVisible = true;
 
         // Coordonnées de la boîte rouge
-        const box = { latitude: 41.873794, longitude: 12.473733, color: "red" };
+        const box = { latitude: 41.880947, longitude: 12.467218, color: "red" };
 
         // Fonction de calcul de distance (Haversine)
         function calculateDistance(lat1, lon1, lat2, lon2) {
