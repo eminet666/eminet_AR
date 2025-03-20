@@ -62,23 +62,25 @@
         <a-camera gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
 
         <!-- Model3D -->
-        <a-entity id="3Dflamingo" 
-            gps-new-entity-place="latitude: 41.880947; longitude: 12.467218;"
+        <a-entity id="3Dmodels" gps-new-entity-place="latitude: 41.880947; longitude: 12.467218;">
+            <a-entity id="3Dflamingo" 
+            position="-4 1 -6"
             rotation="0 90 0" scale="5 5 5"
             gltf-model="#flamingo" animation-mixer>
         </a-entity>
 
         <a-entity id="3Dparrot" 
-            gps-new-entity-place="latitude: 41.880947; longitude: 12.467318;"
+            position="0 1 -6"
             rotation="0 90 0" scale="5 5 5"
             gltf-model="#parrot" animation-mixer>
         </a-entity>
 
         <a-entity id="3Dstork" 
-            gps-new-entity-place="latitude: 41.880947; longitude: 12.467118;"
+            position="4 1 -6"
             rotation="0 90 0" scale="5 5 5"
             gltf-model="#stork" animation-mixer>
-        </a-entity>        
+        </a-entity>  
+        </a-entity>         
 
         <!-- Ligne caméra -> boîte -->
         <a-entity id="line"></a-entity>

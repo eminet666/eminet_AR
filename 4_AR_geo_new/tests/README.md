@@ -20,7 +20,7 @@ O: lat: 48.860677, lon: 2.373905\
 * [gps 3Dmodel](./hotel/gps_3Dmodel.html)
 * [gps fox](./hotel/gps_fox.html)
 * [gps birds](./hotel/gps_birds.html)
-* [gps relative](./hotel/test_relative.html)
+* [gps birds relative](./hotel/gps_birds_relative.html)
 
 ## test AR abaroma
 * [gps redbox](./abaroma/gps_redbox.html)
