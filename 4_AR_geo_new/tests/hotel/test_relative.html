@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AR.js with GPS and Relative Positioning</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-gps-model-component/dist/aframe-gps-model-component.min.js"></script>
+  </head>
+  <body style="margin: 0; overflow: hidden">
+    <a-scene embedded arjs>
+      <!-- Entité placée à un point GPS avec gps-new-entity-place -->
+      <a-entity 
+        id="gpsEntity"
+        gps-new-entity-place="latitude: 41.880947; longitude: 12.467218;" 
+        scale="1 1 1">
+        <!-- Enfants positionnés relativement -->
+        <a-box position="2 0 0" color="blue" scale="1 1 1"></a-box>
+        <a-sphere position="0 2 0" color="red" scale="1 1 1"></a-sphere>
+      </a-entity>
+
+      <!-- Optionnellement, un modèle 3D pour l'entité GPS -->
+      <a-assets>
+        <a-asset-item id="myModel" src="model.glb"></a-asset-item>
+      </a-assets>
+    </a-scene>
+  </body>
+</html>
