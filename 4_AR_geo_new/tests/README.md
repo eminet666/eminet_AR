@@ -19,8 +19,17 @@ O: lat: 48.860677, lon: 2.373905\
 * [gps redbox](./hotel/gps_redbox.html)
 * [gps 3Dmodel](./hotel/gps_3Dmodel.html)
 * [gps fox](./hotel/gps_fox.html)
+* [gps fox relative](./hotel/gps_fox_relative.html)
 * [gps birds](./hotel/gps_birds.html)
 * [gps birds relative](./hotel/gps_birds_relative.html)
+
+## tzst AR abaroma new
+* [gps redbox](./abaroma/new/gps_fox.html)
+* [gps 3Dmodel](./abaroma/new/gps_3Dmodel.html)
+* [gps fox](./abaroma/new/gps_fox.html)
+* [gps fox relative](./abaroma/new/gps_fox_relative.html)
+* [gps birds](./abaroma/new/gps_birds.html)
+* [gps birds relative](./abaroma/new/gps_birds_relative.html)
 
 ## test AR abaroma
 * [gps redbox](./abaroma/gps_redbox.html)
