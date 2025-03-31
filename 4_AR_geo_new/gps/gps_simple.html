@@ -11,11 +11,13 @@
 <body>
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
         renderer='antialias: true; alpha: true'>
-        <a-camera gps-new-camera='gpsMinDistance: 5;latitude: 48.860675; longitude: 2.373996'></a-camera>
+
+        <a-camera id="camera" gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
+
         <a-box color="red" gps-new-entity-place="latitude: 48.860685; longitude: 2.373996" 
             depth="2" height="2" width="2" rotation="45 45 45" position="0 2 0"></a-box>
+            
     </a-scene>
 </body>
 
 </html>
-<!-- // OK de ma cuisine au nord -->
