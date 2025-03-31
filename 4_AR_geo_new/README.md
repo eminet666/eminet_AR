@@ -23,6 +23,7 @@
 ### gps
 * [gps simple](./gps/gps_simple.html)
 * [gps boxes](./gps/gps_boxes.html)
+* [gps boxes json spiti](./gps/gps_boxes_json_gps_spiti.html)
 
 ### simulate (désactiver gps sur le tel)
 * [simulate simple](./simulate/simulate_simple.html)

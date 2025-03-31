@@ -1,0 +1,24 @@
+{
+    "camera": {
+        "latitude": 48.860677,
+        "longitude": 2.373800
+    },
+    "entities": {
+        "box1": {
+            "latitude": 48.860777,
+            "longitude": 2.373800
+        },
+        "box2": {
+            "latitude": 48.860677,
+            "longitude": 2.373900
+        },
+        "box3": {
+            "latitude": 48.860577,
+            "longitude": 2.373800
+        },
+        "box4": {
+            "latitude": 48.860677,
+            "longitude": 2.373700
+        }
+    }
+}
