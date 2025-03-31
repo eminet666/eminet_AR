@@ -62,9 +62,10 @@
         <a-camera gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
 
         <!-- Model3D -->
-        <a-entity id="model3D" gltf-model="#glbModel" rotation="0 180 0" scale="1 1 1" model_loaded
-            shadow="cast:true; receive:true" animation-mixer position="0 0 -3 "
-            gps-entity-place="latitude: 41.875412; longitude: 12.470480;">
+        <a-entity id="model3D" gltf-model="#glbModel" 
+            rotation="0 180 0" scale="1 1 1"
+            animation-mixer="clip: pas_05;" 
+            gps-new-entity-place="latitude: 41.873794; longitude: 12.473733;">
         </a-entity>
 
         <!-- Ligne caméra -> boîte -->
@@ -84,7 +85,7 @@
         let debugVisible = true;
 
         // Coordonnées de la boîte rouge
-        const box = { latitude: 41.875412, longitude: 12.470480, color: "red" };
+        const box = { latitude: 41.873794, longitude: 12.473733, color: "red" };
 
         // Fonction de calcul de distance (Haversine)
         function calculateDistance(lat1, lon1, lat2, lon2) {

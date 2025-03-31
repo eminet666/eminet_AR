@@ -53,13 +53,19 @@
     <!-- Scène AR -->
     <a-scene arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
         renderer="antialias: true; alpha: true">
+        
+        <a-assets>
+            <a-asset-item id="glbModel" src="../antoine_hugo.glb"></a-asset-item>
+        </a-assets>
+        
         <!-- Caméra AR -->
         <a-camera gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
 
-        <!-- Boîte rouge -->
-        <a-box id="box1" color="red" height="5" width="5" depth="5"
-            gps-new-entity-place="latitude: 41.873794; longitude: 12.473733;" 
-            ></a-box>
+        <!-- Model3D -->
+        <a-entity id="model3D" gltf-model="#glbModel" rotation="0 180 0" scale="1 1 1" model_loaded
+            shadow="cast:true; receive:true" animation-mixer position="0 0 -3 "
+            gps-new-entity-place="latitude: 41.895039; longitude: 12.471150;">
+        </a-entity>
 
         <!-- Ligne caméra -> boîte -->
         <a-entity id="line"></a-entity>
@@ -78,7 +84,7 @@
         let debugVisible = true;
 
         // Coordonnées de la boîte rouge
-        const box = { latitude: 41.873794, longitude: 12.473733, color: "red" };
+        const box = { latitude: 41.895039, longitude: 12.471150, color: "red" };
 
         // Fonction de calcul de distance (Haversine)
         function calculateDistance(lat1, lon1, lat2, lon2) {

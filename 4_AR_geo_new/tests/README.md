@@ -15,6 +15,27 @@ O: lat: 48.860677, lon: 2.373905\
 * [gps 3Dmodel](./truillot/gps_3Dmodel.html)
 <!-- * [simulate](./truillot/simulate_boxes.html) -->
 
+## test AR hotel
+* [gps redbox](./hotel/gps_redbox.html)
+* [gps 3Dmodel](./hotel/gps_3Dmodel.html)
+* [gps fox](./hotel/gps_fox.html)
+* [gps fox relative](./hotel/gps_fox_relative.html)
+* [gps birds](./hotel/gps_birds.html)
+* [gps birds relative](./hotel/gps_birds_relative.html)
+
+## tzst AR abaroma new
+* [gps redbox](./abaroma/new/gps_fox.html)
+* [gps 3Dmodel](./abaroma/new/gps_3Dmodel.html)
+* [gps fox](./abaroma/new/gps_fox.html)
+* [gps fox relative](./abaroma/new/gps_fox_relative.html)
+* [gps birds](./abaroma/new/gps_birds.html)
+* [gps birds relative](./abaroma/new/gps_birds_relative.html)
+
+## test AR abaroma
+* [gps redbox](./abaroma/gps_redbox.html)
+* [gps 3Dmodel](./abaroma/gps_3Dmodel.html)
+* [gps fox](./abaroma/gps_fox.html)
+
 ## test AR ensaama
 * [gps redbox](./ensaama/gps_3Dmodel.html)
 
@@ -22,9 +43,23 @@ O: lat: 48.860677, lon: 2.373905\
 * [gps redbox](./transtevere/gps_redbox.html)
 * [gps 3Dmodel](./transtevere/gps_3Dmodel.html)
 
-## test AR abaroma
-* [gps redbox](./abaroma/gps_redbox.html)
-* [gps 3Dmodel](./abaroma/gps_redbox.html)
+## test AR pantheon
+* [gps redbox](./pantheon/gps_redbox.html)
+* [gps 3Dmodel](./pantheon/gps_3Dmodel.html)
+
+## test AR campodeifiori
+* [gps redbox](./campodeifiori/gps_redbox.html)
+* [gps 3Dmodel](./campodeifiori/gps_3Dmodel.html)
+
+## test AR farnese
+* [gps redbox](./farnese/gps_redbox.html)
+* [gps 3Dmodel](./farnese/gps_3Dmodel.html)
+
+## test AR navonna
+* [gps redbox](./navonna/gps_redbox.html)
+* [gps 3Dmodel](./navonna/gps_3Dmodel.html)
+
+
 
 ### liens
 * [build your AR app](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)
