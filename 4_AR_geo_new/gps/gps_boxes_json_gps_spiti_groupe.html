@@ -14,12 +14,17 @@
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
         renderer='antialias: true; alpha: true'>
 
-        <a-camera id="camera" gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
+        <a-assets>
+            <a-mixin id="boite" depth="2" height="2" width="2" rotation="45 45 45"></a-mixin>
+        </a-assets>
 
-        <a-box id="box1" color="red" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
-        <a-box id="box2" color="yellow" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
-        <a-box id="box3" color="blue" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
-        <a-box id="box4" color="green" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-camera id="camera" gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
+        <a-entity id="groupe">
+            <a-box id="box1" position="0 0 0" color="red" mixin="boite"></a-box>
+            <a-box id="box2" position="0 -2 0"  color="yellow" mixin="boite"></a-box>
+            <a-box id="box3" position="0 -4 0"  color="blue" mixin="boite"></a-box>
+            <a-box id="box4" position="0 2 0"  color="green" mixin="boite"></a-box>
+        </a-entity>
 
     </a-scene>
 
@@ -32,7 +37,7 @@
     <script src="./ar_tools.js"></script>
 
     <script>
-        loadPositions("positions.json");
+        loadPositions("positions_spiti_relative.json");
     </script>
 
 </body>
