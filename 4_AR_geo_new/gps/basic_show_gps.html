@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>AR.js A-Frame Location-based</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
+    <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+    <link rel="stylesheet" href="./ar_tools.css">
+
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs="sourceType: webcam;">
+        <a-camera id="camera" gps-new-camera="gpsTimeInterval: 5000;" ></a-camera>
+    </a-scene>
+
+    <!-- INTERFACE DEBUG -->
+    <div id="debug-info">
+        <p id="debugLatLon"></p>
+    </div>
+    <button id="debug-button" onclick="toggleDebug()">debug info</button>
+
+    <script src="./ar_tools.js"></script>
+
+    <!-- <script>
+        let debugVisible = true; // État initial : affiché
+
+        function toggleDebug() {
+            debugVisible = !debugVisible; // Inverse l'état
+
+            const debugElement = document.getElementById('debug-info');
+            if (debugElement) {
+                debugElement.style.display = debugVisible ? "block" : "none";
+                console.log(`Debug mode: ${debugVisible ? "ON" : "OFF"}`);
+            } else {
+                console.error("Element #debug-info not found!");
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const camera = document.querySelector("#camera");
+            const debugLatLon = document.querySelector("#debugLatLon");
+
+            if (camera) {
+                console.log("GPS Camera found, waiting for position updates...");
+                camera.addEventListener("gps-camera-update-position", (event) => {
+                    if (event.detail.position) {
+                        const { latitude, longitude } = event.detail.position;
+                        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+
+                        // Affichage dans le paragraphe latlon
+                        debugLatLon.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                    }
+                });
+            } else {
+                console.error("GPS Camera not found!");
+            }
+        });
+    </script> -->
+</body>
+
+</html>

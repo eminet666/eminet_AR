@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR.js A-Frame Location-based</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
+    <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+    <script src='./loadpositions.js'></script>
+    <link rel="stylesheet" href="./ar_tools.css">
+</head>
+
+<body>
+    <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+        renderer='antialias: true; alpha: true'>
+
+        <a-camera id="camera" gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
+
+        <a-box id="box1" color="red" gps-new-entity-place depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-box id="box2" color="yellow" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-box id="box3" color="blue" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-box id="box4" color="green" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+
+    </a-scene>
+
+    <!-- INTERFACE DEBUG -->
+    <div id="debug-info">
+        <p id="debugLatLon"></p>
+    </div>
+    <button id="debug-button" onclick="toggleDebug()">debug info</button>
+    
+    <script src="./ar_tools.js"></script>
+
+    <script>
+        loadPositions("positions.json");
+    </script>
+
+</body>
+
+</html>

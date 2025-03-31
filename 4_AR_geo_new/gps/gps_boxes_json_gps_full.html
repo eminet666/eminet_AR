@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR.js A-Frame Location-based</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
+    <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+</head>
+
+<body>
+    <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+        renderer='antialias: true; alpha: true'>
+
+        <a-camera id="camera" gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
+
+        <a-box id="box1" color="red" gps-new-entity-place depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-box id="box2" color="yellow" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-box id="box3" color="blue" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-box id="box4" color="green" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+
+    </a-scene>
+
+    <script>
+        let positionsData = {};
+        let isDataLoaded = false;
+
+        async function loadPositions(file) {
+            try {
+                const response = await fetch(file);
+                positionsData = await response.json();
+                isDataLoaded = true;
+                console.log("Positions JSON chargé avec succès");
+                console.log("Lecture du fichier JSON:");
+                Object.entries(positionsData.entities).forEach(([id, entity]) => {
+                    console.log(`${id} : lat=${entity.latitude}, lon=${entity.longitude}`);
+                });
+                updatePositions();
+            } catch (error) {
+                console.error("Erreur lors du chargement du fichier JSON:", error);
+            }
+        }
+
+        function updatePositions() {
+            if (!isDataLoaded) {
+                console.error("Les données GPS ne sont pas encore chargées.");
+                return;
+            }
+
+            // Vérification et mise à jour de la caméra
+            const camera = document.querySelector('#camera');
+            if (camera && positionsData.camera) {
+                camera.setAttribute('gps-new-camera', {
+                    gpsMinDistance: 5,
+                    simulateLatitude: positionsData.camera.latitude,
+                    simulateLongitude: positionsData.camera.longitude
+                }, true);
+                console.log(`Caméra mise à jour: lat=${positionsData.camera.latitude}, lon=${positionsData.camera.longitude}`);
+            } else {
+                console.error("La caméra n'a pas été trouvée ou les données GPS de la caméra sont absentes.");
+            }
+
+            // Vérification et mise à jour des entités
+            Object.entries(positionsData.entities).forEach(([id, entityData]) => {
+                const entity = document.querySelector(`#${id}`);
+                if (entity) {
+                    entity.setAttribute('gps-new-entity-place', {
+                        latitude: entityData.latitude,
+                        longitude: entityData.longitude
+                    }, true);
+
+                    // tests
+                    // entity.setAttribute('material', 'color', 'yellow');
+                    // entity.setAttribute('position', { x: 1, y: 2, z: 3 });
+                    // entity.setAttribute('rotation', { x: 90, y: 90, z: 90 });
+
+                    // Affichage dans la console des attributs de l'entité
+                    // console.log(`Attributs de l'entité ${id}:`);
+                    // console.log(`GPS Place: `, entity.getAttribute('gps-new-entity-place')); 
+                    // console.log(`Rotation: `, entity.getAttribute('rotation'));
+                    // console.log(`Couleur: `, entity.getAttribute('material').color);
+                    // console.log(`Position GPS: lat=${entityData.latitude}, lon=${entityData.longitude}`);
+
+                    console.log(`Position mise à jour pour ${id}: lat=${entityData.latitude}, lon=${entityData.longitude}`);
+                    // A CORRIGER console.log(`Attributs de l'entité ${id}: ${entityData}`);
+                } else {
+                    console.error(`L'entité avec l'ID '${id}' n'a pas été trouvée.`);
+                }
+            });
+        }
+
+        loadPositions("positions.json");
+    </script>
+
+</body>
+
+</html>
+
+<!-- une questione private -->
