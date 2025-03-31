@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
         camera.addEventListener("gps-camera-update-position", (event) => {
             if (event.detail.position) {
                 const { latitude, longitude } = event.detail.position;
-                console.log(`lat: ${latitude.toFix(5)}, lon: ${longitude.toFix(5)}`);
+                // console.log(`lat: ${latitude.toFixed(5)}, lon: ${longitude.toFixed(5)}`);
 
                 // Affichage dans le paragraphe latlon
-                debugLatLon.textContent = `lat: ${latitude.toFix(5)}, lon: ${longitude.toFix(5)}`;
+                debugLatLon.textContent = `lat: ${latitude.toFixed(5)}, lon: ${longitude.toFixed(5)}`;
             }
         });
     } else {
