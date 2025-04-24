@@ -27,7 +27,7 @@
 * [gps boxes json spiti groupe](./gps/gps_boxes_json_gps_spiti_groupe.html)
 
 ### lentas
-* [json](./gps/lentas/gps_boxes_json_gps_lentas.html)
+* [json3](./gps/lentas/gps_boxes_json_gps_lentas.html)
 
 ### simulate (désactiver gps sur le tel)
 * [simulate simple](./simulate/simulate_simple.html)

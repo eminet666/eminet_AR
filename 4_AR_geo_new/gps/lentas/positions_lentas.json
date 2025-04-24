@@ -13,8 +13,12 @@
             "longitude": 24.919966
         },
         "thalassa": {
-            "latitude": 34.930071,
+            "latitude": 34.930571,
             "longitude": 24.923199
-        }
+        },
+        "bouno": {
+            "latitude": 34.932282,
+            "longitude": 24.925039
+        }       
     }
 }
