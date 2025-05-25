@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afficher la Console dans une Balise P</title>
+    <style>
+        #console-output {
+            white-space: pre;
+            overflow-y: auto;
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="console-output"></p>
+
+    <script>
+        // Tableau pour stocker les messages
+        const messages = [];
+
+        // Fonction pour ajouter un message au tableau et mettre à jour la balise p
+        function logToParagraph(message) {
+            // Ajouter le message au tableau
+            messages.unshift(message);
+
+            // Limiter le nombre de messages à 10
+            if (messages.length > 10) {
+                messages.pop();
+            }
+
+            // Mettre à jour la balise p avec les messages
+            const consoleOutput = document.getElementById('console-output');
+            consoleOutput.textContent = messages.join('\n');
+        }
+
+        // Remplacer console.log par notre fonction personnalisée
+        console.log = function (message) {
+            logToParagraph(message);
+        };
+
+        // Utiliser setInterval pour envoyer un message toutes les secondes
+        let counter = 0;
+        const intervalId = setInterval(() => {
+            console.log("Message " + counter);
+            counter++;
+
+            // Arrêter l'intervalle après 15 messages pour éviter une boucle infinie
+            if (counter > 15) {
+                clearInterval(intervalId);
+            }
+        }, 1000); // 1000 millisecondes = 1 seconde
+    </script>
+</body>
+
+</html>

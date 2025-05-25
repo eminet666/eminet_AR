@@ -1,0 +1,77 @@
+<!-- https://ar-js-org.github.io/AR.js-Docs/location-based-aframe/ -->
+<!-- https://ar-js-org.github.io/AR.js-Docs/location-based/ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR.js A-Frame Location-based</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <!-- <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script> -->
+    <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+    <link rel="stylesheet" href="./ar_tools.css">
+    <style>
+        #console-output {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            white-space: pre;
+            overflow-y: auto;
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 1000;
+            /* Ensure it is on top of other elements */
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Semi-transparent background */
+        }
+    </style>
+</head>
+
+<body>
+    <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+        renderer='antialias: true; alpha: true'>
+
+        <a-camera id="camera" gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
+
+        <a-box color="red" depth="10" height="10" width="10" rotation="45 45 45"
+            position="0 10 0"
+            gps-new-entity-place="latitude: 48.860777; longitude: 2.374005"></a-box>
+    </a-scene>
+
+    <!-- INTERFACE DEBUG -->
+    <div id="debug-info">
+        <p id="debugLatLon"></p>
+    </div>
+    <p id="console-output"></p>
+    <button id="debug-button" onclick="toggleDebug()">debug info</button>
+
+    <script src="ar_tools.js"></script>
+
+    <script>
+        // Tableau pour stocker les messages
+        const messages = [];
+
+        // Fonction pour ajouter un message au tableau et mettre à jour la balise p
+        function logToParagraph(message) {
+            // Ajouter le message au tableau
+            messages.unshift(message);
+
+            // Limiter le nombre de messages à 10
+            if (messages.length > 10) {
+                messages.pop();
+            }
+
+            // Mettre à jour la balise p avec les messages
+            const consoleOutput = document.getElementById('console-output');
+            consoleOutput.textContent = messages.join('\n');
+        }
+
+        // Remplacer console.log par notre fonction personnalisée
+        console.log = function (message) {
+            logToParagraph(message);
+        };
+    </script>    
+
+</body>
+
+</html>

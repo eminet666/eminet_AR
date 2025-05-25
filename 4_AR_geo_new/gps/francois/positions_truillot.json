@@ -1,0 +1,20 @@
+{
+    "entities": {
+        "rouge": {
+            "latitude": 48.860777,
+            "longitude": 2.374005
+        },
+        "jaune": {
+            "latitude": 48.860677,
+            "longitude": 2.374105
+        },
+        "bleu": {
+            "latitude": 48.860577,
+            "longitude": 2.374005
+        },
+        "vert": {
+            "latitude": 48.860677,
+            "longitude": 2.373905
+        }       
+    }
+}
