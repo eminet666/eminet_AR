@@ -1,5 +1,3 @@
-<!-- https://ar-js-org.github.io/AR.js-Docs/location-based-aframe/ -->
-<!-- https://ar-js-org.github.io/AR.js-Docs/location-based/ -->
 <!DOCTYPE html>
 <html>
 
@@ -8,6 +6,7 @@
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
     <script src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+    <script src='./utils/loadpositions.js'></script>
     <link rel="stylesheet" href="./utils/ar_tools.css">
 </head>
 
@@ -17,9 +16,11 @@
 
         <a-camera id="camera" gps-new-camera="gpsTimeInterval: 5000;"></a-camera>
 
-        <a-box color="red" depth="10" height="10" width="10" rotation="45 45 45"
-            position="0 10 0"
-            gps-new-entity-place="latitude: 48.860777; longitude: 2.374005"></a-box>
+        <a-box id="rouge" color="red" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-box id="jaune" color="yellow" depth="50" height="50" width="50" rotation="45 45 45"></a-box>
+        <a-box id="bleu" position="0 0 0" color="blue" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+        <a-box id="vert" color="green" depth="2" height="2" width="2" rotation="45 45 45"></a-box>
+
     </a-scene>
 
     <!-- INTERFACE DEBUG -->
@@ -27,8 +28,12 @@
         <p id="showLatLon"></p>
     </div>
     <button id="debug-button" onclick="toggleDebug()">debug info</button>
-
+    
     <script src="./utils/ar_tools.js"></script>
+
+    <script>
+        loadPositions("./assets/positions/positions_truillot.json");
+    </script>
 
 </body>
 

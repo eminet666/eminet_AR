@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#debug-info {
+    font-size: 1.2em;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px 10px;
+    position: absolute;
+    top: 10px;
+    z-index: 1000;
+    display: block;
+}
+
+#console-button {
+    position: fixed;
+    bottom: 30px;
+    padding: 10px 10px;
+    font-size: 1em;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#console-output {
+    white-space: pre;
+    overflow: visible;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    max-height: none;
+    display: none;
+    /* Masquer initialement */
+}

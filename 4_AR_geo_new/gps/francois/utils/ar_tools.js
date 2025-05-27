@@ -1,4 +1,3 @@
-
 let debugVisible = true; // État initial : affiché
 let nbPositions = 0; // Nombre de positions chargées
 
@@ -16,7 +15,7 @@ function toggleDebug() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const camera = document.querySelector("#camera");
-    const debugLatLon = document.querySelector("#debugLatLon");
+    const showLatLon = document.querySelector("#showLatLon");
 
     if (camera) {
         console.log("GPS Camera found, waiting for position updates...");
@@ -28,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log(`lat: ${latitude.toFixed(5)}, lon: ${longitude.toFixed(5)}`);
 
                 // Affichage dans le paragraphe latlon
-                debugLatLon.textContent = `lat: ${latitude.toFixed(5)}, lon: ${longitude.toFixed(5)}, nb: ${nbPositions}`;
+                showLatLon.textContent = `lat: ${latitude.toFixed(5)}, lon: ${longitude.toFixed(5)}, nb: ${nbPositions}`;
             }
         });
     } else {
