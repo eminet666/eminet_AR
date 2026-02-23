@@ -6,8 +6,8 @@
     <title>Carte des Points AR</title>
 
     <!-- OpenLayers -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol/7.4.0/ol.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol/7.4.0/ol.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.4.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@7.4.0/dist/ol.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
@@ -15,12 +15,11 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg: #0d0f14;
-            --surface: #161a23;
-            --border: #2a2f3e;
+            --bg: #f4f6f9;
+            --surface: #ffffff;
+            --border: #dde1ea;
             --accent: #e63946;
-            --accent2: #f4a261;
-            --text: #e8eaf0;
+            --text: #1a1d2e;
             --muted: #6b7280;
         }
 
@@ -42,6 +41,7 @@
             border-bottom: 1px solid var(--border);
             background: var(--surface);
             z-index: 10;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
 
         header h1 {
@@ -49,16 +49,17 @@
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
+            color: var(--text);
         }
 
         header span {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             color: var(--accent);
-            background: rgba(230,57,70,0.12);
+            background: rgba(230,57,70,0.08);
             padding: 3px 10px;
             border-radius: 4px;
-            border: 1px solid rgba(230,57,70,0.3);
+            border: 1px solid rgba(230,57,70,0.25);
         }
 
         .layout {
@@ -67,7 +68,6 @@
             overflow: hidden;
         }
 
-        /* Panneau latéral */
         .sidebar {
             width: 280px;
             min-width: 280px;
@@ -104,7 +104,7 @@
         }
 
         .point-item:hover, .point-item.active {
-            background: rgba(230,57,70,0.08);
+            background: rgba(230,57,70,0.06);
         }
 
         .point-marker-icon {
@@ -120,6 +120,7 @@
             font-weight: 700;
             font-size: 0.88rem;
             margin-bottom: 4px;
+            color: var(--text);
         }
 
         .point-coords {
@@ -129,13 +130,8 @@
             line-height: 1.6;
         }
 
-        /* Carte */
-        #map {
-            flex: 1;
-            background: #1a1d26;
-        }
+        #map { flex: 1; }
 
-        /* Popup */
         .ol-popup {
             position: absolute;
             background: var(--surface);
@@ -147,6 +143,7 @@
             pointer-events: none;
             transform: translate(-50%, -110%);
             font-size: 0.82rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
         }
 
         .ol-popup-title {
@@ -162,7 +159,6 @@
             line-height: 1.7;
         }
 
-        /* Contrôles OL */
         .ol-zoom { top: 16px; right: 16px; left: auto; }
         .ol-zoom button {
             background: var(--surface);
@@ -173,7 +169,7 @@
             width: 32px;
             height: 32px;
         }
-        .ol-zoom button:hover { background: var(--border); }
+        .ol-zoom button:hover { background: var(--bg); }
         .ol-attribution { display: none; }
     </style>
 </head>
@@ -192,7 +188,6 @@
     <div id="map"></div>
 </div>
 
-<!-- Popup -->
 <div id="popup" class="ol-popup" style="display:none;">
     <div class="ol-popup-title" id="popup-title"></div>
     <div class="ol-popup-coords" id="popup-coords"></div>
@@ -204,25 +199,17 @@
 // ─────────────────────────────────────────
 let somePlaces = [
     { name: "Point 1", lonlat: [0.712889, 47.409500] },
-    { name: "Point 2", lonlat: [0.710982, 47.309539] }
+    { name: "Point 2", lonlat: [0.710978, 47.409539] }
 ];
 
 // ─────────────────────────────────────────
-//  Icône marker (base64)
-// ─────────────────────────────────────────
-const MARKER_B64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAZCAYAAADe1WXtAAAABHNCSVQICAgIfAhkiAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHrSURBVEjHrdW9a1NxFMbxT9qmNWmaRqlFhE6CLuIL1DcUHDqJm/0HBEUk3RQXpW7dXdysWlAEHQSlo4IoIoggFCko4lJEEaq296aNtvk5JIG2NGmSOjzbuV9+9zzPOUcIwUbCvg7uYGtD9RsVdDCSJh7iT5ofONEyFLkeJvcw/5EQCE8JvRTSjKG9KSiOdvMtz0KxAqzqK+E4cZZ3GNgQikQXV7PET9bAVmqZMMbfNPM4UxOK/iwvB5mfqQNcqTeEHcQ93EVqFRRDaWZHKS41CKzqN2GYQoYv2BtCoJNrvRRe1PnwPeFGpZ+1am5TSrGQ5CJc2E1UqlH8nJCuKFN5WS3wIIUko5DIMjVOab3CEUIbASFLeFwD+Kgct09or/b0cI54rsWXRoQ+Yhxb5X4PDy9TbKWnlyj28mC9SO1MEX9u0v0P5b+YQ9+64e/i+iniZqBHiJLk603Ulm6+P2sQeI9Slmm01Z19DO8iWmogdLmyOYcaWihZ3t5kuR40z2KWiWa21P4eCj/rTFjFnG1N7dMME3kW1wJLhANE7ZxvZUlvTxFNr4GOl82ZQqKlc9LJlZNEVeBseVRjHGz5RiGZYWayAj3HQoZbmz58OD1A9JqQ4hdym4ZWIvaqn8UEZ//Lia5GrJP79cxZqX+cR1gC9S9TwAAAAABJRU5ErkJggg==';
-
-// ─────────────────────────────────────────
-//  Carte OpenLayers (fond OpenStreetMap)
+//  Carte — fond OSM clair
 // ─────────────────────────────────────────
 const map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.Tile({
-            source: new ol.source.XYZ({
-                url: 'https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-                attributions: '© CartoDB'
-            })
+            source: new ol.source.OSM()
         })
     ],
     view: new ol.View({
@@ -233,12 +220,12 @@ const map = new ol.Map({
 });
 
 // ─────────────────────────────────────────
-//  Couche de marqueurs
+//  Marqueurs — marker.png dans le même répertoire
 // ─────────────────────────────────────────
 const markerStyle = new ol.style.Style({
     image: new ol.style.Icon({
-        src: MARKER_B64,
-        anchor: [0.5, 1],
+        src: 'marker.png',
+        anchor: [0.5, 1],   // pointe en bas, centré horizontalement
         scale: 1.4
     })
 });
@@ -304,7 +291,8 @@ map.on('click', (e) => {
 //  Panneau latéral
 // ─────────────────────────────────────────
 const list = document.getElementById('points-list');
-document.getElementById('point-count').textContent = `${somePlaces.length} point${somePlaces.length > 1 ? 's' : ''}`;
+document.getElementById('point-count').textContent =
+    `${somePlaces.length} point${somePlaces.length > 1 ? 's' : ''}`;
 
 somePlaces.forEach((place, i) => {
     const name = place.name || `Point ${i + 1}`;
@@ -312,7 +300,7 @@ somePlaces.forEach((place, i) => {
     item.className = 'point-item';
     item.dataset.name = name;
     item.innerHTML = `
-        <img class="point-marker-icon" src="${MARKER_B64}" alt="marker">
+        <img class="point-marker-icon" src="marker.png" alt="marker">
         <div class="point-info">
             <div class="point-name">${name}</div>
             <div class="point-coords">lon : ${place.lonlat[0].toFixed(6)}<br>lat : ${place.lonlat[1].toFixed(6)}</div>
@@ -335,7 +323,7 @@ function highlightSidebarItem(name) {
     if (target) target.classList.add('active');
 }
 
-// Ajustement auto de la vue pour inclure tous les points
+// Vue ajustée pour englober tous les points
 if (features.length > 1) {
     const extent = vectorLayer.getSource().getExtent();
     map.getView().fit(extent, { padding: [60, 60, 60, 340], maxZoom: 16, duration: 800 });
