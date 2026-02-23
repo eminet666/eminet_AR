@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>OpenLayers Demo</title>
+  <style type="text/css">
+    html,
+    body,
+    #basicMap {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    p {
+      margin: 0;
+      position: absolute;
+      top: 30px;
+      z-index: 1000;
+      background-color: white;
+      font-size: 2em;
+    }
+
+    #basicMap {
+      position: relative;
+      flex-grow: 1;
+    }
+  </style>
+  <script src="OpenLayers.debug.js"></script>
+</head>
+
+<body>
+  <p id="gps">initialisation...</p>
+  <div id="basicMap"></div>
+  <script src="main.js"></script>
+</body>
+
+</html>
+
+
+<!-- openlayers : https://openlayers.org/download/ -->
