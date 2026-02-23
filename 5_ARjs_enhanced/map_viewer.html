@@ -20,7 +20,7 @@
             --text: #1a1d2e;
             --muted: #8a929f;
             --device: #4285F4;
-            --panel-h: 44px;
+            --panel-h: 50px;
         }
 
         html, body {
@@ -57,8 +57,8 @@
         .row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 6px 16px;
+            gap: 12px;
+            padding: 6px 18px;
             height: var(--panel-h);
             border-bottom: 1px solid var(--border);
             cursor: pointer;
@@ -68,23 +68,25 @@
         .row:last-child { border-bottom: none; }
         .row:active, .row.active { background: rgba(230,57,70,0.05); }
 
-        .row img { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; }
+        .row img { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
 
         .row-name {
-            font-size: 0.78rem; font-weight: 700;
+            font-size: 0.88rem;
+            font-weight: 700;
             color: var(--text);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             flex: 1;
         }
 
         .row-coords {
-            font-size: 0.65rem; color: var(--muted);
+            font-size: 0.74rem;
+            color: var(--muted);
             text-align: right; white-space: nowrap; flex-shrink: 0;
         }
 
         .row.device .row-name { color: var(--device); }
 
-        /* ── Badges haut ── */
+        /* ── Badges haut droite ── */
         #badges {
             position: absolute;
             top: 12px; right: 12px;
@@ -98,23 +100,22 @@
         .badge {
             background: var(--surface);
             border-radius: 20px;
-            padding: 5px 10px;
-            font-size: 0.65rem;
+            padding: 6px 12px;
+            font-size: 0.74rem;
             color: var(--muted);
             box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             white-space: nowrap;
         }
 
-        .badge.active   { color: #22c55e; }
-        .badge.compass  { color: var(--muted); }
+        .badge.active         { color: #22c55e; }
         .badge.compass.active { color: #f59e0b; }
 
-        /* ── Bouton boussole (coin haut gauche, sous les zooms) ── */
+        /* ── Bouton boussole ── */
         #compass-btn {
             position: absolute;
             top: 96px; left: 12px;
             z-index: 20;
-            width: 34px; height: 34px;
+            width: 36px; height: 36px;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -123,7 +124,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             transition: background 0.15s;
         }
 
@@ -132,22 +133,21 @@
             border-color: #f59e0b;
         }
 
-        /* Rose des vents — indicateur de rotation sur la carte */
+        /* ── Indicateur nord SVG ── */
         #north-indicator {
             position: absolute;
             top: 96px; right: 12px;
             z-index: 20;
-            width: 34px; height: 34px;
-            display: none;
+            width: 52px; height: 52px;
+            display: none;              /* caché par défaut */
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.2));
-            transform-origin: center;
+            transform-origin: 50% 50%;
             pointer-events: none;
         }
 
-        #north-indicator.visible { display: flex; }
+        /* Affiché seulement quand la boussole est active */
+        #north-indicator.on { display: flex; }
 
         /* ── Popup ── */
         .ol-popup {
@@ -155,18 +155,18 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-left: 3px solid var(--accent);
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 6px;
-            min-width: 150px;
+            min-width: 160px;
             pointer-events: none;
             transform: translate(-50%, -115%);
-            font-size: 0.72rem;
+            font-size: 0.82rem;
             box-shadow: 0 4px 16px rgba(0,0,0,0.12);
         }
 
-        .ol-popup b { display: block; margin-bottom: 3px; color: var(--accent); font-size: 0.75rem; }
+        .ol-popup b    { display: block; margin-bottom: 4px; color: var(--accent); font-size: 0.86rem; }
         .ol-popup.device b { color: var(--device); }
-        .ol-popup span { color: var(--muted); line-height: 1.6; }
+        .ol-popup span { color: var(--muted); line-height: 1.7; font-size: 0.78rem; }
 
         /* ── Contrôles OL ── */
         .ol-zoom { top: 12px; left: 12px; right: auto; }
@@ -175,29 +175,11 @@
             color: var(--text);
             border: 1px solid var(--border);
             border-radius: 6px;
-            width: 34px; height: 34px;
-            font-size: 1.1rem;
+            width: 36px; height: 36px;
+            font-size: 1.15rem;
             box-shadow: 0 1px 4px rgba(0,0,0,0.08);
         }
         .ol-attribution { display: none; }
-
-        /* Bouton iOS autorisation */
-        #ios-btn {
-            display: none;
-            position: absolute;
-            bottom: 50%; left: 50%;
-            transform: translate(-50%, 50%);
-            z-index: 30;
-            background: #f59e0b;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 14px 24px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-        }
     </style>
 </head>
 <body>
@@ -207,14 +189,33 @@
 <!-- Badges GPS + boussole -->
 <div id="badges">
     <span class="badge" id="gps-badge">⏳ GPS…</span>
-    <span class="badge compass" id="compass-badge">🧭 boussole…</span>
+    <span class="badge compass" id="compass-badge">🧭 inactif</span>
 </div>
 
-<!-- Bouton toggle boussole -->
+<!-- Bouton boussole -->
 <button id="compass-btn" title="Orienter selon le nord">🧭</button>
 
-<!-- Indicateur nord (flèche qui tourne) -->
-<div id="north-indicator" class="visible">🔺</div>
+<!--
+    Indicateur nord : rose des vents SVG.
+    La DIV tourne via JS (rotate). Le N pointe toujours vers le nord réel.
+    Classe "on" = visible (boussole active).
+-->
+<div id="north-indicator">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52">
+        <!-- Fond blanc -->
+        <circle cx="26" cy="26" r="24" fill="white" stroke="#e2e6ee" stroke-width="1.5"/>
+        <!-- Demi-flèche nord (rouge) -->
+        <polygon points="26,3 31,26 26,21 21,26" fill="#e63946"/>
+        <!-- Demi-flèche sud (gris clair) -->
+        <polygon points="26,49 21,26 26,31 31,26" fill="#c8cdd8"/>
+        <!-- Lettre N en rouge -->
+        <text x="26" y="13" text-anchor="middle"
+              font-family="sans-serif" font-size="8" font-weight="bold"
+              fill="#e63946">N</text>
+        <!-- Point central -->
+        <circle cx="26" cy="26" r="2.5" fill="#1a1d2e"/>
+    </svg>
+</div>
 
 <!-- Popup -->
 <div id="popup" class="ol-popup" style="display:none;">
@@ -232,9 +233,6 @@
     </div>
     <div id="points-list"></div>
 </div>
-
-<!-- Bouton iOS autorisation capteurs -->
-<button id="ios-btn">🧭 Autoriser la boussole</button>
 
 <script>
 // ─────────────────────────────────────────
@@ -301,7 +299,7 @@ if ('geolocation' in navigator) {
             const lat = pos.coords.latitude;
             deviceFeature.setGeometry(new ol.geom.Point(ol.proj.fromLonLat([lon, lat])));
             deviceCoords.textContent = `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
-            gpsBadge.textContent = '● GPS';
+            gpsBadge.textContent = '● GPS actif';
             gpsBadge.classList.add('active');
         },
         (err) => { gpsBadge.textContent = '✗ GPS'; console.error(err); },
@@ -317,24 +315,19 @@ deviceRow.addEventListener('click', () => {
 });
 
 // ─────────────────────────────────────────
-//  BOUSSOLE — orientation magnétique
+//  BOUSSOLE
 // ─────────────────────────────────────────
-const compassBadge    = document.getElementById('compass-badge');
-const compassBtn      = document.getElementById('compass-btn');
-const northIndicator  = document.getElementById('north-indicator');
-const iosBtn          = document.getElementById('ios-btn');
+const compassBadge   = document.getElementById('compass-badge');
+const compassBtn     = document.getElementById('compass-btn');
+const northIndicator = document.getElementById('north-indicator');
 
-let compassActive  = false;   // boussole activée par l'utilisateur
-let currentHeading = null;    // dernier cap connu (degrés)
-let headingBuffer  = [];      // lissage sur 5 valeurs
-const BUFFER_SIZE  = 5;
+let compassActive = false;
+let headingBuffer = [];
+const BUFFER_SIZE = 5;
 
-// Lissage circulaire du cap (évite les sauts 359° → 1°)
-function smoothHeading(newVal) {
-    headingBuffer.push(newVal);
+function smoothHeading(val) {
+    headingBuffer.push(val);
     if (headingBuffer.length > BUFFER_SIZE) headingBuffer.shift();
-
-    // Moyenne circulaire
     let sinSum = 0, cosSum = 0;
     headingBuffer.forEach(h => {
         sinSum += Math.sin(h * Math.PI / 180);
@@ -343,44 +336,31 @@ function smoothHeading(newVal) {
     return (Math.atan2(sinSum, cosSum) * 180 / Math.PI + 360) % 360;
 }
 
-// Applique la rotation à la carte
 function applyHeading(heading) {
-    currentHeading = heading;
     const smooth   = smoothHeading(heading);
-    const rotation = smooth * Math.PI / 180;   // OL attend des radians
-
+    const rotation = smooth * Math.PI / 180;
     map.getView().setRotation(rotation);
-
-    // L'indicateur nord tourne en sens inverse pour pointer vers le haut
+    // La rose tourne en sens inverse pour que N pointe toujours vers le vrai nord
     northIndicator.style.transform = `rotate(${-smooth}deg)`;
-
     compassBadge.textContent = `🧭 ${Math.round(smooth)}°`;
     compassBadge.classList.add('active');
 }
 
-// Handler DeviceOrientationEvent
 function onOrientation(e) {
     if (!compassActive) return;
-
     let heading = null;
-
-    // iOS : webkitCompassHeading est direct (nord magnétique)
-    if (e.webkitCompassHeading !== undefined && e.webkitCompassHeading !== null) {
-        heading = e.webkitCompassHeading;
+    if (e.webkitCompassHeading != null) {
+        heading = e.webkitCompassHeading;                 // iOS
+    } else if (e.alpha != null) {
+        heading = (360 - e.alpha) % 360;                  // Android
     }
-    // Android : alpha est par rapport au nord mais dans le sens inverse
-    else if (e.alpha !== null) {
-        heading = (360 - e.alpha) % 360;
-    }
-
     if (heading !== null) applyHeading(heading);
 }
 
-// Activation / désactivation boussole
 function enableCompass() {
     compassActive = true;
     compassBtn.classList.add('active');
-    northIndicator.classList.add('visible');
+    northIndicator.classList.add('on');                   // rend visible
     window.addEventListener('deviceorientationabsolute', onOrientation, true);
     window.addEventListener('deviceorientation',         onOrientation, true);
 }
@@ -388,48 +368,32 @@ function enableCompass() {
 function disableCompass() {
     compassActive = false;
     compassBtn.classList.remove('active');
+    northIndicator.classList.remove('on');                // cache
     headingBuffer = [];
-    map.getView().setRotation(0);   // remet le nord en haut
-    compassBadge.textContent = '🧭 désactivée';
-    compassBadge.classList.remove('active');
+    map.getView().setRotation(0);
     northIndicator.style.transform = 'rotate(0deg)';
+    compassBadge.textContent = '🧭 inactif';
+    compassBadge.classList.remove('active');
     window.removeEventListener('deviceorientationabsolute', onOrientation, true);
     window.removeEventListener('deviceorientation',         onOrientation, true);
 }
 
-// Bouton toggle
 compassBtn.addEventListener('click', () => {
-    if (compassActive) {
-        disableCompass();
-        return;
-    }
+    if (compassActive) { disableCompass(); return; }
 
-    // iOS 13+ : demande d'autorisation obligatoire
+    // iOS 13+ : permission obligatoire depuis un geste utilisateur
     if (typeof DeviceOrientationEvent !== 'undefined' &&
         typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
             .then(state => {
-                if (state === 'granted') {
-                    enableCompass();
-                } else {
-                    compassBadge.textContent = '🧭 refusée';
-                }
+                if (state === 'granted') enableCompass();
+                else compassBadge.textContent = '🧭 refusée';
             })
             .catch(console.error);
     } else {
-        // Android & autres
-        enableCompass();
+        enableCompass();  // Android & desktop
     }
 });
-
-// Sur iOS, le requestPermission ne peut être appelé que depuis un geste utilisateur.
-// Le bouton principal gère déjà ça. Le bouton ios-btn est un fallback visible si besoin.
-if (typeof DeviceOrientationEvent !== 'undefined' &&
-    typeof DeviceOrientationEvent.requestPermission === 'function') {
-    // iOS détecté — le bouton principal suffit, pas besoin du fallback
-} else {
-    iosBtn.style.display = 'none';
-}
 
 // ─────────────────────────────────────────
 //  Liste points AR
