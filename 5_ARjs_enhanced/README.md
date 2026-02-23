@@ -1,12 +1,15 @@
 
-## Tests
+## AR
 * [0_base](./gps_0_base.html)
 * [1_ +gps-smooth](./gps_1_gps-smooth.html)
 * [2_ +gyro](./gps_2_gyro.html)
 * [redbox](./gps_redbox.html)
+
+## map viewer
 * [map viewer : places](./map_viewer_0.html)
 * [map viewer : + device](./map_viewer_1.html)
 * [map viewer : + orientation](./map_viewer.html)
+* [map viewer : + distances](./map_viewer.html)
 
 ### Tools
 * [stabilisation gps](./tools/tools_gps.html)

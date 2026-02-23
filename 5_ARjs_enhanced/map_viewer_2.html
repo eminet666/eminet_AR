@@ -78,33 +78,13 @@
             flex: 1;
         }
 
-        /* Bloc droite : distance + coords empilées */
-        .row-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            flex-shrink: 0;
-            gap: 1px;
-        }
-
-        .row-dist {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: var(--accent);
-            white-space: nowrap;
-        }
-
-        /* Distance inconnue (pas encore de GPS) */
-        .row-dist.unknown { color: var(--muted); font-weight: 400; }
-
         .row-coords {
-            font-size: 0.68rem;
+            font-size: 0.74rem;
             color: var(--muted);
-            white-space: nowrap;
+            text-align: right; white-space: nowrap; flex-shrink: 0;
         }
 
-        .row.device .row-name  { color: var(--device); }
-        .row.device .row-dist  { color: var(--device); font-size: 0.74rem; font-weight: 400; }
+        .row.device .row-name { color: var(--device); }
 
         /* ── Badges haut droite ── */
         #badges {
@@ -159,13 +139,14 @@
             top: 96px; right: 12px;
             z-index: 20;
             width: 52px; height: 52px;
-            display: none;
+            display: none;              /* caché par défaut */
             align-items: center;
             justify-content: center;
             transform-origin: 50% 50%;
             pointer-events: none;
         }
 
+        /* Affiché seulement quand la boussole est active */
         #north-indicator.on { display: flex; }
 
         /* ── Popup ── */
@@ -205,38 +186,50 @@
 
 <div id="map"></div>
 
+<!-- Badges GPS + boussole -->
 <div id="badges">
     <span class="badge" id="gps-badge">⏳ GPS…</span>
     <span class="badge compass" id="compass-badge">🧭 inactif</span>
 </div>
 
+<!-- Bouton boussole -->
 <button id="compass-btn" title="Orienter selon le nord">🧭</button>
 
+<!--
+    Indicateur nord : rose des vents SVG.
+    La DIV tourne via JS (rotate). Le N pointe toujours vers le nord réel.
+    Classe "on" = visible (boussole active).
+-->
 <div id="north-indicator">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52">
+        <!-- Fond blanc -->
         <circle cx="26" cy="26" r="24" fill="white" stroke="#e2e6ee" stroke-width="1.5"/>
+        <!-- Demi-flèche nord (rouge) -->
         <polygon points="26,3 31,26 26,21 21,26" fill="#e63946"/>
+        <!-- Demi-flèche sud (gris clair) -->
         <polygon points="26,49 21,26 26,31 31,26" fill="#c8cdd8"/>
+        <!-- Lettre N en rouge -->
         <text x="26" y="13" text-anchor="middle"
               font-family="sans-serif" font-size="8" font-weight="bold"
               fill="#e63946">N</text>
+        <!-- Point central -->
         <circle cx="26" cy="26" r="2.5" fill="#1a1d2e"/>
     </svg>
 </div>
 
+<!-- Popup -->
 <div id="popup" class="ol-popup" style="display:none;">
     <b id="popup-name"></b>
     <span id="popup-coords"></span>
 </div>
 
+<!-- Panneau bas -->
 <div id="bottom-panel">
     <div class="drag-handle"></div>
     <div class="row device" id="device-row">
         <img src="device.png" alt="device">
         <span class="row-name">Ma position</span>
-        <div class="row-right">
-            <span class="row-dist" id="device-coords">–</span>
-        </div>
+        <span class="row-coords" id="device-coords">–</span>
     </div>
     <div id="points-list"></div>
 </div>
@@ -249,25 +242,6 @@ const somePlaces = [
     { name: "Point 1", lonlat: [0.712889, 47.409500] },
     { name: "Point 2", lonlat: [0.710982, 47.309539] }
 ];
-
-// ─────────────────────────────────────────
-//  Haversine — distance en mètres entre deux points GPS
-// ─────────────────────────────────────────
-function haversine(lat1, lon1, lat2, lon2) {
-    const R  = 6371000; // rayon Terre en mètres
-    const φ1 = lat1 * Math.PI / 180;
-    const φ2 = lat2 * Math.PI / 180;
-    const Δφ = (lat2 - lat1) * Math.PI / 180;
-    const Δλ = (lon2 - lon1) * Math.PI / 180;
-    const a  = Math.sin(Δφ/2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) ** 2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-// Formate la distance lisiblement
-function formatDist(m) {
-    if (m < 1000) return `${Math.round(m)} m`;
-    return `${(m / 1000).toFixed(2)} km`;
-}
 
 // ─────────────────────────────────────────
 //  Carte
@@ -312,42 +286,21 @@ const vectorLayer = new ol.layer.Vector({
 map.addLayer(vectorLayer);
 
 // ─────────────────────────────────────────
-//  GPS + mise à jour distances
+//  GPS
 // ─────────────────────────────────────────
 const gpsBadge     = document.getElementById('gps-badge');
 const deviceCoords = document.getElementById('device-coords');
 const deviceRow    = document.getElementById('device-row');
 
-let deviceLat = null;
-let deviceLon = null;
-
-// Références aux spans de distance dans la liste (peuplées plus bas)
-const distSpans = [];
-
-function updateDistances() {
-    if (deviceLat === null) return;
-    somePlaces.forEach((place, i) => {
-        const d = haversine(deviceLat, deviceLon, place.lonlat[1], place.lonlat[0]);
-        if (distSpans[i]) {
-            distSpans[i].textContent = formatDist(d);
-            distSpans[i].classList.remove('unknown');
-        }
-    });
-}
-
 if ('geolocation' in navigator) {
     navigator.geolocation.watchPosition(
         (pos) => {
-            deviceLon = pos.coords.longitude;
-            deviceLat = pos.coords.latitude;
-
-            deviceFeature.setGeometry(new ol.geom.Point(ol.proj.fromLonLat([deviceLon, deviceLat])));
-            deviceCoords.textContent = `${deviceLat.toFixed(5)}, ${deviceLon.toFixed(5)}`;
+            const lon = pos.coords.longitude;
+            const lat = pos.coords.latitude;
+            deviceFeature.setGeometry(new ol.geom.Point(ol.proj.fromLonLat([lon, lat])));
+            deviceCoords.textContent = `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
             gpsBadge.textContent = '● GPS actif';
             gpsBadge.classList.add('active');
-
-            // Recalcul de toutes les distances
-            updateDistances();
         },
         (err) => { gpsBadge.textContent = '✗ GPS'; console.error(err); },
         { enableHighAccuracy: true, maximumAge: 2000 }
@@ -384,8 +337,10 @@ function smoothHeading(val) {
 }
 
 function applyHeading(heading) {
-    const smooth = smoothHeading(heading);
-    map.getView().setRotation(smooth * Math.PI / 180);
+    const smooth   = smoothHeading(heading);
+    const rotation = smooth * Math.PI / 180;
+    map.getView().setRotation(rotation);
+    // La rose tourne en sens inverse pour que N pointe toujours vers le vrai nord
     northIndicator.style.transform = `rotate(${-smooth}deg)`;
     compassBadge.textContent = `🧭 ${Math.round(smooth)}°`;
     compassBadge.classList.add('active');
@@ -394,15 +349,18 @@ function applyHeading(heading) {
 function onOrientation(e) {
     if (!compassActive) return;
     let heading = null;
-    if (e.webkitCompassHeading != null) heading = e.webkitCompassHeading;
-    else if (e.alpha != null)           heading = (360 - e.alpha) % 360;
+    if (e.webkitCompassHeading != null) {
+        heading = e.webkitCompassHeading;                 // iOS
+    } else if (e.alpha != null) {
+        heading = (360 - e.alpha) % 360;                  // Android
+    }
     if (heading !== null) applyHeading(heading);
 }
 
 function enableCompass() {
     compassActive = true;
     compassBtn.classList.add('active');
-    northIndicator.classList.add('on');
+    northIndicator.classList.add('on');                   // rend visible
     window.addEventListener('deviceorientationabsolute', onOrientation, true);
     window.addEventListener('deviceorientation',         onOrientation, true);
 }
@@ -410,7 +368,7 @@ function enableCompass() {
 function disableCompass() {
     compassActive = false;
     compassBtn.classList.remove('active');
-    northIndicator.classList.remove('on');
+    northIndicator.classList.remove('on');                // cache
     headingBuffer = [];
     map.getView().setRotation(0);
     northIndicator.style.transform = 'rotate(0deg)';
@@ -422,20 +380,23 @@ function disableCompass() {
 
 compassBtn.addEventListener('click', () => {
     if (compassActive) { disableCompass(); return; }
+
+    // iOS 13+ : permission obligatoire depuis un geste utilisateur
     if (typeof DeviceOrientationEvent !== 'undefined' &&
         typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
             .then(state => {
                 if (state === 'granted') enableCompass();
                 else compassBadge.textContent = '🧭 refusée';
-            }).catch(console.error);
+            })
+            .catch(console.error);
     } else {
-        enableCompass();
+        enableCompass();  // Android & desktop
     }
 });
 
 // ─────────────────────────────────────────
-//  Liste points AR avec distance
+//  Liste points AR
 // ─────────────────────────────────────────
 const list = document.getElementById('points-list');
 
@@ -447,10 +408,7 @@ somePlaces.forEach((place, i) => {
     row.innerHTML = `
         <img src="marker.png" alt="marker">
         <span class="row-name">${name}</span>
-        <div class="row-right">
-            <span class="row-dist unknown">–</span>
-            <span class="row-coords">${place.lonlat[1].toFixed(5)}, ${place.lonlat[0].toFixed(5)}</span>
-        </div>
+        <span class="row-coords">${place.lonlat[1].toFixed(5)}, ${place.lonlat[0].toFixed(5)}</span>
     `;
     row.addEventListener('click', () => {
         map.getView().animate({ center: ol.proj.fromLonLat(place.lonlat), zoom: 17, duration: 500 });
@@ -458,9 +416,6 @@ somePlaces.forEach((place, i) => {
         row.classList.add('active');
     });
     list.appendChild(row);
-
-    // Garde une référence au span de distance pour mise à jour en temps réel
-    distSpans.push(row.querySelector('.row-dist'));
 });
 
 // ─────────────────────────────────────────
@@ -480,16 +435,8 @@ map.on('pointermove', (e) => {
     if (feature && feature.getGeometry()) {
         const geom = feature.getGeometry().getCoordinates();
         const ll   = ol.proj.toLonLat(geom);
-        popupName.textContent = feature.get('name');
-
-        // Ajoute la distance dans la popup si c'est un point AR
-        let extra = '';
-        if (feature.get('type') === 'ar' && deviceLat !== null) {
-            const lonlat = feature.get('lonlat');
-            const d = haversine(deviceLat, deviceLon, lonlat[1], lonlat[0]);
-            extra = `<br>📏 ${formatDist(d)}`;
-        }
-        popupCoords.innerHTML = `${ll[1].toFixed(6)}<br>${ll[0].toFixed(6)}${extra}`;
+        popupName.textContent  = feature.get('name');
+        popupCoords.innerHTML  = `${ll[1].toFixed(6)}<br>${ll[0].toFixed(6)}`;
         popup.className = 'ol-popup' + (feature.get('type') === 'device' ? ' device' : '');
         overlayPopup.setPosition(geom);
         popup.style.display = 'block';
