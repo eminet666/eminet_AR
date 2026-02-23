@@ -3,7 +3,8 @@
 // données
 // TOURS
 let somePlaces = [
-  { lonlat:[0.71318, 47.40953] }
+  { lonlat:[0.712889, 47.409500] },
+  { lonlat:[0.710982, 47.309539] }
 ]
 
 let firstGPSPosition = null;

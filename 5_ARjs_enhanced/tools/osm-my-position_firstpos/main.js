@@ -3,7 +3,7 @@
 // données
 // TOURS
 let somePlaces = [
-  { lonlat:[0.71318, 47.40953] }
+//   { lonlat:[0.71318, 47.40953] }
 ]
 
 
