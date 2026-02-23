@@ -2,200 +2,186 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte des Points AR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Carte AR</title>
 
-    <!-- OpenLayers -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.4.0/ol.css">
     <script src="https://cdn.jsdelivr.net/npm/ol@7.4.0/dist/ol.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg: #f4f6f9;
             --surface: #ffffff;
-            --border: #dde1ea;
+            --border: #e2e6ee;
             --accent: #e63946;
             --text: #1a1d2e;
-            --muted: #6b7280;
+            --muted: #8a929f;
+            --device: #4285F4;
+            --panel-h: 44px; /* hauteur d'une ligne de point */
         }
 
-        body {
-            font-family: 'Syne', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+        html, body {
+            width: 100%;
+            height: 100%;
             overflow: hidden;
+            font-family: 'JetBrains Mono', monospace;
+            background: #e8edf2;
         }
 
-        header {
-            padding: 14px 24px;
+        /* ── Carte — prend tout l'espace sauf le panneau bas ── */
+        #map {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        /* ── Panneau bas ── */
+        #bottom-panel {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            z-index: 10;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.10);
+            border-radius: 14px 14px 0 0;
+        }
+
+        /* Poignée visuelle */
+        .drag-handle {
+            width: 36px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 8px auto 4px;
+        }
+
+        /* Ligne device */
+        .row {
             display: flex;
             align-items: center;
-            gap: 16px;
-            border-bottom: 1px solid var(--border);
-            background: var(--surface);
-            z-index: 10;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-        }
-
-        header h1 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--text);
-        }
-
-        header span {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--accent);
-            background: rgba(230,57,70,0.08);
-            padding: 3px 10px;
-            border-radius: 4px;
-            border: 1px solid rgba(230,57,70,0.25);
-        }
-
-        .layout {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .sidebar {
-            width: 280px;
-            min-width: 280px;
-            background: var(--surface);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .sidebar-title {
-            padding: 16px 20px 10px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--muted);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .points-list {
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .point-item {
-            padding: 14px 20px;
+            gap: 10px;
+            padding: 6px 16px;
+            height: var(--panel-h);
             border-bottom: 1px solid var(--border);
             cursor: pointer;
-            transition: background 0.15s;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
+            transition: background 0.12s;
         }
 
-        .point-item:hover, .point-item.active {
-            background: rgba(230,57,70,0.06);
-        }
+        .row:last-child { border-bottom: none; }
+        .row:active, .row.active { background: rgba(230,57,70,0.05); }
 
-        .point-marker-icon {
+        .row img {
             width: 18px;
-            height: 22px;
+            height: 18px;
+            object-fit: contain;
             flex-shrink: 0;
-            margin-top: 2px;
         }
 
-        .point-info { flex: 1; }
-
-        .point-name {
+        .row-name {
+            font-size: 0.78rem;
             font-weight: 700;
-            font-size: 0.88rem;
-            margin-bottom: 4px;
             color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
         }
 
-        .point-coords {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
+        .row-coords {
+            font-size: 0.65rem;
             color: var(--muted);
-            line-height: 1.6;
+            text-align: right;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        #map { flex: 1; }
+        /* Couleur device */
+        .row.device .row-name { color: var(--device); }
 
+        /* ── GPS badge (coin haut droit) ── */
+        #gps-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 20;
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-size: 0.65rem;
+            color: var(--muted);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        #gps-badge.active { color: #22c55e; }
+
+        /* ── Popup carte ── */
         .ol-popup {
             position: absolute;
             background: var(--surface);
             border: 1px solid var(--border);
             border-left: 3px solid var(--accent);
-            padding: 12px 16px;
+            padding: 8px 12px;
             border-radius: 6px;
-            min-width: 180px;
+            min-width: 150px;
             pointer-events: none;
-            transform: translate(-50%, -110%);
-            font-size: 0.82rem;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-        }
-
-        .ol-popup-title {
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--accent);
-        }
-
-        .ol-popup-coords {
+            transform: translate(-50%, -115%);
+            font-size: 0.72rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--muted);
-            line-height: 1.7;
         }
 
-        .ol-zoom { top: 16px; right: 16px; left: auto; }
+        .ol-popup b { display: block; margin-bottom: 3px; color: var(--accent); font-size: 0.75rem; }
+        .ol-popup.device b { color: var(--device); }
+        .ol-popup span { color: var(--muted); line-height: 1.6; }
+
+        /* ── Contrôles OL ── */
+        .ol-zoom { top: 12px; left: 12px; right: auto; }
         .ol-zoom button {
             background: var(--surface);
             color: var(--text);
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 6px;
+            width: 34px;
+            height: 34px;
             font-size: 1.1rem;
-            width: 32px;
-            height: 32px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
         }
-        .ol-zoom button:hover { background: var(--bg); }
         .ol-attribution { display: none; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>📍 Carte AR</h1>
-    <span id="point-count">0 points</span>
-</header>
+<div id="map"></div>
 
-<div class="layout">
-    <aside class="sidebar">
-        <div class="sidebar-title">Points de repère</div>
-        <div class="points-list" id="points-list"></div>
-    </aside>
-    <div id="map"></div>
-</div>
+<div id="gps-badge">⏳ GPS…</div>
 
 <div id="popup" class="ol-popup" style="display:none;">
-    <div class="ol-popup-title" id="popup-title"></div>
-    <div class="ol-popup-coords" id="popup-coords"></div>
+    <b id="popup-name"></b>
+    <span id="popup-coords"></span>
+</div>
+
+<div id="bottom-panel">
+    <div class="drag-handle"></div>
+
+    <!-- Ligne device -->
+    <div class="row device" id="device-row">
+        <img src="device.png" alt="device">
+        <span class="row-name">Ma position</span>
+        <span class="row-coords" id="device-coords">–</span>
+    </div>
+
+    <!-- Lignes points AR (injectées par JS) -->
+    <div id="points-list"></div>
 </div>
 
 <script>
 // ─────────────────────────────────────────
-//  🗂️  DONNÉES — modifie ce tableau
+//  DONNÉES
 // ─────────────────────────────────────────
 let somePlaces = [
     { name: "Point 1", lonlat: [0.712889, 47.409500] },
@@ -203,15 +189,18 @@ let somePlaces = [
 ];
 
 // ─────────────────────────────────────────
-//  Carte — fond OSM clair
+//  Hauteur du panneau bas → padding carte
+// ─────────────────────────────────────────
+function getPanelHeight() {
+    return document.getElementById('bottom-panel').offsetHeight;
+}
+
+// ─────────────────────────────────────────
+//  Carte
 // ─────────────────────────────────────────
 const map = new ol.Map({
     target: 'map',
-    layers: [
-        new ol.layer.Tile({
-            source: new ol.source.OSM()
-        })
-    ],
+    layers: [ new ol.layer.Tile({ source: new ol.source.OSM() }) ],
     view: new ol.View({
         center: ol.proj.fromLonLat([0.712, 47.36]),
         zoom: 12
@@ -220,52 +209,108 @@ const map = new ol.Map({
 });
 
 // ─────────────────────────────────────────
-//  Marqueurs — marker.png dans le même répertoire
+//  Marqueurs points AR
 // ─────────────────────────────────────────
-const markerStyle = new ol.style.Style({
-    image: new ol.style.Icon({
-        src: 'marker.png',
-        anchor: [0.5, 1],   // pointe en bas, centré horizontalement
-        scale: 1.4
-    })
-});
-
 const features = somePlaces.map((place, i) => {
     const f = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat(place.lonlat)),
         name: place.name || `Point ${i + 1}`,
-        lonlat: place.lonlat
+        lonlat: place.lonlat,
+        type: 'ar'
     });
-    f.setStyle(markerStyle);
+    f.setStyle(new ol.style.Style({
+        image: new ol.style.Icon({ src: 'marker.png', anchor: [0.5, 1], scale: 1.3 })
+    }));
     return f;
 });
 
+// ─────────────────────────────────────────
+//  Marqueur device
+// ─────────────────────────────────────────
+const deviceFeature = new ol.Feature({ name: 'Ma position', type: 'device' });
+deviceFeature.setStyle(new ol.style.Style({
+    image: new ol.style.Icon({ src: 'device.png', anchor: [0.5, 0.5], scale: 1.2 })
+}));
+
 const vectorLayer = new ol.layer.Vector({
-    source: new ol.source.Vector({ features })
+    source: new ol.source.Vector({ features: [...features, deviceFeature] })
 });
 map.addLayer(vectorLayer);
 
 // ─────────────────────────────────────────
-//  Popup au survol
+//  GPS device
 // ─────────────────────────────────────────
-const popup = document.getElementById('popup');
-const popupTitle = document.getElementById('popup-title');
+const gpsBadge    = document.getElementById('gps-badge');
+const deviceCoords = document.getElementById('device-coords');
+const deviceRow   = document.getElementById('device-row');
+
+if ('geolocation' in navigator) {
+    navigator.geolocation.watchPosition(
+        (pos) => {
+            const lon = pos.coords.longitude;
+            const lat = pos.coords.latitude;
+            deviceFeature.setGeometry(new ol.geom.Point(ol.proj.fromLonLat([lon, lat])));
+            deviceCoords.textContent = `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+            gpsBadge.textContent = '● GPS';
+            gpsBadge.classList.add('active');
+        },
+        (err) => { gpsBadge.textContent = '✗ GPS'; console.error(err); },
+        { enableHighAccuracy: true, maximumAge: 2000 }
+    );
+} else {
+    gpsBadge.textContent = '✗ GPS';
+}
+
+// Clic device → centrer sur position
+deviceRow.addEventListener('click', () => {
+    const geom = deviceFeature.getGeometry();
+    if (geom) map.getView().animate({ center: geom.getCoordinates(), zoom: 17, duration: 500 });
+});
+
+// ─────────────────────────────────────────
+//  Liste points AR
+// ─────────────────────────────────────────
+const list = document.getElementById('points-list');
+
+somePlaces.forEach((place, i) => {
+    const name = place.name || `Point ${i + 1}`;
+    const row  = document.createElement('div');
+    row.className   = 'row';
+    row.dataset.name = name;
+    row.innerHTML = `
+        <img src="marker.png" alt="marker">
+        <span class="row-name">${name}</span>
+        <span class="row-coords">${place.lonlat[1].toFixed(5)}, ${place.lonlat[0].toFixed(5)}</span>
+    `;
+    row.addEventListener('click', () => {
+        map.getView().animate({ center: ol.proj.fromLonLat(place.lonlat), zoom: 17, duration: 500 });
+        document.querySelectorAll('.row').forEach(r => r.classList.remove('active'));
+        row.classList.add('active');
+    });
+    list.appendChild(row);
+});
+
+// ─────────────────────────────────────────
+//  Popup au tap/survol
+// ─────────────────────────────────────────
+const popup      = document.getElementById('popup');
+const popupName  = document.getElementById('popup-name');
 const popupCoords = document.getElementById('popup-coords');
 
 const overlayPopup = new ol.Overlay({
-    element: popup,
-    positioning: 'bottom-center',
-    stopEvent: false
+    element: popup, positioning: 'bottom-center', stopEvent: false
 });
 map.addOverlay(overlayPopup);
 
 map.on('pointermove', (e) => {
     const feature = map.forEachFeatureAtPixel(e.pixel, f => f);
-    if (feature) {
-        const coords = feature.get('lonlat');
-        popupTitle.textContent = feature.get('name');
-        popupCoords.innerHTML = `lon : ${coords[0].toFixed(6)}<br>lat : ${coords[1].toFixed(6)}`;
-        overlayPopup.setPosition(feature.getGeometry().getCoordinates());
+    if (feature && feature.getGeometry()) {
+        const geom = feature.getGeometry().getCoordinates();
+        const ll   = ol.proj.toLonLat(geom);
+        popupName.textContent  = feature.get('name');
+        popupCoords.innerHTML  = `${ll[1].toFixed(6)}<br>${ll[0].toFixed(6)}`;
+        popup.className = 'ol-popup' + (feature.get('type') === 'device' ? ' device' : '');
+        overlayPopup.setPosition(geom);
         popup.style.display = 'block';
         map.getViewport().style.cursor = 'pointer';
     } else {
@@ -274,60 +319,22 @@ map.on('pointermove', (e) => {
     }
 });
 
-// Clic → zoom sur le point
-map.on('click', (e) => {
-    const feature = map.forEachFeatureAtPixel(e.pixel, f => f);
-    if (feature) {
-        map.getView().animate({
-            center: feature.getGeometry().getCoordinates(),
-            zoom: 17,
-            duration: 600
+// ─────────────────────────────────────────
+//  Vue initiale avec padding bas = panneau
+// ─────────────────────────────────────────
+window.addEventListener('load', () => {
+    const ph = getPanelHeight();
+    if (features.length > 1) {
+        const extent = vectorLayer.getSource().getExtent();
+        map.getView().fit(extent, {
+            padding: [40, 20, ph + 20, 20],
+            maxZoom: 16,
+            duration: 800
         });
-        highlightSidebarItem(feature.get('name'));
     }
+    // Mise à jour de la taille carte pour éviter que le panneau couvre le canvas
+    map.updateSize();
 });
-
-// ─────────────────────────────────────────
-//  Panneau latéral
-// ─────────────────────────────────────────
-const list = document.getElementById('points-list');
-document.getElementById('point-count').textContent =
-    `${somePlaces.length} point${somePlaces.length > 1 ? 's' : ''}`;
-
-somePlaces.forEach((place, i) => {
-    const name = place.name || `Point ${i + 1}`;
-    const item = document.createElement('div');
-    item.className = 'point-item';
-    item.dataset.name = name;
-    item.innerHTML = `
-        <img class="point-marker-icon" src="marker.png" alt="marker">
-        <div class="point-info">
-            <div class="point-name">${name}</div>
-            <div class="point-coords">lon : ${place.lonlat[0].toFixed(6)}<br>lat : ${place.lonlat[1].toFixed(6)}</div>
-        </div>
-    `;
-    item.addEventListener('click', () => {
-        map.getView().animate({
-            center: ol.proj.fromLonLat(place.lonlat),
-            zoom: 17,
-            duration: 600
-        });
-        highlightSidebarItem(name);
-    });
-    list.appendChild(item);
-});
-
-function highlightSidebarItem(name) {
-    document.querySelectorAll('.point-item').forEach(el => el.classList.remove('active'));
-    const target = document.querySelector(`.point-item[data-name="${name}"]`);
-    if (target) target.classList.add('active');
-}
-
-// Vue ajustée pour englober tous les points
-if (features.length > 1) {
-    const extent = vectorLayer.getSource().getExtent();
-    map.getView().fit(extent, { padding: [60, 60, 60, 340], maxZoom: 16, duration: 800 });
-}
 </script>
 
 </body>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte des Points AR</title>
+
+    <!-- OpenLayers -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.4.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@7.4.0/dist/ol.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #f4f6f9;
+            --surface: #ffffff;
+            --border: #dde1ea;
+            --accent: #e63946;
+            --text: #1a1d2e;
+            --muted: #6b7280;
+        }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            z-index: 10;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        header h1 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+
+        header span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            background: rgba(230,57,70,0.08);
+            padding: 3px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(230,57,70,0.25);
+        }
+
+        .layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-title {
+            padding: 16px 20px 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .points-list {
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .point-item {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .point-item:hover, .point-item.active {
+            background: rgba(230,57,70,0.06);
+        }
+
+        .point-marker-icon {
+            width: 18px;
+            height: 22px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .point-info { flex: 1; }
+
+        .point-name {
+            font-weight: 700;
+            font-size: 0.88rem;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .point-coords {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        #map { flex: 1; }
+
+        .ol-popup {
+            position: absolute;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 12px 16px;
+            border-radius: 6px;
+            min-width: 180px;
+            pointer-events: none;
+            transform: translate(-50%, -110%);
+            font-size: 0.82rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        }
+
+        .ol-popup-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--accent);
+        }
+
+        .ol-popup-coords {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .ol-zoom { top: 16px; right: 16px; left: auto; }
+        .ol-zoom button {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1.1rem;
+            width: 32px;
+            height: 32px;
+        }
+        .ol-zoom button:hover { background: var(--bg); }
+        .ol-attribution { display: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📍 Carte AR</h1>
+    <span id="point-count">0 points</span>
+</header>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">Points de repère</div>
+        <div class="points-list" id="points-list"></div>
+    </aside>
+    <div id="map"></div>
+</div>
+
+<div id="popup" class="ol-popup" style="display:none;">
+    <div class="ol-popup-title" id="popup-title"></div>
+    <div class="ol-popup-coords" id="popup-coords"></div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+//  🗂️  DONNÉES — modifie ce tableau
+// ─────────────────────────────────────────
+let somePlaces = [
+    { name: "Point 1", lonlat: [0.712889, 47.409500] },
+    { name: "Point 2", lonlat: [0.710978, 47.409539] }
+];
+
+// ─────────────────────────────────────────
+//  Carte — fond OSM clair
+// ─────────────────────────────────────────
+const map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+        })
+    ],
+    view: new ol.View({
+        center: ol.proj.fromLonLat([0.712, 47.36]),
+        zoom: 12
+    }),
+    controls: ol.control.defaults.defaults({ attribution: false })
+});
+
+// ─────────────────────────────────────────
+//  Marqueurs — marker.png dans le même répertoire
+// ─────────────────────────────────────────
+const markerStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        src: 'marker.png',
+        anchor: [0.5, 1],   // pointe en bas, centré horizontalement
+        scale: 1.4
+    })
+});
+
+const features = somePlaces.map((place, i) => {
+    const f = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.fromLonLat(place.lonlat)),
+        name: place.name || `Point ${i + 1}`,
+        lonlat: place.lonlat
+    });
+    f.setStyle(markerStyle);
+    return f;
+});
+
+const vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({ features })
+});
+map.addLayer(vectorLayer);
+
+// ─────────────────────────────────────────
+//  Popup au survol
+// ─────────────────────────────────────────
+const popup = document.getElementById('popup');
+const popupTitle = document.getElementById('popup-title');
+const popupCoords = document.getElementById('popup-coords');
+
+const overlayPopup = new ol.Overlay({
+    element: popup,
+    positioning: 'bottom-center',
+    stopEvent: false
+});
+map.addOverlay(overlayPopup);
+
+map.on('pointermove', (e) => {
+    const feature = map.forEachFeatureAtPixel(e.pixel, f => f);
+    if (feature) {
+        const coords = feature.get('lonlat');
+        popupTitle.textContent = feature.get('name');
+        popupCoords.innerHTML = `lon : ${coords[0].toFixed(6)}<br>lat : ${coords[1].toFixed(6)}`;
+        overlayPopup.setPosition(feature.getGeometry().getCoordinates());
+        popup.style.display = 'block';
+        map.getViewport().style.cursor = 'pointer';
+    } else {
+        popup.style.display = 'none';
+        map.getViewport().style.cursor = '';
+    }
+});
+
+// Clic → zoom sur le point
+map.on('click', (e) => {
+    const feature = map.forEachFeatureAtPixel(e.pixel, f => f);
+    if (feature) {
+        map.getView().animate({
+            center: feature.getGeometry().getCoordinates(),
+            zoom: 17,
+            duration: 600
+        });
+        highlightSidebarItem(feature.get('name'));
+    }
+});
+
+// ─────────────────────────────────────────
+//  Panneau latéral
+// ─────────────────────────────────────────
+const list = document.getElementById('points-list');
+document.getElementById('point-count').textContent =
+    `${somePlaces.length} point${somePlaces.length > 1 ? 's' : ''}`;
+
+somePlaces.forEach((place, i) => {
+    const name = place.name || `Point ${i + 1}`;
+    const item = document.createElement('div');
+    item.className = 'point-item';
+    item.dataset.name = name;
+    item.innerHTML = `
+        <img class="point-marker-icon" src="marker.png" alt="marker">
+        <div class="point-info">
+            <div class="point-name">${name}</div>
+            <div class="point-coords">lon : ${place.lonlat[0].toFixed(6)}<br>lat : ${place.lonlat[1].toFixed(6)}</div>
+        </div>
+    `;
+    item.addEventListener('click', () => {
+        map.getView().animate({
+            center: ol.proj.fromLonLat(place.lonlat),
+            zoom: 17,
+            duration: 600
+        });
+        highlightSidebarItem(name);
+    });
+    list.appendChild(item);
+});
+
+function highlightSidebarItem(name) {
+    document.querySelectorAll('.point-item').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`.point-item[data-name="${name}"]`);
+    if (target) target.classList.add('active');
+}
+
+// Vue ajustée pour englober tous les points
+if (features.length > 1) {
+    const extent = vectorLayer.getSource().getExtent();
+    map.getView().fit(extent, { padding: [60, 60, 60, 340], maxZoom: 16, duration: 800 });
+}
+</script>
+
+</body>
+</html>
