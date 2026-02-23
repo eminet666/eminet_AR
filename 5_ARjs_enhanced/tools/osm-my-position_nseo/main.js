@@ -1,8 +1,9 @@
 // https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
 
 // données
+// TOURS
 let somePlaces = [
-  // { lonlat:[2.373970, 48.860656] }, // Peut être vide
+  { lonlat:[47.40953, 0.71318] }
 ]
 
 let firstGPSPosition = null;

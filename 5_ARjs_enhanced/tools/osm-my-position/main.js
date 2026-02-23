@@ -11,7 +11,7 @@
 
 // TOURS
 let somePlaces = [
-  { lonlat:[147.40953, 0.71318] }
+  { lonlat:[47.40953, 0.71318] }
 ]
 
 // ENSAAMA

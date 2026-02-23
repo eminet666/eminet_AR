@@ -1,9 +1,11 @@
 // https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
 
 // données
+// TOURS
 let somePlaces = [
-  // { lonlat:[2.373970, 48.860656] }, 	
+  { lonlat:[47.40953, 0.71318] }
 ]
+
 
 let firstGPSPosition = null;
 let gpsPositions = []; // Stocker toutes les mesures GPS
@@ -40,10 +42,10 @@ function initMap(lonlat) {
 function followUser({ fromProjection, toProjection }) {
   function success(pos) {
     let { longitude, latitude } = pos.coords;
-    console.log(`user position: (${longitude.toFixed(6)}, ${latitude.toFixed(6)})`);
+    console.log(`user position: (${longitude.toFixed(5)}, ${latitude.toFixed(5)})`);
 
     let gpsinfo = document.getElementById("gps");
-    gpsinfo.textContent = `lon : ${longitude.toFixed(6)}, lat : ${latitude.toFixed(6)}, ${gpsPositions.length + 1}`;
+    gpsinfo.textContent = `lon : ${longitude.toFixed(5)}, lat : ${latitude.toFixed(5)}, ${gpsPositions.length + 1}`;
 
     let size = new OpenLayers.Size(21,25);
     let offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
