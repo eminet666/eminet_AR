@@ -4,6 +4,8 @@
 * [1_ +gps-smooth](./gps_1_gps-smooth.html)
 * [2_ +gyro](./gps_2_gyro.html)
 * [3_ +box-text-model3D](./gps_3_box-text-model.html)
+* [StLibert_Box](./gps_stlibert_box.html)
+* [StLibert](./gps_stlibert.html)
 
 ## map viewer
 * [map viewer : places](./map_viewer_0.html)
