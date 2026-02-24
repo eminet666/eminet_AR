@@ -12,12 +12,11 @@
 
     // ═══════════════════════════════════════════════════════
     //  COMPOSANT 1 : smooth-gps
-    //  Lisse la position GPS par moyenne glissante circulaire
     // ═══════════════════════════════════════════════════════
     AFRAME.registerComponent('smooth-gps', {
         schema: {
-            bufferSize: { type: 'int', default: 5 },   // nb de mesures à moyenner
-            interval:   { type: 'int', default: 2000 } // maximumAge GPS en ms
+            bufferSize: { type: 'int', default: 5 },
+            interval:   { type: 'int', default: 2000 }
         },
 
         init() {
@@ -64,29 +63,20 @@
 
     // ═══════════════════════════════════════════════════════
     //  COMPOSANT 2 : gyro-orientation
-    //  Stabilise l'orientation de la caméra AR en lissant
-    //  le cap (alpha) issu de deviceorientation.
-    //
-    //  Pourquoi ? AR.js prend l'orientation brute du capteur,
-    //  très sensible aux micro-tremblements du magnétomètre.
-    //  On applique une moyenne circulaire sur le cap avant
-    //  de l'injecter dans la rotation de la caméra A-Frame.
     // ═══════════════════════════════════════════════════════
     AFRAME.registerComponent('gyro-orientation', {
         schema: {
-            bufferSize: { type: 'int',   default: 8   }, // nb de mesures à lisser
+            bufferSize: { type: 'int',     default: 8    },
             enabled:    { type: 'boolean', default: true }
         },
 
         init() {
-            this.buffer      = [];
-            this.lastAlpha   = null;
-            this.bound       = this.onOrientation.bind(this);
+            this.buffer    = [];
+            this.lastAlpha = null;
+            this.bound     = this.onOrientation.bind(this);
 
-            // iOS 13+ : demande de permission
             if (typeof DeviceOrientationEvent !== 'undefined' &&
                 typeof DeviceOrientationEvent.requestPermission === 'function') {
-                // On attend un geste utilisateur — déclenché par le premier touch
                 document.addEventListener('touchstart', () => {
                     DeviceOrientationEvent.requestPermission()
                         .then(state => {
@@ -96,14 +86,11 @@
                         .catch(console.error);
                 }, { once: true });
             } else {
-                // Android et autres : direct
                 this.startListening();
             }
         },
 
         startListening() {
-            // deviceorientationabsolute = plus précis sur Android (nord absolu)
-            // deviceorientation = fallback universel
             window.addEventListener('deviceorientationabsolute', this.bound, true);
             window.addEventListener('deviceorientation',         this.bound, true);
             console.log('gyro-orientation : écoute active');
@@ -112,20 +99,14 @@
         onOrientation(e) {
             if (!this.data.enabled) return;
 
-            // ── Récupération du cap selon la plateforme ──
             let heading = null;
-
             if (e.webkitCompassHeading != null) {
-                // iOS : webkitCompassHeading = cap direct vers le nord magnétique
                 heading = e.webkitCompassHeading;
             } else if (e.alpha != null) {
-                // Android : alpha = rotation autour de Z, sens inverse du cap
                 heading = (360 - e.alpha) % 360;
             }
-
             if (heading === null) return;
 
-            // ── Lissage circulaire (évite les sauts 359°→1°) ──
             this.buffer.push(heading);
             if (this.buffer.length > this.data.bufferSize) this.buffer.shift();
 
@@ -136,22 +117,15 @@
             });
             const smoothed = (Math.atan2(sinSum, cosSum) * 180 / Math.PI + 360) % 360;
 
-            // ── Application à la caméra A-Frame ──
-            // On récupère la rotation actuelle et on ne modifie que le Y (cap)
-            // pour ne pas interférer avec beta/gamma (inclinaison)
             const cam = this.el.object3D;
             if (cam) {
-                // Convertit le cap en radians (sens trigonométrique)
-                const yaw = THREE.MathUtils.degToRad(-smoothed);
-
-                // Préserve l'inclinaison (pitch/roll) de la caméra
+                const yaw   = THREE.MathUtils.degToRad(-smoothed);
                 const euler = new THREE.Euler().setFromQuaternion(cam.quaternion, 'YXZ');
                 euler.y = yaw;
                 cam.quaternion.setFromEuler(euler);
             }
 
             this.lastAlpha = smoothed;
-            // console.log(`Gyro lissé → cap: ${smoothed.toFixed(1)}°`);
         },
 
         remove() {
@@ -164,43 +138,41 @@
 </head>
 
 <body>
-    <asset>
-        <!-- écrire ligne pour asset pour un model 3D en glb -->
-        <a-asset-item id="statue" src="./assets/3Dscan_baracco.glb"></a-asset-item>
-    </asset>
-
-
     <a-scene vr-mode-ui='enabled: false'
              arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
              renderer='antialias: true; alpha: true'>
 
-        <!--
-            La caméra reçoit les deux composants :
-            - smooth-gps   : lisse la position GPS
-            - gyro-orientation : stabilise le cap magnétique
-            - gpsMinDistance: 0 car smooth-gps gère les mises à jour
-        -->
+        <a-assets>
+            <a-asset-item id="statue" src="./assets/3Dscan_baracco.glb"></a-asset-item>
+        </a-assets>
+
         <a-camera
             smooth-gps="bufferSize: 5; interval: 2000"
             gyro-orientation="bufferSize: 8; enabled: true"
             gps-new-camera='gpsMinDistance: 0'>
         </a-camera>
 
-0.712849
-
-        <!-- Tours St-Libert -->
+        <!-- Centre -->
         <a-box color="red"
                gps-new-entity-place="latitude: 47.409839; longitude: 0.712794"
                depth="2" height="2" width="2"
                rotation="45 45 45"
                position="0 1 0">
         </a-box>
-        <a-text value="TEXTE" gps-new-entity-place="latitude: 47.409839; longitude: 0.712794" color="blue" align="center"
-            look-at="[gps-new-camera]" position="0 1 0">
+        <a-text value="TEXTE"
+                gps-new-entity-place="latitude: 47.409839; longitude: 0.712794"
+                color="blue"
+                align="center"
+                look-at="[gps-new-camera]"
+                position="0 1 0">
+        </a-text>
 
         <!-- NO -->
-        <a-box color="blue" gps-new-entity-place="latitude: 47.409870; longitude: 0.713199" depth="2" height="2" width="2"
-            rotation="45 45 45" position="0 1 0">
+        <a-box color="blue"
+               gps-new-entity-place="latitude: 47.409870; longitude: 0.713199"
+               depth="2" height="2" width="2"
+               rotation="45 45 45"
+               position="0 1 0">
         </a-box>
         <a-text value="TEXTE"
                 gps-new-entity-place="latitude: 47.409870; longitude: 0.713199"
@@ -208,11 +180,14 @@
                 align="center"
                 look-at="[gps-new-camera]"
                 position="0 1 0">
+        </a-text>
 
-        <!-- NE -->
-        <!-- remplacer la box green par un model 3D glb #statue -->
-        <a-box color="green" gps-new-entity-place="latitude: 47.409596; longitude: 0.713282" depth="2" height="2" width="2"
-            rotation="45 45 45" position="0 1 0">
+        <!-- NE : box verte + modèle GLB superposés -->
+        <a-box color="green"
+               gps-new-entity-place="latitude: 47.409596; longitude: 0.713282"
+               depth="2" height="2" width="2"
+               rotation="45 45 45"
+               position="0 1 0">
         </a-box>
         <a-entity gps-new-entity-place="latitude: 47.409596; longitude: 0.713282"
                   position="0 1 0"
@@ -221,17 +196,34 @@
         </a-entity>
 
         <!-- SO -->
-        <a-box color="yellow" gps-new-entity-place="latitude: 47.409688; longitude: 0.713112" depth="2" height="2" width="2"
-            rotation="45 45 45" position="0 1 0">
+        <a-box color="yellow"
+               gps-new-entity-place="latitude: 47.409688; longitude: 0.713112"
+               depth="2" height="2" width="2"
+               rotation="45 45 45"
+               position="0 1 0">
         </a-box>
-        <a-text value="TEXTE" gps-new-entity-place="latitude: 47.409688; longitude: 0.713112" color="blue" align="center"
-            look-at="[gps-new-camera]" position="0 1 0">
+        <a-text value="TEXTE"
+                gps-new-entity-place="latitude: 47.409688; longitude: 0.713112"
+                color="blue"
+                align="center"
+                look-at="[gps-new-camera]"
+                position="0 1 0">
+        </a-text>
 
-        <a-box color="white" gps-new-entity-place="latitude: 47.409546; longitude: 0.712849" depth="2" height="2" width="2"
-            rotation="45 45 45" position="0 1 0">
+        <!-- S -->
+        <a-box color="white"
+               gps-new-entity-place="latitude: 47.409546; longitude: 0.712849"
+               depth="2" height="2" width="2"
+               rotation="45 45 45"
+               position="0 1 0">
         </a-box>
-        <a-text value="TEXTE" gps-new-entity-place="latitude: 47.409546; longitude: 0.712849" color="blue" align="center"
-            look-at="[gps-new-camera]" position="0 1 0">
+        <a-text value="TEXTE"
+                gps-new-entity-place="latitude: 47.409546; longitude: 0.712849"
+                color="blue"
+                align="center"
+                look-at="[gps-new-camera]"
+                position="0 1 0">
+        </a-text>
 
     </a-scene>
 </body>

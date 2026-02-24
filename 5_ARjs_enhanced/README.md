@@ -13,6 +13,7 @@
 * [map viewer : + orientation](./map_viewer_2.html)
 * [map viewer : + distances](./map_viewer_3.html)
 * [map viewer : + clic-marker](./map_viewer_4.html)
+* [map viewer : StLibert](./gps_stlibert_box.html)
 
 ### Tools
 * [stabilisation gps](./tools/tools_gps.html)
