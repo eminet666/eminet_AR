@@ -3,7 +3,7 @@
 * [0_base](./gps_0_base.html)
 * [1_ +gps-smooth](./gps_1_gps-smooth.html)
 * [2_ +gyro](./gps_2_gyro.html)
-* [redbox](./gps_redbox.html)
+* [3_ +box-text-model3D](./gps_3_box-text-model.html)
 
 ## map viewer
 * [map viewer : places](./map_viewer_0.html)
