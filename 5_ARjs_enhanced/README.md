@@ -8,8 +8,9 @@
 ## map viewer
 * [map viewer : places](./map_viewer_0.html)
 * [map viewer : + device](./map_viewer_1.html)
-* [map viewer : + orientation](./map_viewer.html)
-* [map viewer : + distances](./map_viewer.html)
+* [map viewer : + orientation](./map_viewer_2.html)
+* [map viewer : + distances](./map_viewer_3.html)
+* [map viewer : + clic-marker](./map_viewer_4.html)
 
 ### Tools
 * [stabilisation gps](./tools/tools_gps.html)
