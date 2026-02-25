@@ -21,3 +21,7 @@
 * [first pos](./tools/osm-my-position_firstpos/)
 * [add places](./tools/osm-my-position_addplaces/index.html)
 * [pos nseo](./tools/osm-my-position_nseo/index.html)
+
+### liens 
+* [gltf transform](https://gltf-transform.dev/)
+* [mesh optimizer](https://github.com/zeux/meshoptimizer)
