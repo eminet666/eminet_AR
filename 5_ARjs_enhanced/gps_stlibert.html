@@ -153,77 +153,49 @@
         </a-camera>
 
         <!-- Centre -->
-        <a-box color="red"
-               gps-new-entity-place="latitude: 47.409839; longitude: 0.712794"
-               depth="2" height="2" width="2"
-               rotation="45 45 45"
-               position="0 1 0">
-        </a-box>
-        <a-text value="TEXTE"
-                gps-new-entity-place="latitude: 47.409839; longitude: 0.712794"
-                color="blue"
-                align="center"
-                look-at="[gps-new-camera]"
-                position="0 1 0">
-        </a-text>
+        <a-entity gps-new-entity-place="latitude: 47.409839; longitude: 0.712794" position="0 1 0">
+            <a-box color="red" depth="2" height="2" width="2" rotation="45 45 45" position="0 0 0">
+            </a-box>
+        
+            <a-text value="ROUGE" color="red" align="center" look-at="[gps-new-camera]" position="0 1.5 0">
+            </a-text>
+        </a-entity>
 
         <!-- NO -->
-        <a-box color="blue"
-               gps-new-entity-place="latitude: 47.409870; longitude: 0.713199"
-               depth="2" height="2" width="2"
-               rotation="45 45 45"
-               position="0 1 0">
-        </a-box>
-        <a-text value="TEXTE"
-                gps-new-entity-place="latitude: 47.409870; longitude: 0.713199"
-                color="blue"
-                align="center"
-                look-at="[gps-new-camera]"
-                position="0 1 0">
-        </a-text>
+        <a-entity gps-new-entity-place="latitude: 47.409870; longitude: 0.713199" position="0 1 0">
+            <a-box color="blue" depth="2" height="2" width="2" rotation="45 45 45" position="0 0 0">
+            </a-box>
+
+            <a-text value="BLEU" color="blue" align="center" look-at="[gps-new-camera]" position="0 1.5 0">
+            </a-text>
+        </a-entity>
 
         <!-- NE : box verte + modèle GLB superposés -->
-        <a-box color="green"
-               gps-new-entity-place="latitude: 47.409596; longitude: 0.713282"
-               depth="2" height="2" width="2"
-               rotation="45 45 45"
-               position="0 1 0">
-        </a-box>
-        <a-entity gps-new-entity-place="latitude: 47.409596; longitude: 0.713282"
-                  position="0 1 0"
-                  rotation="45 45 45"
-                  gltf-model="#statue">
+        <a-entity gps-new-entity-place="latitude: 47.409596; longitude: 0.713282" position="0 1 0">
+            <a-box color="green" depth="2" height="2" width="2" rotation="45 45 45" position="0 0 0">
+            </a-box>
+        
+            <a-text value="VERT" color="green" align="center" look-at="[gps-new-camera]" position="0 1.5 0">
+            </a-text>
         </a-entity>
 
         <!-- SO -->
-        <a-box color="yellow"
-               gps-new-entity-place="latitude: 47.409688; longitude: 0.713112"
-               depth="2" height="2" width="2"
-               rotation="45 45 45"
-               position="0 1 0">
-        </a-box>
-        <a-text value="TEXTE"
-                gps-new-entity-place="latitude: 47.409688; longitude: 0.713112"
-                color="blue"
-                align="center"
-                look-at="[gps-new-camera]"
-                position="0 1 0">
-        </a-text>
+        <a-entity gps-new-entity-place="latitude: 47.409688; longitude: 0.713112" position="0 1 0">
+            <a-box color="yellow" depth="2" height="2" width="2" rotation="45 45 45" position="0 0 0">
+            </a-box>
+        
+            <a-text value="JAUNE" color="yellow" align="center" look-at="[gps-new-camera]" position="0 1.5 0">
+            </a-text>
+        </a-entity>
 
         <!-- S -->
-        <a-box color="white"
-               gps-new-entity-place="latitude: 47.409546; longitude: 0.712849"
-               depth="2" height="2" width="2"
-               rotation="45 45 45"
-               position="0 1 0">
-        </a-box>
-        <a-text value="TEXTE"
-                gps-new-entity-place="latitude: 47.409546; longitude: 0.712849"
-                color="blue"
-                align="center"
-                look-at="[gps-new-camera]"
-                position="0 1 0">
-        </a-text>
+        <a-entity gps-new-entity-place="latitude: 47.409546; longitude: 0.712849" position="0 1 0">
+            <a-box color="white" depth="2" height="2" width="2" rotation="45 45 45" position="0 0 0">
+            </a-box>
+        
+            <a-text value="BLANC" color="white" align="center" look-at="[gps-new-camera]" position="0 1.5 0">
+            </a-text>
+        </a-entity>
 
     </a-scene>
 </body>
