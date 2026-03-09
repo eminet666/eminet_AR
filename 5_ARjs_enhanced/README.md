@@ -7,6 +7,7 @@
 * [StLibert_Box](./gps_stlibert_box.html)
 * [StLibert](./gps_stlibert.html)
 * [Voltaire Box](./gps_voltaire_box.html)
+* [Voltaire Text](./gps_voltaire_text.html)
 * [Volataire Box Link](./gps_voltaire_box_new.html)
 
 ## map viewer
