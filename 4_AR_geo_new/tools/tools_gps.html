@@ -70,22 +70,22 @@
         // Fonction pour mettre à jour l'affichage des coordonnées
         function updateCoordinatesDisplay() {
             const lastCoord = coordinatesHistory[coordinatesHistory.length - 1];
-            document.getElementById('coordinates').innerText = `Dernière position: Latitude: ${lastCoord.latitude.toFixed(4)}, Longitude: ${lastCoord.longitude.toFixed(4)}`;
+            document.getElementById('coordinates').innerText = `Dernière position: Latitude: ${lastCoord.latitude.toFixed(5)}, Longitude: ${lastCoord.longitude.toFixed(5)}`;
 
             // Calculer et afficher la moyenne
             const averageLat = calculateAverage(coordinatesHistory.map(coord => coord.latitude));
             const averageLon = calculateAverage(coordinatesHistory.map(coord => coord.longitude));
-            document.getElementById('average').innerHTML = `<strong>Moyenne: Latitude: ${averageLat.toFixed(4)}, Longitude: ${averageLon.toFixed(4)}</strong>`;
+            document.getElementById('average').innerHTML = `<strong>Moyenne: Latitude: ${averageLat.toFixed(5)}, Longitude: ${averageLon.toFixed(5)}</strong>`;
 
             // Calculer et afficher l'écart
             const latDeviation = lastCoord.latitude - averageLat;
             const lonDeviation = lastCoord.longitude - averageLon;
-            document.getElementById('deviation').innerText = `Écart: Latitude: ${latDeviation.toFixed(4)}, \nLongitude: ${lonDeviation.toFixed(4)}`;
+            document.getElementById('deviation').innerText = `Écart: Latitude: ${latDeviation.toFixed(5)}, \nLongitude: ${lonDeviation.toFixed(5)}`;
 
             // Afficher les 9 précédentes mesures
             let previousText = 'Précédentes mesures:\n';
             for (let i = coordinatesHistory.length - 2; i >= 0; i--) {
-                previousText += `Latitude: ${coordinatesHistory[i].latitude.toFixed(4)}, Longitude: ${coordinatesHistory[i].longitude.toFixed(4)}\n`;
+                previousText += `Latitude: ${coordinatesHistory[i].latitude.toFixed(5)}, Longitude: ${coordinatesHistory[i].longitude.toFixed(5)}\n`;
             }
             document.getElementById('previous').innerText = previousText;
 
