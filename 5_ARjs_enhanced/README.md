@@ -6,6 +6,7 @@
 * [3_ +box-text-model3D](./gps_3_box-text-model.html)
 * [StLibert_Box](./gps_stlibert_box.html)
 * [StLibert](./gps_stlibert.html)
+* [Voltaire Box](./gps_voltaire_box.html)
 
 ## map viewer
 * [map viewer : places](./map_viewer_0.html)
@@ -14,6 +15,7 @@
 * [map viewer : + distances](./map_viewer_3.html)
 * [map viewer : + clic-marker](./map_viewer_4.html)
 * [map viewer : StLibert](./map_viewer_stlibert.html)
+* [map viewer : Voltaire](./map_viewer_voltaire.html)
 
 ### Tools
 * [stabilisation gps](./tools/tools_gps.html)
