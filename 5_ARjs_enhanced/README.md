@@ -14,6 +14,7 @@
 * [Text lookat2](./gps_voltaire_lookat2.html)
 * [Text Entity](./gps_voltaire_entity_text.html)
 * [Box Link](./gps_voltaire_box_new.html)
+* [Statue](./gps_voltaire_statue.html)
 
 ## map viewer
 * [map viewer : places](./map_viewer_0.html)
