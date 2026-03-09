@@ -180,7 +180,7 @@
             - gyro-orientation : stabilise le cap magnétique
             - gpsMinDistance: 0 car smooth-gps gère les mises à jour
         -->
-        <a-camera
+        <a-camera if="cam"
             smooth-gps="bufferSize: 5; interval: 2000"
             gyro-orientation="bufferSize: 8; enabled: true"
             gps-new-camera='gpsMinDistance: 0'>
@@ -191,7 +191,8 @@
             <!-- <a-box color="red" depth="2" height="2" width="2" rotation="45 45 45" position="0 0 0">
             </a-box> -->
         
-            <a-text value="ROUGE" color="red" align="center" scale="2 2 2" look-at="[gps-new-camera]">
+            <a-text value="ROUGE" color="red" align="center" scale="2 2 2" look-at="cam">
+            <scale x="2" y="2" z="2"></scale>
             </a-text>
         </a-entity>
 
