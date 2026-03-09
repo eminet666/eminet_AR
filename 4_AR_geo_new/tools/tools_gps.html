@@ -46,8 +46,8 @@
         function getCoordinates() {
             if ('geolocation' in navigator) {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    const latitude = position.coords.latitude.toFixed(4);
-                    const longitude = position.coords.longitude.toFixed(4);
+                    const latitude = position.coords.latitude.toFixed(5);
+                    const longitude = position.coords.longitude.toFixed(5);
 
                     // Ajouter les coordonnées au tableau
                     coordinatesHistory.push({ latitude: parseFloat(latitude), longitude: parseFloat(longitude) });
