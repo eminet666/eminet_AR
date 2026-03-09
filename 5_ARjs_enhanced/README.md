@@ -8,9 +8,10 @@
 * [StLibert](./gps_stlibert.html)
 * [Voltaire Box](./gps_voltaire_box.html)
 * [Voltaire Text](./gps_voltaire_text.html)
-* [Volataire Text lookat](./gps_voltaire_lookat.html)
-* [Volataire Text lookat2](./gps_voltaire_lookat2.html)
-* [Volataire Box Link](./gps_voltaire_box_new.html)
+* [Voltaire Text lookat](./gps_voltaire_lookat.html)
+* [Voltaire Text lookat2](./gps_voltaire_lookat2.html)
+* [Voltaire Text Entity](./gps_voltaire_entity_text.html)
+* [Voltaire Box Link](./gps_voltaire_box_new.html)
 
 ## map viewer
 * [map viewer : places](./map_viewer_0.html)
