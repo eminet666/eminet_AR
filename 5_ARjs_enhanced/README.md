@@ -6,12 +6,14 @@
 * [3_ +box-text-model3D](./gps_3_box-text-model.html)
 * [StLibert_Box](./gps_stlibert_box.html)
 * [StLibert](./gps_stlibert.html)
-* [Voltaire Box](./gps_voltaire_box.html)
-* [Voltaire Text](./gps_voltaire_text.html)
-* [Voltaire Text lookat](./gps_voltaire_lookat.html)
-* [Voltaire Text lookat2](./gps_voltaire_lookat2.html)
-* [Voltaire Text Entity](./gps_voltaire_entity_text.html)
-* [Voltaire Box Link](./gps_voltaire_box_new.html)
+
+### Voltaire
+* [Box](./gps_voltaire_box.html)
+* [Text](./gps_voltaire_text.html)
+* [Text lookat](./gps_voltaire_lookat.html)
+* [Text lookat2](./gps_voltaire_lookat2.html)
+* [Text Entity](./gps_voltaire_entity_text.html)
+* [Box Link](./gps_voltaire_box_new.html)
 
 ## map viewer
 * [map viewer : places](./map_viewer_0.html)
