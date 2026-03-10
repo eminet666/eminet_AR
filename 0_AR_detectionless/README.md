@@ -8,3 +8,5 @@
 * [AR_4_3Dmodel](./AR_4_3Dmodel.html)
 * [AR_5_complexe](./AR_5_complexe.html)
 * [AR_6_text](./AR_6_text.html)
+* [AR_7_entity text](./AR_7_entity_text.html)
+* [AR_8_Lookat](./AR_8_3Dmodel_lookat.html)

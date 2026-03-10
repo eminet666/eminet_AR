@@ -9,5 +9,5 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain(certfile="cert.pem", keyfile="key.pem")
     httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
-    print(f"Serveur HTTPS sur https://192.168.0.24:{PORT}")
+    print(f"Serveur HTTPS sur https://local_ip_address:{PORT}")
     httpd.serve_forever()
