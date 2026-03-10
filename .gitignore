@@ -10,3 +10,11 @@ Thumbs.db
 # ignore rep
 /z_*
 /3_AR_geo/z_temp2
+fr
+# environnements Python
+venv/
+.env/
+.envrc
+.pyenv/
+.venv/
+

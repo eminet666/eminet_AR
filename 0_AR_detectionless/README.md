@@ -7,3 +7,4 @@
 * [AR_3_relatives](./AR_3_relatives.html)
 * [AR_4_3Dmodel](./AR_4_3Dmodel.html)
 * [AR_5_complexe](./AR_5_complexe.html)
+* [AR_6_text](./AR_6_text.html)
