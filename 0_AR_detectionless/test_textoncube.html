@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Exemple texte sur cube</title>
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component/dist/aframe-look-at-component.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <!-- méthode 1 : attribut `text` sur le cube -->
+        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"
+            text="value: CUBE ATTR; color: white; align: center; width: 1; zOffset: 0.505; width: 2">
+        </a-box>
+
+        <!-- méthode 2 : entité <a-text> imbriquée -->
+        <a-box position="1 0.5 -3" color="#EF2D5E" lookt-at="#cam">
+            <!-- le texte est un enfant, il hérite des transformations du cube -->
+            <a-text value="CUBE CHILD" scale="2 2 2" color="white" align="center" width="1" position="0 0 0.505">  
+            </a-text>
+        </a-box>
+
+        <!-- caméra et ciel simples -->
+        <a-entity id="cam" camera wasd-controls look-controls position="0 1.6 0"></a-entity>
+        <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+</body>
+
+</html>

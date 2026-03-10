@@ -16,6 +16,9 @@
 * [Box Link](./gps_voltaire_box_new.html)
 * [Statue](./gps_voltaire_statue.html)
 
+### ensaama
+* [Box Text](./gps_ensaama_box-text.html)
+
 ## map viewer
 * [map viewer : places](./map_viewer_0.html)
 * [map viewer : + device](./map_viewer_1.html)
@@ -25,6 +28,7 @@
 * [map viewer : StLibert](./map_viewer_stlibert.html)
 * [map viewer : Voltaire](./map_viewer_voltaire.html)
 * [map viewer : Voltaire link](./map_viewer_voltaire_new.html)
+* [map viewer : ensaama](./map_viewer_ensaama.html)
 
 ### Tools
 * [stabilisation gps](./tools/tools_gps.html)
