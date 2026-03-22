@@ -20,7 +20,7 @@
             <!-- écrire ligne pour asset pour un model 3D en glb -->
             <a-asset-item id="zorba" src="./assets/antoine_hugo.glb"></a-asset-item>
             <a-mixin id="commun" model_loaded shadow="cast:true; receive:true"
-                animation-mixer="clip: idle; clampWhenFinished: true;" scale="0.7 0.7 0.7">
+                animation-mixer="clip: pas_01; clampWhenFinished: true;" scale="2 2 2">
             </a-mixin>
         </a-assets>
 
@@ -38,7 +38,7 @@
 
         <!-- Terrasse Voltaire -->
         <a-entity gps-new-entity-place="latitude: 48.860781; longitude: 2.373874">
-            <a-entity id="danseur1" gltf-model="#zorba" mixin="commun" rotation="90 120 90">
+            <a-entity id="danseur1" gltf-model="#zorba" mixin="commun" rotation="0 0 0">
             </a-entity>
         </a-entity>
 
