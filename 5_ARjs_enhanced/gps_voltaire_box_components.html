@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>AR.js - GPS Lissé + Gyro Stabilisé</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/three.js/build/ar-threex-location-only.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
+    <script src="https://ensaama-officiel-numerique.github.io/components/AR_utils/AR_components.js"></script>
+    <link rel="stylesheet" href="https://ensaama-officiel-numerique.github.io/components/AR_utils/map.css">
+</head>
+
+<body>
+    <asset>
+        <!-- écrire ligne pour asset pour un model 3D en glb -->
+        <!-- <a-asset-item id="statue" src="./assets/3Dscan_baracco.glb"></a-asset-item> -->
+    </asset>
+
+
+    <a-scene vr-mode-ui='enabled: false'
+             arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+             renderer='antialias: true; alpha: true'>
+
+        <!--
+            La caméra reçoit les deux composants :
+            - smooth-gps   : lisse la position GPS
+            - gyro-orientation : stabilise le cap magnétique
+            - gpsMinDistance: 0 car smooth-gps gère les mises à jour
+        -->
+        <a-camera
+            smooth-gps="bufferSize: 5; interval: 2000"
+            gyro-orientation="bufferSize: 8; enabled: true"
+            gps-new-camera='gpsMinDistance: 0'>
+        </a-camera>
+
+        <!-- Terrasse Voltaire -->
+        <a-box color="red"
+               gps-new-entity-place="latitude: 48.860781; longitude: 2.373874"
+               depth="2" height="2" width="2"
+               rotation="45 45 45"
+               position="0 1 0">
+        </a-box>
+
+
+
+    </a-scene>
+</body>
+
+</html>

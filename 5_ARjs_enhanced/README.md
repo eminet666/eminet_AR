@@ -13,8 +13,9 @@
 * [Text lookat](./gps_voltaire_lookat.html)
 * [Text lookat2](./gps_voltaire_lookat2.html)
 * [Text Entity](./gps_voltaire_entity_text.html)
-* [Box Link](./gps_voltaire_box_new.html)
 * [Statue](./gps_voltaire_statue.html)
+* [Box Link local](./gps_voltaire_box_local.html)
+* [Box Link remote](./gps_voltaire_box_components.html)
 
 ### ensaama
 * [Box Text](./gps_ensaama_box-text.html)
@@ -27,8 +28,9 @@
 * [map viewer : + clic-marker](./map_viewer_4.html)
 * [map viewer : StLibert](./map_viewer_stlibert.html)
 * [map viewer : Voltaire](./map_viewer_voltaire.html)
-* [map viewer : Voltaire link](./map_viewer_voltaire_new.html)
 * [map viewer : ensaama](./map_viewer_ensaama.html)
+* [map viewer : Voltaire link local](./map_viewer_voltaire_local.html)
+* [map viewer : Voltaire link remote](./gps_voltaire_box_components.html)
 
 ### Tools
 * [stabilisation gps](./tools/tools_gps.html)
