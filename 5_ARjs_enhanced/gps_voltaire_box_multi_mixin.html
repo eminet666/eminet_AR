@@ -12,17 +12,16 @@
 </head>
 
 <body>
-    <a-assets>
-        <!-- écrire ligne pour asset pour un model 3D en glb -->
-        <!-- <a-asset-item id="statue" src="./assets/3Dscan_baracco.glb"></a-asset-item> -->
-        <a-mixin id="boite" depth="2" height="2" width="2" rotation="45 45 45"></a-mixin>
-    </a-assets>
-
-
 
     <a-scene vr-mode-ui='enabled: false'
              arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
              renderer='antialias: true; alpha: true'>
+
+        <a-assets>
+            <!-- écrire ligne pour asset pour un model 3D en glb -->
+            <!-- <a-asset-item id="statue" src="./assets/3Dscan_baracco.glb"></a-asset-item> -->
+            <a-mixin id="boite" depth="2" height="2" width="2" rotation="45 45 45"></a-mixin>
+        </a-assets>
 
         <!--
             La caméra reçoit les deux composants :

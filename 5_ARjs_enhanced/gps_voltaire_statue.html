@@ -164,15 +164,14 @@
 </head>
 
 <body>
-    <asset>
-        <!-- écrire ligne pour asset pour un model 3D en glb -->
-        <a-asset-item id="statue" src="./assets/3Dscan_baracco.glb"></a-asset-item>
-    </asset>
-
 
     <a-scene vr-mode-ui='enabled: false'
              arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
              renderer='antialias: true; alpha: true'>
+        <a-assets>
+            <!-- écrire ligne pour asset pour un model 3D en glb -->
+            <a-asset-item id="statue" src="./assets/3Dscan_baracco.glb"></a-asset-item>
+        </a-assets>
 
         <!--
             La caméra reçoit les deux composants :

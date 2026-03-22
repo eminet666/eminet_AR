@@ -18,6 +18,7 @@
 * [Box Link remote](./gps_voltaire_box_components.html)
 * [Box Multi Parent](./gps_voltaire_box_multi.html)
 * [Box Multi Parent](./gps_voltaire_box_multi_mixin.html)
+* [3D anim](./gps_voltaire_anim3D.html)
 
 ### ensaama
 * [Box Text](./gps_ensaama_box-text.html)
