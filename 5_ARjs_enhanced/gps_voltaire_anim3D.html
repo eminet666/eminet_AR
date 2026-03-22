@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>AR.js - GPS Lissé + Gyro Stabilisé</title>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/three.js/build/ar-threex-location-only.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
     <script src="https://ensaama-officiel-numerique.github.io/components/AR_utils/AR_components.js"></script>
@@ -18,10 +19,11 @@
 
         <a-assets>
             <!-- écrire ligne pour asset pour un model 3D en glb -->
-            <a-asset-item id="zorba" src="./assets/antoine_hugo.glb"></a-asset-item>
+            <!-- <a-asset-item id="zorba" src="./assets/antoine_hugo.glb"></a-asset-item>
             <a-mixin id="commun" model_loaded shadow="cast:true; receive:true"
                 animation-mixer="clip: pas_01; clampWhenFinished: true;" scale="2 2 2">
-            </a-mixin>
+            </a-mixin> -->
+            <a-asset-item id="robot" src="./assets/isabelle_robot.glb"></a-asset-item>
         </a-assets>
 
         <!--
@@ -38,7 +40,9 @@
 
         <!-- Terrasse Voltaire -->
         <a-entity gps-new-entity-place="latitude: 48.860781; longitude: 2.373874">
-            <a-entity id="danseur1" gltf-model="#zorba" mixin="commun" rotation="0 0 0">
+            <!-- <a-entity id="danseur1" gltf-model="#zorba" mixin="commun" rotation="0 0 0">
+            </a-entity> -->
+            <a-entity gltf-model="#robot" position="0 -1 0"animation-mixer scale="2 2 2">
             </a-entity>
         </a-entity>
 
