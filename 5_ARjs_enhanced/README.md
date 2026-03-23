@@ -24,6 +24,10 @@
 * [3D anim sirtaki 1](./gps_voltaire_anim3D_sirtaki_1.html)
 * [3D anim sirtaki 2](./gps_voltaire_anim3D_sirtaki_2.html)
 
+### Truillot
+* [3D anim robot](./gps_truillot_anim3D_robot.html)
+* [3D anim sirtaki 2](./gps_truillot_anim3D_sirtaki_2.html)
+
 ### ensaama
 * [Box Text](./gps_ensaama_box-text.html)
 
