@@ -147,3 +147,109 @@ AFRAME.registerComponent('gyro-orientation', {
         window.removeEventListener('deviceorientation',         this.bound, true);
     }
 });
+
+// ═══════════════════════════════════════════════════════
+//  COMPOSANT 3 : random-animator
+//  Syntaxe simple pour faire jouer des animations d'un modèle 3D de manière aléatoire et continue.
+//  Ex: random-animator="clips: anim1, anim2, anim3; minDelay: 500"
+//  - clips : liste des noms d'animations à jouer (séparés par virgule)
+//  - minDelay : délai minimum entre deux animations (en ms)
+// ═══════════════════════════════════════════════════════
+AFRAME.registerComponent('random-animator', {
+    schema: {
+        clips: { type: 'string', default: 'anim1, anim2, anim3' },
+        minDelay: { type: 'number', default: 0 }   // délai mini entre deux animations (ms)
+    },
+
+    init() {
+        this.clipList = this.data.clips.split(',').map(s => s.trim());
+        this.lastClip = null;
+        this.mixer = null;
+
+        // Attend que le modèle GLB soit chargé
+        this.el.addEventListener('model-loaded', () => {
+            this.mixer = this.el.components['animation-mixer'];
+            this.playRandom();
+        });
+    },
+
+    // Choisit une animation différente de la précédente
+    pickClip() {
+        const others = this.clipList.filter(c => c !== this.lastClip);
+        return others[Math.floor(Math.random() * others.length)];
+    },
+
+    playRandom() {
+        const clip = this.pickClip();
+        this.lastClip = clip;
+
+        // Injecte le clip dans animation-mixer
+        this.el.setAttribute('animation-mixer', {
+            clip: clip,
+            loop: 'once',
+            clampWhenFinished: true
+        });
+
+        // Récupère la durée du clip pour enchaîner
+        this.el.addEventListener('animation-finished', () => {
+            setTimeout(() => this.playRandom(), this.data.minDelay);
+        }, { once: true });
+
+        console.log(`random-animator → ${clip}`);
+    }
+});
+
+// ═══════════════════════════════════════════════════════
+//  COMPOSANT 4 : sync-animator-master
+//  Permet de synchroniser l'animation de plusieurs entités à partir d'un "chef d'orchestre".    
+//  Syntaxe : sync-animator-master="clips: anim1, anim2; targets: id1, id2, id3; minDelay: 500"
+//  - clips : liste des noms d'animations à jouer (séparés par virgule)
+//  - targets : liste des ids des entités à animer (séparés par virgule)
+//  - minDelay : délai minimum entre deux animations (en ms)
+// ═══════════════════════════════════════════════════════
+
+// ─── Chef d'orchestre : choisit le clip et prévient les autres ───
+    AFRAME.registerComponent('sync-animator-master', {
+        schema: {
+        clips: {type: 'string', default: 'pas_01,pas_02,pas_03,pas_04,pas_05' },
+    targets: {type: 'string', default: '' },  // ids séparés par virgule ex: "danseur1,danseur2,danseur3"
+    minDelay: {type: 'number', default: 0 }
+    },
+
+    init() {
+        this.clipList = this.data.clips.split(',').map(s => s.trim());
+        this.targetIds = this.data.targets.split(',').map(s => s.trim());
+    this.lastClip = null;
+
+        // Attend que CE modèle soit chargé avant de démarrer
+        this.el.addEventListener('model-loaded', () => this.playSync());
+    },
+
+    pickClip() {
+        const others = this.clipList.filter(c => c !== this.lastClip);
+    return others[Math.floor(Math.random() * others.length)];
+    },
+
+    playSync() {
+        const clip = this.pickClip();
+    this.lastClip = clip;
+
+        // Applique le clip sur tous les targets (y compris lui-même)
+        this.targetIds.forEach(id => {
+            const el = document.getElementById(id);
+    if (!el) return;
+    el.setAttribute('animation-mixer', {
+        clip: clip,
+    loop: 'once',
+    clampWhenFinished: true
+            });
+        });
+
+    console.log(`sync-animator → ${clip}`);
+
+        // Enchaîne sur l'événement du master uniquement
+        this.el.addEventListener('animation-finished', () => {
+            setTimeout(() => this.playSync(), this.data.minDelay);
+        }, { once: true });
+    }
+});

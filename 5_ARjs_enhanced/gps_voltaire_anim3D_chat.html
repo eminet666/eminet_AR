@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>AR.js - GPS Lissé + Gyro Stabilisé</title>
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.3/three.js/build/ar-threex-location-only.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.3/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@6.1.1/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://ensaama-officiel-numerique.github.io/components/AR_utils/AR_components.js"></script>
+    <link rel="stylesheet" href="https://ensaama-officiel-numerique.github.io/components/AR_utils/map.css">
+</head>
+
+<body>
+    <a-scene vr-mode-ui='enabled: false'
+             arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+             renderer='antialias: true; alpha: true'>
+
+        <a-assets>
+            <a-asset-item id="cat" src="./assets/cat/an_animated_cat.glb"></a-asset-item>
+        </a-assets>
+
+        <a-camera near="0.01" far="10000"
+            smooth-gps="bufferSize: 5; interval: 2000"
+            gyro-orientation="bufferSize: 8; enabled: true"
+            gps-new-camera='gpsMinDistance: 0'>
+        </a-camera>
+
+        <!-- Terrasse Voltaire -->
+        <a-entity gps-new-entity-place="latitude: 48.860781; longitude: 2.373874">
+            <a-entity gltf-model="#cat"
+                      position="0 -1 -1"
+                      animation-mixer
+                      scale="1 1 1"
+                      rotation="0 0 0">
+            </a-entity>
+        </a-entity>
+
+    </a-scene>
+</body>
+
+</html>

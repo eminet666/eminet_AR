@@ -17,8 +17,12 @@
 * [Box Link local](./gps_voltaire_box_local.html)
 * [Box Link remote](./gps_voltaire_box_components.html)
 * [Box Multi Parent](./gps_voltaire_box_multi.html)
-* [Box Multi Parent](./gps_voltaire_box_multi_mixin.html)
-* [3D anim](./gps_voltaire_anim3D.html)
+* [Box Multi Mixin](./gps_voltaire_box_multi_mixin.html)
+* [3D anim chat](./gps_voltaire_anim3D_chat.html)
+* [3D anim robot](./gps_voltaire_anim3D_robot.html)
+* [3D anim sirtaki 0](./gps_voltaire_anim3D_sirtaki_0.html)
+* [3D anim sirtaki 1](./gps_voltaire_anim3D_sirtaki_1.html)
+* [3D anim sirtaki 2](./gps_voltaire_anim3D_sirtaki_2.html)
 
 ### ensaama
 * [Box Text](./gps_ensaama_box-text.html)

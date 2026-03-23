@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>AR.js - GPS Lissé + Gyro Stabilisé</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/three.js/build/ar-threex-location-only.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.3/three.js/build/ar-threex-location-only.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.3/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@6.1.1/dist/aframe-extras.loaders.min.js"></script>
     <script src="https://ensaama-officiel-numerique.github.io/components/AR_utils/AR_components.js"></script>
     <link rel="stylesheet" href="https://ensaama-officiel-numerique.github.io/components/AR_utils/map.css">
 </head>
@@ -15,15 +16,15 @@
 <body>
     <a-scene vr-mode-ui='enabled: false'
              arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
-             renderer='antialias: true; alpha: true'>
+             renderer='antialias: true; alpha: true;'>
 
         <a-assets>
             <!-- écrire ligne pour asset pour un model 3D en glb -->
-            <!-- <a-asset-item id="zorba" src="./assets/antoine_hugo.glb"></a-asset-item>
-            <a-mixin id="commun" model_loaded shadow="cast:true; receive:true"
-                animation-mixer="clip: pas_01; clampWhenFinished: true;" scale="2 2 2">
-            </a-mixin> -->
-            <a-asset-item id="robot" src="./assets/isabelle_robot.glb"></a-asset-item>
+            <a-asset-item id="zorba" src="./assets/antoine_hugo.glb"></a-asset-item>
+            <a-mixin id="commun" gltf-model="#zorba" 
+                rotation="0 0 0" scale="2 2 2"
+                model_loaded shadow="cast:true; receive:true">
+            </a-mixin>
         </a-assets>
 
         <!--
@@ -32,17 +33,16 @@
             - gyro-orientation : stabilise le cap magnétique
             - gpsMinDistance: 0 car smooth-gps gère les mises à jour
         -->
-        <a-camera
+        <a-camera near="0.01" far="10000" 
             smooth-gps="bufferSize: 5; interval: 2000"
-            gyro-orientation="bufferSize: 8; enabled: true"
+            gyro-orientation="bufferSize: 8; enabled: true" 
             gps-new-camera='gpsMinDistance: 0'>
         </a-camera>
 
         <!-- Terrasse Voltaire -->
         <a-entity gps-new-entity-place="latitude: 48.860781; longitude: 2.373874">
-            <!-- <a-entity id="danseur1" gltf-model="#zorba" mixin="commun" rotation="0 0 0">
-            </a-entity> -->
-            <a-entity gltf-model="#robot" position="0 -1 0"animation-mixer scale="2 2 2">
+            <a-entity id="danseur1" mixin="commun" 
+            animation-mixer="clip: pas_01; clampWhenFinished: true;">
             </a-entity>
         </a-entity>
 
